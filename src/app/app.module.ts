@@ -1,6 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+import { NgxJsonViewerModule } from 'ngx-json-viewer';
+import { Guid } from "guid-typescript";
+
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
 
@@ -16,6 +19,7 @@ import { TabComponent } from './tab/tab.component';
     TabComponent
   ],
   imports: [
+    NgxJsonViewerModule,
     BrowserModule,
     FormsModule
   ],
@@ -23,7 +27,8 @@ import { TabComponent } from './tab/tab.component';
   bootstrap: [
     AppComponent,
     SubmissionComponent,
-    QuestionComponent
+    QuestionComponent,
+    TabComponent
   ]
 })
 export class AppModule { }

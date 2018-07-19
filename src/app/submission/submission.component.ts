@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import {Submission} from '../submission'
 import { Step } from "app/step";
+import { Guid } from "guid-typescript/dist/guid";
 
 @Component({
   selector: 'app-submission',
@@ -24,11 +25,14 @@ export class SubmissionComponent implements OnInit {
   }
 
   AddTab() {
-    this.numTabs++;
     console.log(this.numTabs);
     let toAdd: Step = new Step();
-    toAdd.label = "Edit Label";
-    var count = this.myForm.steps.push(toAdd);
+    toAdd.label = "Edit TAB " + (this.numTabs + 1);
+    toAdd.order = this.numTabs + 1;
+    toAdd.key = Guid.create().toString();
+    toAdd.questions = [];
+    
+    this.numTabs = this.myForm.steps.push(toAdd);
   }
 
 }

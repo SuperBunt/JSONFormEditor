@@ -1,19 +1,19 @@
 <div>
+  <div><ngx-json-viewer [json]="myForm" [expanded]="true"></ngx-json-viewer></div>
+  {{myForm | json}}
   <h1>
     {{myForm.displayName}}
   </h1>
   <h2>
     Version: {{myForm.version}}
   </h2>
+  <p>Tabs: {{numTabs}}</p>
+  
 </div>
 
 <div>
   <button (click)="AddTab()">Add Tab</button>
-  <h3>Tabs: {{numTabs}}</h3>
-
-  <!-- </div>
-  <app-tab [tab] = "selectedTab"></app-tab>
-</div> -->
+  <h3></h3>
 </div>
 
 <div>
@@ -21,11 +21,6 @@
     <input [(ngModel)]="myForm.displayName" placeholder="name">
   </label>
   <li *ngFor="let tab of myForm.steps">
-    <p>{{tab.label}}</p>
-  <label>Enter tab label:
-      <input [(ngModel)]="tab.label" placeholder="label"/>
-    </label>
-    <button (click)="AddSection()">Add Section</button>
-    <app-tab [tab] = "selectedTab"></app-tab>
-</li>
+    <app-tab [tab]="tab"></app-tab>
+  </li>
 </div>

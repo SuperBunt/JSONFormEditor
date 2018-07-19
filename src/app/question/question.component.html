@@ -1,3 +1,5 @@
-<p>
-  question works!
+<div *ngIf="controlType">
+<p>Edit label: 
+  <input [(ngModel)]="controlType.label" placeholder=" "/>
 </p>
+</div>
