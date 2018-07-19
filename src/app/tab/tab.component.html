@@ -1,0 +1,9 @@
+<div *ngIf="tab">
+  <div>
+    <label>Enter tab label:
+      <input [(ngModel)]="tab.label" placeholder="label"/>
+    </label>
+    <!-- INSERT QUESTION COMPONENT of type SECTION -->
+    <app-question></app-question>
+</div>
+</div>
