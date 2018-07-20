@@ -1,0 +1,14 @@
+<div *ngIf="section" class="section">
+  <div>
+    <h3>{{section.label}}</h3>
+    <label>Edit label:
+      <input [(ngModel)]="section.label" placeholder="{{section.label}}"/>
+    </label>
+    <button (click)="AddControlType()">Add Control Type</button>
+    <!-- INSERT QUESTION COMPONENT of type SECTION -->
+    <li *ngFor="let item of section.questions">
+      <app-question [controlType]="item"></app-question>
+      <!-- <app-tab [tab]="tab"></app-tab> -->
+    </li>
+  </div>
+</div>

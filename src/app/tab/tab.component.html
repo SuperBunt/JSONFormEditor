@@ -1,4 +1,4 @@
-<div *ngIf="tab">
+<div *ngIf="tab" class="tab">
   <div>
     <h2>{{tab.label}}</h2>
     <label>Enter tab label:
@@ -6,9 +6,9 @@
     </label>
     <button (click)="AddSection()">Add Section</button>
     <!-- INSERT QUESTION COMPONENT of type SECTION -->
-    <li *ngFor="let item of tab.questions">
-      <app-question [controlType]="item"></app-question>
+    <ul *ngFor="let item of tab.questions">
+      <app-section [section]="item"></app-section>
       <!-- <app-tab [tab]="tab"></app-tab> -->
-    </li>
+    </ul>
   </div>
 </div>

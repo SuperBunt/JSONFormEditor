@@ -10,13 +10,17 @@ import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
 import { QuestionComponent } from './question/question.component';
 import { SubmissionComponent } from './submission/submission.component';
 import { TabComponent } from './tab/tab.component';
+import { SubmissionDetailsComponent } from './submission-details/submission-details.component';
+import { SectionComponent } from './section/section.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     QuestionComponent,
     SubmissionComponent,
-    TabComponent
+    TabComponent,
+    SubmissionDetailsComponent,
+    SectionComponent
   ],
   imports: [
     NgxJsonViewerModule,

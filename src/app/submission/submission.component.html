@@ -1,5 +1,7 @@
 <div>
-  <div><ngx-json-viewer [json]="myForm" [expanded]="true"></ngx-json-viewer></div>
+  <div>
+    <ngx-json-viewer [json]="myForm" [expanded]="true"></ngx-json-viewer>
+  </div>
   {{myForm | json}}
   <h1>
     {{myForm.displayName}}
@@ -8,19 +10,17 @@
     Version: {{myForm.version}}
   </h2>
   <p>Tabs: {{numTabs}}</p>
-  
+
 </div>
 
-<div>
-  <button (click)="AddTab()">Add Tab</button>
-  <h3></h3>
-</div>
-
-<div>
-  <label>Add submission display name:
+<div class='submission'>
+  <div>
+    <label>Edit submission display name:
     <input [(ngModel)]="myForm.displayName" placeholder="name">
   </label>
-  <li *ngFor="let tab of myForm.steps">
-    <app-tab [tab]="tab"></app-tab>
-  </li>
+    <button (click)="AddTab()">Add Tab</button>
+    <ul *ngFor="let tab of myForm.steps">
+      <app-tab [tab]="tab"></app-tab>
+    </ul>
+  </div>
 </div>

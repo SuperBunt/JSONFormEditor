@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Question } from '../question'
+import { Guid } from "guid-typescript/dist/guid";
 
 @Component({
   selector: 'app-question',
@@ -9,10 +10,14 @@ import { Question } from '../question'
 export class QuestionComponent implements OnInit {
 
   @Input() controlType: Question;
-
+  numQuestions = 0;
+  
   constructor() { }
 
   ngOnInit() {
+    this.controlType.questions = [];
   }
+
+  
 
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Step } from '../step';
 import { Question } from '../question'
+import { Guid } from "guid-typescript/dist/guid";
 
 @Component({
   selector: 'app-tab',
@@ -21,9 +22,9 @@ export class TabComponent implements OnInit {
     // Add section to the tab
     console.log("Add section...")
     let newSection: Question = new Question();
+    newSection.key = Guid.create().toString();
     newSection.controlType = "section";
-    newSection.label = "Edit SECTION " + (this.numSections + 1) +" Label";
-    newSection.key = "Generate key";
+    newSection.label = "Edit SECTION " + (this.numSections + 1) +" Label";    
     this. numSections = this.tab.questions.push(newSection);
   }
 

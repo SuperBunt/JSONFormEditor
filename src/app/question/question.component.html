@@ -1,5 +1,16 @@
-<div *ngIf="controlType">
+<!--<div *ngIf="controlType">
 <p>Edit label: 
   <input [(ngModel)]="controlType.label" placeholder=" "/>
 </p>
+</div>-->
+<div *ngIf="controlType" class = "control">
+  <div>
+    <h4>{{controlType.label}}</h4>
+    <label>Edit label:
+      <input [(ngModel)]="controlType.label" placeholder="Edit me"/>
+    </label>
+    <p><b>controlType: </b>{{controlType.controlType}}</p>
+    <p><b>key: </b>{{controlType.key}}</p>
+    
+  </div>
 </div>

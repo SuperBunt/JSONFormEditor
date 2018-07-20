@@ -1,0 +1,13 @@
+.control{
+    background-color: #92abdd;
+    position: relative;
+    width:90%;
+    padding-left: 10%;
+    padding-top: 8px;
+    padding-bottom: 5px;
+    margin: 5px;
+}
+
+ul {
+  list-style-type: none;
+}
