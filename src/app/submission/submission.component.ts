@@ -13,6 +13,7 @@ export class SubmissionComponent implements OnInit {
 
   numTabs = 0;
   myForm: Submission;
+  expanded: boolean;
 
   constructor(
 
@@ -21,14 +22,15 @@ export class SubmissionComponent implements OnInit {
   ngOnInit() {
     this.myForm = new Submission( );
     this.myForm.version = "1.1.0"
-    this.myForm.displayName = "";
+    this.myForm.displayName = "Submission Form";
     this.myForm.steps = [];
+    this.expanded = false;
   }
 
   AddTab() {
     console.log(this.numTabs);
     let toAdd: Step = new Step();
-    toAdd.label = "Edit TAB " + (this.numTabs + 1);
+    toAdd.label = "TAB " + (this.numTabs + 1);
     toAdd.controlType = "step";    
     toAdd.order = this.numTabs + 1;
     toAdd.key = Guid.create().toString();

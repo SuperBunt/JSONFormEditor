@@ -3,14 +3,22 @@
   <input [(ngModel)]="controlType.label" placeholder=" "/>
 </p>
 </div>-->
-<div *ngIf="controlType" class = "control">
-  <div>
-    <h4>{{controlType.label}}</h4>
-    <label>Edit label:
+<div *ngIf="controlType" class="control" (click)=toggle()>
+	<div>
+		<label>Label:
       <input [(ngModel)]="controlType.label" placeholder="Edit me"/>
     </label>
-    <p><b>controlType: </b>{{controlType.controlType}}</p>
+		<p><b>controlType: </b>{{controlType.controlType}}</p>
+	</div>
+	<div [hidden]="isVisible" (click)=toggle()>
     <p><b>key: </b>{{controlType.key}}</p>
-    
-  </div>
+    <div *ngIf="controlType.options">
+    <p><b>Options: </b></p>
+		<li *ngFor="let item of controlType.options">
+			{{item.value}}
+			<!-- <app-tab [tab]="tab"></app-tab> -->
+		</li>
+    </div>
+	</div>
+	<!--<div [on]="on" (click)="onClick()"><h1>CAN YOU SEE ME NOW?</h1></div>-->
 </div>

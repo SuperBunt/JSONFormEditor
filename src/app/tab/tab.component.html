@@ -1,10 +1,9 @@
 <div *ngIf="tab" class="tab">
   <div>
-    <h2>{{tab.label}}</h2>
     <label>Enter tab label:
       <input [(ngModel)]="tab.label" placeholder="label"/>
     </label>
-    <button (click)="AddSection()">Add Section</button>
+    <button (click)="AddSection()" class="myButton"><i class="fas fa-plus"></i></button>
     <!-- INSERT QUESTION COMPONENT of type SECTION -->
     <ul *ngFor="let item of tab.questions">
       <app-section [section]="item"></app-section>
@@ -12,3 +11,5 @@
     </ul>
   </div>
 </div>
+
+

@@ -1,5 +1,3 @@
-
-
 import { Question } from "app/question";
 
 export class Step {

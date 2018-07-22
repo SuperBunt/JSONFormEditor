@@ -1,3 +1,5 @@
+import { Option } from 'app/option';
+
 export class Question {
     key: string;
   controlType: string;
@@ -11,7 +13,7 @@ export class Question {
   value: string;
   maxLength: number;
   orientation: string;
-  //options: Option[];
+  options: Option[];
   subAttachTypeId: number;
   placeholder: string;
   //conditionalProperties: ConditionalProperties;

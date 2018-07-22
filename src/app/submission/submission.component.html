@@ -3,6 +3,11 @@
     <ngx-json-viewer [json]="myForm" [expanded]="true"></ngx-json-viewer>
   </div>
   {{myForm | json}}
+  <ul>
+  <li *ngFor="let item of myForm"> 
+     {{item}}
+  </li>
+</ul>
   <h1>
     {{myForm.displayName}}
   </h1>
@@ -13,12 +18,16 @@
 
 </div>
 
-<div class='submission'>
-  <div>
+<div class='submission container'>
+  
+  <button (click)="AddTab()" matTooltip="Add a tab" class="myButton"><i class="fas fa-plus fa-2x"></i></button>
+  <div >
     <label>Edit submission display name:
     <input [(ngModel)]="myForm.displayName" placeholder="name">
   </label>
-    <button (click)="AddTab()">Add Tab</button>
+    
+    </div>
+    <div>
     <ul *ngFor="let tab of myForm.steps">
       <app-tab [tab]="tab"></app-tab>
     </ul>
