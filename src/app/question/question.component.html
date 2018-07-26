@@ -3,14 +3,16 @@
   <input [(ngModel)]="controlType.label" placeholder=" "/>
 </p>
 </div>-->
-<div *ngIf="controlType" class="control" (click)=toggle()>
+<div *ngIf="controlType" class="control" >
 	<div>
 		<label>Label:
-      <input [(ngModel)]="controlType.label" placeholder="Edit me"/>
-    </label>
+			<input [(ngModel)]="controlType.label" placeholder="Edit me"/>
+			<button type="button" name="delete" class="btn btn-info align-self-end" (click)="toggle()"><i class="far fa-edit"></i></button>
+			<button type="button" name="delete" class="btn btn-danger align-self-end" (click)="deleteItem(controlType.key)"><i class="fas fa-trash-alt"></i></button>
+		</label>
 		<p><b>controlType: </b>{{controlType.controlType}}</p>
 	</div>
-	<div [hidden]="isVisible" (click)=toggle()>
+	<div [hidden]="isVisible">
     <p><b>key: </b>{{controlType.key}}</p>
     <div *ngIf="controlType.options">
     <p><b>Options: </b></p>

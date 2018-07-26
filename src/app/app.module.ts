@@ -16,6 +16,8 @@ import { TabComponent } from './tab/tab.component';
 import { SubmissionDetailsComponent } from './submission-details/submission-details.component';
 import { SectionComponent } from './section/section.component';
 
+import { SubmissionService } from './submissionService.service'
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +34,9 @@ import { SectionComponent } from './section/section.component';
     FormsModule,
     SelectDropDownModule
   ],
-  providers: [],
+  providers: [
+    SubmissionService
+  ],
   bootstrap: [
     AppComponent,
     SubmissionComponent,

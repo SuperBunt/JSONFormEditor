@@ -1,31 +1,19 @@
-<div *ngIf="section" class="section" >
-	<label>Label:
-      <input [(ngModel)]="section.label" placeholder="{{section.label}}"/>
-    </label>
-	<!--<button (click)="AddControlType()">Add Control Type</button>-->
-	<!--<div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Dropdown button
-  </button>
-  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="#">Action</a>
-    <a class="dropdown-item" href="#">Another action</a>
-    <a class="dropdown-item" href="#">Something else here</a>
-  </div>
-</div>-->
-
-	<!--<ngx-select-dropdown [config]="config" [options]="dropdownOptions" 
-            [(value)]="string" [multiple]="false" (change)="AddInput()"></ngx-select-dropdown>-->
-
-	<!-- INSERT QUESTION COMPONENT of type SECTION -->
-	<li *ngFor="let item of section.questions">
-		<app-question [controlType]="item"></app-question>
-		<!-- <app-tab [tab]="tab"></app-tab> -->
-	</li>
-	<label>Add Control type:
-      <select class='select-option' required [(ngModel)]='optionSelected' (ngModelChange)='AddInput($event)'>
-          <option class='option' *ngFor='let option of options' [value]="option">{{option}}</option>
+<div *ngIf="section" class="section">
+  <h5>Questions in Section: {{numQuestions}}</h5>
+  <label>Label:
+    <input [(ngModel)]="section.label" placeholder="{{section.label}}" />
+    <button type="button" name="delete" class="btn btn-danger align-self-end" (click)="deleteSection(section.key)"><i class="fas fa-trash-alt"></i></button>
+  </label>
+  <li *ngFor="let item of section.questions; index as i">
+    <app-question [controlType]="item" (itemDeleted)="onItemDeleted($event)"></app-question>
+  </li>
+  
+  <div class='btn btn-secondary btn-sm btn-block'>
+    <label>Add Control type:
+      <select  class='select-option' required [(ngModel)]='optionSelected' (ngModelChange)='AddInput($event)'>
+        <option class='option' *ngFor='let option of options' [value]="option">{{option}}</option>
       </select>
     </label>
-    
+  </div>
+
 </div>

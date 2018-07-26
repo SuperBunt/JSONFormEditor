@@ -6,4 +6,8 @@ export class Submission {
     displayName: string;
     submissionDetails: SubmissionDetails;
     steps: Step[];
+
+    constructor(name: string){
+        this.displayName = name;
+    }
 }

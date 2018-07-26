@@ -4,9 +4,10 @@
       <input [(ngModel)]="tab.label" placeholder="label"/>
     </label>
     <button (click)="AddSection()" class="myButton"><i class="fas fa-plus"></i></button>
+    <button (click)="deleteTab(tab.key)">Delete</button>
     <!-- INSERT QUESTION COMPONENT of type SECTION -->
     <ul *ngFor="let item of tab.questions">
-      <app-section [section]="item"></app-section>
+      <app-section [section]="item" (sectionDeleted)="onSectionDeleted($event)"></app-section>
       <!-- <app-tab [tab]="tab"></app-tab> -->
     </ul>
   </div>
