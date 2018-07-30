@@ -16,7 +16,7 @@ export class Question {
   options: Option[];
   subAttachTypeId: number;
   placeholder: string;
-  //conditionalProperties: ConditionalProperties;
+  conditionalProperties: any[];
   itemName: string;
   buttonText: string;
   defaultOpen: boolean;

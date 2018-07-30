@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-
-import {Submission} from '../submission'
+import { trigger, state, style, transition, animate, keyframes } from '@angular/animations';
+import { Submission } from '../submission'
 import { Step } from "app/step";
 import { Guid } from "guid-typescript/dist/guid";
 import { SubmissionService } from '../submissionService.service';
@@ -8,13 +8,26 @@ import { SubmissionService } from '../submissionService.service';
 @Component({
   selector: 'app-submission',
   templateUrl: './submission.component.html',
-  styleUrls: ['./submission.component.css']
+  styleUrls: ['./submission.component.css'],
+  animations: [
+    // the fade-in/fade-out animation.
+    trigger('activate', [
+      state('small', style({
+        transform: 'scale(1)',
+      })),
+      state('large', style({
+        transform: 'scale(1.5)',
+      })),
+      transition('small => large', animate('800ms ease-in')),
+    ])
+  ]
 })
 export class SubmissionComponent implements OnInit {
 
   numTabs = 0;
   expanded: boolean;
   prettyJSON: string;
+  state: string = 'show';
 
   constructor(public myService: SubmissionService) { }
 
@@ -23,7 +36,7 @@ export class SubmissionComponent implements OnInit {
     this.prettyJSON = JSON.stringify(this.myForm, undefined, 2);
   }
 
-  get myForm(){
+  get myForm() {
     return this.myService.myForm;
   }
 
@@ -40,8 +53,12 @@ export class SubmissionComponent implements OnInit {
     //this.numTabs = this.myForm.steps.push(toAdd);
   }
 
-  ViewPrettyJSON(): void{
+  ViewPrettyJSON(): void {
     this.prettyJSON = JSON.stringify(this.myForm, undefined, 2);
+  }
+
+  changeTab() {
+    this.state = (this.state === 'small' ? 'large' : 'small');
   }
 
 }

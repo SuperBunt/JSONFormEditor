@@ -1,26 +1,54 @@
-<!--<div *ngIf="controlType">
-<p>Edit label: 
-  <input [(ngModel)]="controlType.label" placeholder=" "/>
-</p>
-</div>-->
-<div *ngIf="controlType" class="control" >
+<div *ngIf="controlType" class="control">
 	<div>
 		<label>Label:
-			<input [(ngModel)]="controlType.label" placeholder="Edit me"/>
-			<button type="button" name="delete" class="btn btn-info align-self-end" (click)="toggle()"><i class="far fa-edit"></i></button>
-			<button type="button" name="delete" class="btn btn-danger align-self-end" (click)="deleteItem(controlType.key)"><i class="fas fa-trash-alt"></i></button>
+			<input [(ngModel)]="controlType.label" placeholder="Edit me" />
+			<button type="button" name="delete" class="btn btn-info align-self-end" (click)="toggle()">
+				<i class="far fa-edit"></i>
+			</button>
+			<button type="button" name="delete" class="btn btn-danger align-self-end" (click)="deleteItem(controlType.key)">
+				<i class="fas fa-trash-alt"></i>
+			</button>
 		</label>
-		<p><b>controlType: </b>{{controlType.controlType}}</p>
+		<p>
+			<b>controlType: </b>{{controlType.controlType}}</p>
+		<p>
+			<b>key: </b>{{controlType.key}}</p>
 	</div>
-	<div [hidden]="isVisible">
-    <p><b>key: </b>{{controlType.key}}</p>
-    <div *ngIf="controlType.options">
-    <p><b>Options: </b></p>
-		<li *ngFor="let item of controlType.options">
-			{{item.value}}
-			<!-- <app-tab [tab]="tab"></app-tab> -->
-		</li>
-    </div>
+	<div [hidden]="edit">
+		<div *ngIf="controlType.options">
+			<p>
+				<b>Options: </b>
+			</p>
+			<li *ngFor="let item of controlType.options index as i">
+				<label>
+					Value:
+					<input [(ngModel)]="item.value" placeholder="Edit me" />
+				</label>
+				<button type="button" name="add" class="btn btn-danger align-self-end" (click)="removeOption(i)">
+					<i class="fas fa-trash"></i>
+				</button>
+			</li>
+			<button type="button" name="add" class="btn btn-info align-self-end" (click)="addOption()">
+				<i class="fas fa-plus"></i>
+			</button>
+		</div>
+		<div class="checkbox">
+			<label>
+				<input type="checkbox" [(ngModel)]="isVisible" (change)="toggleVisible()">Visible</label>
+		</div>
+		<div class="checkbox">
+			<label>
+				<input type="checkbox" [(ngModel)]="isRequired" (change)="toggleRequired()">Required</label>
+		</div>
+		<!-- <div class='btn btn-secondary btn-sm btn-block'>
+					<label>Add Conditional property:
+						<select  class='select-option' required [(ngModel)]='optionSelected' (ngModelChange)='AddCondition($event)'>
+							<option class='option' *ngFor='let option of conditions' [value]="option">{{option}}</option>
+						</select>
+					</label>
+				</div> -->
+		<div *ngFor="let item of controlType.conditionalProperties">
+			<app-condition-properties [prop]="item"></app-condition-properties>
+		</div>
 	</div>
-	<!--<div [on]="on" (click)="onClick()"><h1>CAN YOU SEE ME NOW?</h1></div>-->
 </div>

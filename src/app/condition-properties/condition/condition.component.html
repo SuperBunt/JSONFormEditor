@@ -1,0 +1,54 @@
+<div *ngFor="let item of condition.visible">
+  <h4>Visible</h4>
+  <form>
+    <div class="radio">
+      <label>
+        <input type="radio" [(ngModel)]="item.propertyValue" [value]="true" name="optradio" checked>True</label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" [(ngModel)]="item.propertyValue" [value]="false" name="optradio">False</label>
+    </div>
+    <div>
+      <label>Left</label>
+      <input type="textbox" [(ngModel)]="item.left" name="left" checked>
+      <label>Operator:</label>
+      <select class='select-option' required [(ngModel)]='item.operator' [ngModelOptions]="{standalone: true}">
+        <option class='option' *ngFor='let operator of operators' [value]="operator">{{operator}}</option>
+      </select>
+
+      <label>Right</label>
+      <input type="textbox" [(ngModel)]="item.right" name="right" checked>
+    </div>
+  </form>
+
+</div>
+<div *ngFor="let item of condition.required">
+  <h4>Required</h4>
+  <form>
+    <div class="radio">
+      <label>
+        <input type="radio" [(ngModel)]="item.propertyValue" [value]="true" name="optradio" checked>True</label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" [(ngModel)]="item.propertyValue" [value]="false" name="optradio">False</label>
+    </div>
+    <div>
+      <label>Left</label>
+      <input type="textbox" [(ngModel)]="item.left" name="left" checked>
+      <div >
+          <label>Operator:
+              <select class='select-option' required [(ngModel)]='item.operator' [ngModelOptions]="{standalone: true}">
+                  <option class='option' *ngFor='let operator of operators' [value]="operator">{{operator}}</option>
+                </select>
+          </label>
+          
+        </div>
+      
+      <label>Right</label>
+      <input type="textbox" [(ngModel)]="item.right" name="right" checked>
+    </div>
+  </form>
+
+</div>

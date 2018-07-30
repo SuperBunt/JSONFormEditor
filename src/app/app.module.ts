@@ -16,7 +16,9 @@ import { TabComponent } from './tab/tab.component';
 import { SubmissionDetailsComponent } from './submission-details/submission-details.component';
 import { SectionComponent } from './section/section.component';
 
-import { SubmissionService } from './submissionService.service'
+import { SubmissionService } from './submissionService.service';
+import { ConditionPropertiesComponent } from './condition-properties/condition-properties.component';
+import { ConditionComponent } from './condition-properties/condition/condition.component'
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { SubmissionService } from './submissionService.service'
     SubmissionComponent,
     TabComponent,
     SubmissionDetailsComponent,
-    SectionComponent
+    SectionComponent,
+    ConditionPropertiesComponent,
+    ConditionComponent
   ],
   imports: [
     NgxJsonViewerModule,

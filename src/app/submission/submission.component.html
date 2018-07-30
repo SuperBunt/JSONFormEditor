@@ -3,7 +3,7 @@
     <ngx-json-viewer [json]="myForm" [expanded]="true"></ngx-json-viewer>
   </div>
 
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg" (click)="ViewPrettyJSON()">ViewJSON</button>
+  <button type="button" class="btn-lg btn-primary viewBtn" data-toggle="modal" data-target=".bd-example-modal-lg" (click)="ViewPrettyJSON()">ViewJSON</button>
 
   <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -34,7 +34,7 @@
 <div class='submission container'>
 
   <button (click)="AddTab()" matTooltip="Add a tab" class="myButton">
-    <i class="fas fa-plus fa-2x"></i>
+    <i class="fas fa-plus fa-2x"></i>Add a tab
   </button>
   <div>
     <label>Edit submission display name:
@@ -42,9 +42,13 @@
     </label>
 
   </div>
-  <div>
-    <ul *ngFor="let tab of myForm.steps index as i">
-      <app-tab [tab]="tab"></app-tab>
+  <div class="rs-form-container">
+    <!-- <ul class="tabs" [@activate]="state" *ngFor="let tab of myForm.steps index as i" (click)="changeTab()">
+      {{tab.label}}
+    </ul> -->
+    <ul class="" role="tablist" *ngFor="let tab of myForm.steps index as i">
+        {{tab.label}}
+      <div class="rs-form-content"><app-tab [tab]="tab"></app-tab></div>
     </ul>
   </div>
 </div>

@@ -1,16 +1,21 @@
 <div *ngIf="tab" class="tab">
-  <div>
+    <div class="tabs"  (click)="changeTab()">
+        {{tab.label}}
+      </div>
+  <div>     
+    <div [@tabStyling]="state">
     <label>Enter tab label:
       <input [(ngModel)]="tab.label" placeholder="label"/>
     </label>
-    <button (click)="AddSection()" class="myButton"><i class="fas fa-plus"></i></button>
+    <button (click)="AddSection()" class="myButton"><i class="fas fa-plus"></i>Add Section</button>
     <button (click)="deleteTab(tab.key)">Delete</button>
     <!-- INSERT QUESTION COMPONENT of type SECTION -->
     <ul *ngFor="let item of tab.questions">
-      <app-section [section]="item" (sectionDeleted)="onSectionDeleted($event)"></app-section>
+      <app-section [section]="item" (tabSelected)="onTabSelected($event)" (sectionDeleted)="onSectionDeleted($event)"></app-section>
       <!-- <app-tab [tab]="tab"></app-tab> -->
     </ul>
   </div>
+</div> 
 </div>
 
 

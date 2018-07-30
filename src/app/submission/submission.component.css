@@ -3,7 +3,8 @@
     position: relative;
     width: 60%;
     text-align: left;
-  padding: 20px;
+	padding: 20px;
+	margin-bottom: 20px;
 }
 
 ul {
@@ -14,7 +15,6 @@ ul {
 	background-color:#0d6d06;
 	-moz-border-radius:28px;
 	-webkit-border-radius:28px;
-	border-radius: 50%;
 	border:1px solid #18ab29;
 	display:inline-block;
 	cursor:pointer;
@@ -23,8 +23,51 @@ ul {
 	padding:6px 6px;
 	text-decoration:none;
 	text-shadow:0px 1px 0px #2f6627;
-  position:absolute; top:5px; right:5px;
+  position:absolute; top:10px; right:10px;
 }
 .myButton:hover {
 	background-color:#5cbf2a;
 }
+
+.viewBtn {
+	position:fixed; bottom:15px; right:15px;
+}
+/* 
+.rs-form-container {
+	position: relative;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	clear: both;
+}
+
+.rs-form-container regsys-form-steps {
+	bottom: 0;
+	left: 0;
+	-webkit-box-align: stretch;
+	-ms-flex-align: stretch;
+	align-items: stretch;
+	-webkit-box-pack: justify;
+	-ms-flex-pack: justify;
+	justify-content: space-between;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	width: 100%;
+	-webkit-box-flex: 1.5;
+	-ms-flex: 1.5;
+	flex: 1.5;
+}
+
+.rs-form-container regsys-form-steps .rs-form-steps li.active {
+	background-color: #fff!important;
+	background-image: none;
+	white-space: nowrap;
+}
+
+.rs-form-content {
+    -webkit-box-flex: 8.5;
+    -ms-flex: 8.5;
+    flex: 8.5;
+    position: relative;
+} */
