@@ -1,14 +1,22 @@
+
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { NgxJsonViewerModule } from 'ngx-json-viewer';
 import { Guid } from "guid-typescript";
 
 import { AppComponent } from './app.component';
-import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
 import {Component} from "@angular/core";
-import { SelectDropDownModule } from 'ngx-select-dropdown'
+import { MatButtonModule, MatCheckboxModule, MatIconModule } from '@angular/material';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatCardModule} from '@angular/material/card';
+import {MatSelectModule} from '@angular/material/select';
+import {MatInputModule} from '@angular/material/input';
+import {MatExpansionModule} from '@angular/material/expansion'
+
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { QuestionComponent } from './question/question.component';
 import { SubmissionComponent } from './submission/submission.component';
@@ -34,9 +42,17 @@ import { ConditionComponent } from './condition-properties/condition/condition.c
   imports: [
     NgxJsonViewerModule,
     BrowserModule,
-    BrowserAnimationsModule,
     FormsModule,
-    SelectDropDownModule
+    MatButtonModule, 
+    MatCheckboxModule,
+    MatTabsModule,
+    MatCardModule,
+    BrowserAnimationsModule,
+    MatIconModule,
+    MatSelectModule,
+    MatInputModule,
+    MatExpansionModule,
+    FlexLayoutModule
   ],
   providers: [
     SubmissionService

@@ -31,43 +31,13 @@ ul {
 
 .viewBtn {
 	position:fixed; bottom:15px; right:15px;
-}
-/* 
-.rs-form-container {
-	position: relative;
-	display: -webkit-box;
-	display: -ms-flexbox;
-	display: flex;
-	clear: both;
+	z-index: 1;
 }
 
-.rs-form-container regsys-form-steps {
-	bottom: 0;
-	left: 0;
-	-webkit-box-align: stretch;
-	-ms-flex-align: stretch;
-	align-items: stretch;
-	-webkit-box-pack: justify;
-	-ms-flex-pack: justify;
-	justify-content: space-between;
-	list-style: none;
-	padding: 0;
-	margin: 0;
-	width: 100%;
-	-webkit-box-flex: 1.5;
-	-ms-flex: 1.5;
-	flex: 1.5;
-}
-
-.rs-form-container regsys-form-steps .rs-form-steps li.active {
-	background-color: #fff!important;
-	background-image: none;
-	white-space: nowrap;
-}
-
-.rs-form-content {
-    -webkit-box-flex: 8.5;
-    -ms-flex: 8.5;
-    flex: 8.5;
-    position: relative;
-} */
+.demo-tab-group {
+	border: 1px solid #e8e8e8;
+  }
+  
+  .demo-tab-content {
+	padding: 16px;
+  }

@@ -31,24 +31,25 @@
 
 </div>
 
-<div class='submission container'>
+  <mat-card>
+    <mat-card-content>
+      <button mat-raised-button color="primary" (click)="AddTab()" matTooltip="Add a tab">
+        Add a tab
+        <i class="fas fa-plus fa-2x"></i>
+      </button>
+      <div>
+        <label>Edit submission display name:
+          <input [(ngModel)]="myForm.displayName" placeholder="name">
+        </label>
 
-  <button (click)="AddTab()" matTooltip="Add a tab" class="myButton">
-    <i class="fas fa-plus fa-2x"></i>Add a tab
-  </button>
-  <div>
-    <label>Edit submission display name:
-      <input [(ngModel)]="myForm.displayName" placeholder="name">
-    </label>
-
-  </div>
-  <div class="rs-form-container">
-    <!-- <ul class="tabs" [@activate]="state" *ngFor="let tab of myForm.steps index as i" (click)="changeTab()">
-      {{tab.label}}
-    </ul> -->
-    <ul class="" role="tablist" *ngFor="let tab of myForm.steps index as i">
-        {{tab.label}}
-      <div class="rs-form-content"><app-tab [tab]="tab"></app-tab></div>
-    </ul>
-  </div>
-</div>
+      </div>
+      <mat-tab-group class="demo-tab-group" [(selectedIndex)]="selectedTab">
+        <mat-tab [label]="tab.label" *ngFor="let tab of myForm.steps; index as i; let last = last;">
+            <ng-template md-tab-label>
+                {{tab.label}}
+              </ng-template>
+          <app-tab [tab]="tab"></app-tab>          
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
+  </mat-card>

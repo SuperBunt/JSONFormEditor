@@ -1,19 +1,44 @@
-<div *ngIf="section" class="section">
+<!-- <div *ngIf="section" class="section">
   <h5>Questions in Section: {{numQuestions}}</h5>
   <label>Label:
     <input [(ngModel)]="section.label" placeholder="{{section.label}}" />
-    <button type="button" name="delete" class="btn btn-danger align-self-end" (click)="deleteSection(section.key)"><i class="fas fa-trash-alt"></i></button>
+    <button type="button" name="delete" class="btn btn-danger align-self-end" (click)="deleteSection(section.key)">
+      <i class="fas fa-trash-alt"></i>
+    </button>
   </label>
   <li *ngFor="let item of section.questions; index as i">
     <app-question [controlType]="item" (itemDeleted)="onItemDeleted($event)"></app-question>
   </li>
-  
+
   <div class='btn btn-secondary btn-sm btn-block'>
     <label>Add Control type:
-      <select  class='select-option' required [(ngModel)]='optionSelected' (ngModelChange)='AddInput($event)'>
+      <select class='select-option' required [(ngModel)]='optionSelected' (ngModelChange)='AddInput($event)'>
         <option class='option' *ngFor='let option of options' [value]="option">{{option}}</option>
       </select>
     </label>
   </div>
 
-</div>
+</div> -->
+
+<mat-card fxFlex="80%" *ngIf="section">
+   <h3>{{section.label}}</h3> 
+  <!-- <mat-card-header>
+    <mat-card-title>{{section.label}}</mat-card-title>
+  </mat-card-header> -->
+  <mat-form-field class="example-form-field">
+      <input matInput type="text" placeholder="Edit Section label" [(ngModel)]="section.label">
+    </mat-form-field>
+  <mat-card-content>
+    <li *ngFor="let item of section.questions; index as i">
+      <app-question [controlType]="item" (itemDeleted)="onItemDeleted($event)"></app-question>
+    </li>
+  </mat-card-content>
+  <mat-form-field>
+      <mat-select placeholder="Add Control Type" [(ngModel)]='optionSelected' (ngModelChange)='AddInput($event)'>
+        <mat-option *ngFor='let option of options' [value]="option">
+          {{option}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+</mat-card>
+

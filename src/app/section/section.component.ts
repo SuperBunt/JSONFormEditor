@@ -63,6 +63,7 @@ export class SectionComponent implements OnInit {
       }
     }
     this.numQuestions = this.section.questions.push(newControl);
+    event = "";
     console.log(this.section.questions);
   }
 
