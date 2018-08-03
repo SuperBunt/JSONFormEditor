@@ -1,0 +1,56 @@
+<h1 mat-dialog-title>Edit Control Type</h1>
+<mat-dialog-content *ngIf="controlType" class="control">
+  <div>
+    <label>Label:
+      <input [(ngModel)]="controlType.label" placeholder="Edit me" />
+    </label>
+  </div>
+  <!-- <mat-form-field>
+    <mat-select placeholder="Add Control Type" [(ngModel)]='optionSelected' (ngModelChange)='AddInput($event)'>
+      <mat-option *ngFor="let option of options" [value]="option">
+        {{option}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field> -->
+  <div>
+    <b>Controltype: </b>{{controlType.controlType}} </div>
+  <div>
+    <b>Key: </b>{{controlType.key}}</div>
+
+  <div *ngIf="controlType.options">
+    <p>
+      <b>Options: </b>
+    </p>
+    <div *ngFor="let item of controlType.options; index as i;">
+      
+        <label>
+          Value:
+          <input [(ngModel)]="item.value" placeholder="Edit me" />
+        </label>
+        <button type="button" name="add" class="btn btn-danger align-self-end" (click)="removeOption(i)">
+          <i class="fas fa-trash"></i>
+        </button>
+      
+    </div>
+    <button type="button" name="add" class="btn btn-info align-self-end" (click)="addOption()">
+      <i class="fas fa-plus"></i>
+    </button>
+    
+  </div>
+  <h5>Conditional Properties</h5>
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" [(ngModel)]="isVisible" (change)="toggleVisible()">Visible</label>
+  </div>
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" [(ngModel)]="isRequired" (change)="toggleRequired()">Required</label>
+  </div>
+  <div *ngFor="let item of controlType.conditionalProperties">
+    <app-condition-properties [prop]="item"></app-condition-properties>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button class="mat-raised-button mat-primary" (click)="close()">Close</button>
+  <!-- <button class="mat-raised-button mat-primary"(click)="save()">Save</button> -->
+</mat-dialog-actions>

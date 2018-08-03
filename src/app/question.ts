@@ -20,13 +20,10 @@ export class Question {
   itemName: string;
   buttonText: string;
   defaultOpen: boolean;
-  //questionBase: QuestionBase;
-  //descriptors: Descriptor[];
+  questionBase: Question[];
+  descriptors: any[];
 
   constructor(){
-      this.controlType = "textarea";
-      this.label = "Edit me";
-      this.visible = true;
-      this.required = false
+      
   }
 }

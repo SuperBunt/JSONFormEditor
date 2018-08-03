@@ -1,49 +1,44 @@
-import { Component, OnInit, Input, Output, Inject, EventEmitter } from '@angular/core';
-import { Question } from '../question'
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig} from '@angular/material';
-import { ConditionValues } from '../conditionValues';
-import { QuestionDialogComponent } from '../question-dialog/question-dialog.component';
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
+import { Component, OnInit, Inject, Output, EventEmitter } from '@angular/core';
+import { Question } from "../question";
+import { FormBuilder, FormGroup } from "../../../node_modules/@angular/forms";
+import { ConditionValues } from "../conditionValues";
+import { Guid } from "../../../node_modules/guid-typescript";
+import { SubmissionService } from '../submissionService.service';
 
 @Component({
-  selector: 'app-question',
-  templateUrl: './question.component.html',
-  styleUrls: ['./question.component.css']
+  selector: 'app-question-dialog',
+  templateUrl: './question-dialog.component.html',
+  styleUrls: ['./question-dialog.component.css']
 })
-export class QuestionComponent implements OnInit {
+export class QuestionDialogComponent implements OnInit {
 
-  @Input() controlType: Question;
   @Output() itemDeleted: EventEmitter<string> = new EventEmitter();
+  form: FormGroup;
+  controlType: Question;
+  numOptions = 2;
   isVisible: boolean;
   isRequired: boolean = false;
+  
+  numberOfTicks = 1;
+  
 
-  numQuestions = 0;
-  edit = true;
-  numOptions = 2;
-  conditions = ["visible", "required"]
-
-  constructor(public dialog: MatDialog) { }
-
-  ngOnInit() {
+  constructor(
+    public myService: SubmissionService,
+    private dialogRef: MatDialogRef<QuestionDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: Question) {
+    this.controlType = data;
   }
 
-  openDialog(): void {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.data = this.controlType;
-    dialogConfig.minWidth = 600;
-
-    const dialogRef = this.dialog.open(QuestionDialogComponent, dialogConfig);
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      //this.controlType = result;
-    });
+  ngOnInit() { 
   }
 
-  toggle() {
-    console.log("toggle");
-    this.edit = !this.edit;
+  save() {
+    this.dialogRef.close(this.form.value);
+  }
+
+  close() {
+    this.dialogRef.close();
   }
 
   deleteItem(key) {
@@ -79,7 +74,12 @@ export class QuestionComponent implements OnInit {
     }
   }
 
-  toggleVisible() {    
+  AddInput(event): void {
+    console.log("dropdown: "+event)
+    this.myService.updateQuestionType(this.controlType, event).then(x => this.controlType = x);
+  }
+
+  toggleVisible() {
     if (this.isVisible) {
       console.log("add visible")
       this.controlType.conditionalProperties ? null : this.controlType.conditionalProperties = [];
@@ -92,10 +92,10 @@ export class QuestionComponent implements OnInit {
       const i = this.controlType.conditionalProperties.map(question => question.key).indexOf("visible");
       this.controlType.conditionalProperties.splice(i, 1);
     }
-    
+
   }
 
-  toggleRequired() {    
+  toggleRequired() {
     if (this.isRequired) {
       console.log("add required")
       this.controlType.conditionalProperties ? null : this.controlType.conditionalProperties = [];
@@ -108,9 +108,6 @@ export class QuestionComponent implements OnInit {
       const i = this.controlType.conditionalProperties.map(question => question.key).indexOf("required");
       this.controlType.conditionalProperties.splice(i, 1);
     }
-    
   }
 
 }
-
-

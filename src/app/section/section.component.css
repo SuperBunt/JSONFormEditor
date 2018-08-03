@@ -8,3 +8,14 @@
     margin: auto;
 }
 
+.emphaise{
+    width: 50%;
+    margin: auto;
+    background-color: rgb(182, 175, 176, 0.5);
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 15px;
+}
+
+
+

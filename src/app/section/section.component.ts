@@ -2,6 +2,10 @@ import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef, Chan
 import { Question } from '../question'
 import { Option } from '../option'
 import { Guid } from "guid-typescript/dist/guid";
+import { MatDialog, MatDialogConfig } from '../../../node_modules/@angular/material';
+import { QuestionDialogComponent } from '../question-dialog/question-dialog.component';
+import { ConditionValues } from '../conditionValues';
+import { SubmissionService } from '../submissionService.service';
 
 @Component({
   selector: 'app-section',
@@ -12,15 +16,19 @@ export class SectionComponent implements OnInit {
 
   @Input() section: Question;
   numQuestions = 0;
-  options = ["textbox", "radio", "dropdown"];
+  options = ["textbox", "textarea", "radio", "dropdown", ,"file-upload", "list","multi-select", "free-note", "date", "checkbox", "quick-autocomplete"];
   optionSelected: any;
   numberOfTicks = 1;
   @Output() sectionDeleted: EventEmitter<string> = new EventEmitter();
 
-  constructor(private ref: ChangeDetectorRef) {
+  constructor(
+    public tabService: SubmissionService,
+    private ref: ChangeDetectorRef, 
+    public dialog: MatDialog) {
   }
 
   ngOnInit() {
+    this.options.sort();
     this.section.questions = []
   }
 
@@ -30,7 +38,22 @@ export class SectionComponent implements OnInit {
     newControl.key = Guid.create().toString();
     newControl.controlType = "textbox";
     newControl.label = "Edit this Label";
-    this.numQuestions = this.section.questions.push(newControl);
+    this.openDialog(newControl);
+  }
+
+  openDialog(newControl: Question): void {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = newControl;
+    dialogConfig.minWidth = 600;
+
+    const dialogRef = this.dialog.open(QuestionDialogComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log("closed dialog");
+      this.numQuestions = this.section.questions.push(newControl);
+    });
   }
 
   AddInput(event): void {
@@ -41,30 +64,53 @@ export class SectionComponent implements OnInit {
     newControl.label = "Input " + this.numberOfTicks++;
     switch (event) {
       case "radio":
-      case "dropdown": {
-        let option1 = new Option();
-        option1.key = 1;
-        option1.value = "Option A";
-        let option2 = new Option();
-        option2.key = 2;
-        option2.value = "Option b";
-        newControl.options = [
-          option1, option2
-        ]
-        break;
-      }
-      case "other": {
-        //statements; 
-        break;
-      }
-      default: {
-        //statements; 
-        break;
-      }
-    }
-    this.numQuestions = this.section.questions.push(newControl);
-    event = "";
-    console.log(this.section.questions);
+      case "dropdown":
+          newControl.orientation = "horizontal";
+          let option1 = new Option();
+          option1.key = 1;
+          option1.value = "Option 1";
+          let option2 = new Option();
+          option2.key = 2;
+          option2.value = "Option 2";
+          newControl.options = [
+              option1, option2
+          ]
+          break;
+      case "file-upload":
+          newControl.subAttachTypeId = 9999
+          newControl.conditionalProperties = [];
+          let cond = new ConditionValues();
+          let visible: any = { "visible": [cond] }
+          newControl.conditionalProperties.push(visible);
+          let required: any = { "required": [cond] }
+          newControl.conditionalProperties.push(required);
+          break;
+      case "list":
+          let questionBase: any;
+          newControl.buttonText = "Add";
+          newControl.defaultOpen = true;
+          newControl.itemName = "List of ?"
+          questionBase.regSysKey = Guid.create().toString() + ".addRegEdit[0]";
+          questionBase.questions = [];
+          newControl.descriptors = [
+              {
+                  "order": 1,
+                  "label": "Description label",
+                  "visible": true,
+                  "keys": [
+                      {
+                          "key": "@",
+                          "order": 1
+                      }
+                  ]
+              }
+          ]
+          break;
+      default:
+          console.log("Default")
+          break;
+  }
+    this.openDialog(newControl);
   }
 
   onItemDeleted(id: string) {

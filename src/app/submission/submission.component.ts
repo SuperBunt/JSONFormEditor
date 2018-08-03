@@ -23,8 +23,8 @@ import { SubmissionService } from '../submissionService.service';
   ]
 })
 export class SubmissionComponent implements OnInit {
-
-  numTabs = 0;
+  selectedTab: number;
+  numTabs = 1;
   expanded: boolean;
   prettyJSON: string;
   state: string = 'show';
@@ -50,11 +50,14 @@ export class SubmissionComponent implements OnInit {
     toAdd.key = Guid.create().toString();
     toAdd.questions = [];
     this.myService.addTab(toAdd);
+    this.selectedTab = this.myForm.steps.length;
+    console.log("tab index: "+ this.selectedTab);
     //this.numTabs = this.myForm.steps.push(toAdd);
   }
 
   ViewPrettyJSON(): void {
     this.prettyJSON = JSON.stringify(this.myForm, undefined, 2);
+    console.log("View json")
   }
 
   changeTab() {

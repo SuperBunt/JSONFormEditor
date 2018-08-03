@@ -22,3 +22,15 @@ ul {
 .myButton:hover {
 	background-color:#5cbf2a;
 }
+
+.tab{
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+	align-items: stretch;
+	align-content: stretch;
+	width: 80%;
+	margin:auto;
+}
