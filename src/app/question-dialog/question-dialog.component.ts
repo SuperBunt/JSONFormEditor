@@ -33,8 +33,8 @@ export class QuestionDialogComponent implements OnInit {
   ngOnInit() { 
   }
 
-  save() {
-    this.dialogRef.close(this.form.value);
+  delete() {
+    //emit deleteQuestion
   }
 
   close() {
@@ -42,8 +42,9 @@ export class QuestionDialogComponent implements OnInit {
   }
 
   deleteItem(key) {
-    console.log("deleteing " + key);
+    console.log("dialog emit: deleteing " + key);
     this.itemDeleted.emit(key);
+    this.dialogRef.close();
   }
 
   addOption() {

@@ -38,6 +38,7 @@ export class SectionComponent implements OnInit {
     newControl.key = Guid.create().toString();
     newControl.controlType = "textbox";
     newControl.label = "Edit this Label";
+    newControl.visible = true;
     this.openDialog(newControl);
   }
 
@@ -47,6 +48,7 @@ export class SectionComponent implements OnInit {
     dialogConfig.autoFocus = true;
     dialogConfig.data = newControl;
     dialogConfig.minWidth = 600;
+    dialogConfig.direction = "ltr";
 
     const dialogRef = this.dialog.open(QuestionDialogComponent, dialogConfig);
 
@@ -61,6 +63,7 @@ export class SectionComponent implements OnInit {
     let newControl: Question = new Question();
     newControl.key = Guid.create().toString();
     newControl.controlType = event;
+    newControl.visible = true;
     newControl.label = "Input " + this.numberOfTicks++;
     switch (event) {
       case "radio":
@@ -114,7 +117,7 @@ export class SectionComponent implements OnInit {
   }
 
   onItemDeleted(id: string) {
-    console.log("delete item " + id);
+    console.log("section delete item " + id);
     const questionIndex = this.section.questions.map(question => question.key).indexOf(id);
     console.log(questionIndex);
     this.section.questions.splice(questionIndex, 1);

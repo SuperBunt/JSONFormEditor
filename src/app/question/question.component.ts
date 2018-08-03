@@ -47,7 +47,7 @@ export class QuestionComponent implements OnInit {
   }
 
   deleteItem(key) {
-    console.log("deleteing " + key);
+    console.log("question emit: deleteing " + key);
     this.itemDeleted.emit(key);
   }
 

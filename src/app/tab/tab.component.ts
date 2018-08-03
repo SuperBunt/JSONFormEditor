@@ -41,6 +41,7 @@ export class TabComponent implements OnInit {
     newSection.key = Guid.create().toString();
     newSection.controlType = "section";
     newSection.label = "SECTION " + (this.numSections + 1) +" Label"; 
+    newSection.visible = true;
     this. numSections = this.tab.questions.push(newSection);
   }
 

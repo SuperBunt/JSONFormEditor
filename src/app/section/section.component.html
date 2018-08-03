@@ -14,8 +14,8 @@
   </mat-card-content>
   <mat-form-field class="emphaise">
     <label>Add a control type</label>
-      <mat-select  [(ngModel)]='optionSelected' (ngModelChange)='AddInput($event)'>
-        <mat-option *ngFor='let option of options' [value]="option">
+      <mat-select  [(ngModel)]='optionSelected' >
+        <mat-option *ngFor='let option of options' [value]="option" (click)='AddInput(option)'>
           {{option}}
         </mat-option>
       </mat-select>

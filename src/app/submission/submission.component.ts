@@ -48,6 +48,7 @@ export class SubmissionComponent implements OnInit {
     toAdd.controlType = "step";
     toAdd.order = this.myForm.steps ? this.myForm.steps.length + 1 : 1;
     toAdd.key = Guid.create().toString();
+    toAdd.visible = true;
     toAdd.questions = [];
     this.myService.addTab(toAdd);
     this.selectedTab = this.myForm.steps.length;
