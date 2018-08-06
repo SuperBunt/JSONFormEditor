@@ -1,26 +1,20 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { trigger, state, style, transition, animate, keyframes } from '@angular/animations';
 import { Submission } from '../submission'
 import { Step } from "app/step";
 import { Guid } from "guid-typescript/dist/guid";
 import { SubmissionService } from '../submissionService.service';
+import { fadeInAnimation } from '../_animations/fade-in';
 
 @Component({
   selector: 'app-submission',
   templateUrl: './submission.component.html',
   styleUrls: ['./submission.component.css'],
-  animations: [
-    // the fade-in/fade-out animation.
-    trigger('activate', [
-      state('small', style({
-        transform: 'scale(1)',
-      })),
-      state('large', style({
-        transform: 'scale(1.5)',
-      })),
-      transition('small => large', animate('800ms ease-in')),
-    ])
-  ]
+ 
+  // make fade in animation available to this component
+  animations: [fadeInAnimation],
+
+  // attach the fade in animation to the host (root) element of this component
+  host: { '[@fadeInAnimation]': '' }
 })
 export class SubmissionComponent implements OnInit {
   selectedTab: number;

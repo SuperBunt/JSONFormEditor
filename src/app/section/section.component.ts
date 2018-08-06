@@ -6,11 +6,16 @@ import { MatDialog, MatDialogConfig } from '../../../node_modules/@angular/mater
 import { QuestionDialogComponent } from '../question-dialog/question-dialog.component';
 import { ConditionValues } from '../conditionValues';
 import { SubmissionService } from '../submissionService.service';
+import { fadeInAnimation } from '../_animations/fade-in';
 
 @Component({
   selector: 'app-section',
   templateUrl: './section.component.html',
-  styleUrls: ['./section.component.css']
+  styleUrls: ['./section.component.css'], 
+  // make fade in animation available to this component
+  animations: [fadeInAnimation], 
+  // attach the fade in animation to the host (root) element of this component
+  host: { '[@fadeInAnimation]': '' }
 })
 export class SectionComponent implements OnInit {
 
@@ -19,6 +24,7 @@ export class SectionComponent implements OnInit {
   options = ["textbox", "textarea", "radio", "dropdown", ,"file-upload", "list","multi-select", "free-note", "date", "checkbox", "quick-autocomplete"];
   optionSelected: any;
   numberOfTicks = 1;
+  show: boolean = true;
   @Output() sectionDeleted: EventEmitter<string> = new EventEmitter();
 
   constructor(
@@ -60,61 +66,8 @@ export class SectionComponent implements OnInit {
 
   AddInput(event): void {
     console.log("adding input type:" + event)
-    let newControl: Question = new Question();
-    newControl.key = Guid.create().toString();
-    newControl.controlType = event;
-    newControl.visible = true;
-    newControl.label = "Input " + this.numberOfTicks++;
-    switch (event) {
-      case "radio":
-      case "dropdown":
-          newControl.orientation = "horizontal";
-          let option1 = new Option();
-          option1.key = 1;
-          option1.value = "Option 1";
-          let option2 = new Option();
-          option2.key = 2;
-          option2.value = "Option 2";
-          newControl.options = [
-              option1, option2
-          ]
-          break;
-      case "file-upload":
-          newControl.subAttachTypeId = 9999
-          newControl.conditionalProperties = [];
-          let cond = new ConditionValues();
-          let visible: any = { "visible": [cond] }
-          newControl.conditionalProperties.push(visible);
-          let required: any = { "required": [cond] }
-          newControl.conditionalProperties.push(required);
-          break;
-      case "list":
-          let questionBase: any;
-          newControl.buttonText = "Add";
-          newControl.defaultOpen = true;
-          newControl.itemName = "List of ?"
-          questionBase.regSysKey = Guid.create().toString() + ".addRegEdit[0]";
-          questionBase.questions = [];
-          newControl.descriptors = [
-              {
-                  "order": 1,
-                  "label": "Description label",
-                  "visible": true,
-                  "keys": [
-                      {
-                          "key": "@",
-                          "order": 1
-                      }
-                  ]
-              }
-          ]
-          break;
-      default:
-          console.log("Default")
-          break;
-  }
-    this.openDialog(newControl);
-  }
+    this.tabService.createQuestionType(event).then(x => this.openDialog(x));
+      }
 
   onItemDeleted(id: string) {
     console.log("section delete item " + id);

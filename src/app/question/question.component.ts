@@ -3,11 +3,14 @@ import { Question } from '../question'
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig} from '@angular/material';
 import { ConditionValues } from '../conditionValues';
 import { QuestionDialogComponent } from '../question-dialog/question-dialog.component';
+import { fadeInAnimation } from '../_animations/fade-in';
 
 @Component({
   selector: 'app-question',
   templateUrl: './question.component.html',
-  styleUrls: ['./question.component.css']
+  styleUrls: ['./question.component.css'], 
+  // make fade in animation available to this component
+  animations: [fadeInAnimation]
 })
 export class QuestionComponent implements OnInit {
 
@@ -89,8 +92,8 @@ export class QuestionComponent implements OnInit {
     }
     else {
       console.log("remove visible")
-      const i = this.controlType.conditionalProperties.map(question => question.key).indexOf("visible");
-      this.controlType.conditionalProperties.splice(i, 1);
+      // const i = this.controlType.conditionalProperties.map(question => question.key).indexOf("visible");
+      // this.controlType.conditionalProperties.splice(i, 1);
     }
     
   }
@@ -105,8 +108,8 @@ export class QuestionComponent implements OnInit {
     }
     else {
       console.log("remove required")
-      const i = this.controlType.conditionalProperties.map(question => question.key).indexOf("required");
-      this.controlType.conditionalProperties.splice(i, 1);
+      // const i = this.controlType.conditionalProperties.map(question => question.key).indexOf("required");
+      // this.controlType.conditionalProperties.splice(i, 1);
     }
     
   }

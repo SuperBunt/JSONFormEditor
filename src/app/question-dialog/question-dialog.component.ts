@@ -1,10 +1,12 @@
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
+import { MAT_DIALOG_DATA, MatDialogRef, MatFormFieldBase } from "@angular/material";
 import { Component, OnInit, Inject, Output, EventEmitter } from '@angular/core';
 import { Question } from "../question";
-import { FormBuilder, FormGroup } from "../../../node_modules/@angular/forms";
+import { FormBuilder, FormGroup, FormControl } from "../../../node_modules/@angular/forms";
 import { ConditionValues } from "../conditionValues";
-import { Guid } from "../../../node_modules/guid-typescript";
 import { SubmissionService } from '../submissionService.service';
+import { Condition } from "../conditionalProperty";
+import { checkAndUpdateBinding } from "../../../node_modules/@angular/core/src/view/util";
+import { Descriptor } from "./descriptor";
 
 @Component({
   selector: 'app-question-dialog',
@@ -17,11 +19,17 @@ export class QuestionDialogComponent implements OnInit {
   form: FormGroup;
   controlType: Question;
   numOptions = 2;
-  isVisible: boolean;
-  isRequired: boolean = false;
-  
+  hasLabel: boolean = true;
+  hasVisible: boolean;
+  hasRequired: boolean;
+  options: string[] = ["label", "required", "visible"]
+  isSelected: boolean[] = [false, true, false];
+  optionSelected: any;
+  toppings = new FormControl();
+
   numberOfTicks = 1;
-  
+  objectKeys: string[];
+
 
   constructor(
     public myService: SubmissionService,
@@ -30,7 +38,7 @@ export class QuestionDialogComponent implements OnInit {
     this.controlType = data;
   }
 
-  ngOnInit() { 
+  ngOnInit() {
   }
 
   delete() {
@@ -55,60 +63,122 @@ export class QuestionDialogComponent implements OnInit {
     this.controlType.options.splice(i, 1);
   }
 
-  AddCondition(type: string) {
+  // addCondition(){
+  //   this.controlType.conditionalProperties ? null : this.controlType.conditionalProperties = [];
+  //   let values = new ConditionValues();
+  //     let whatever: any = { "condition": [values] }
+  //     this.controlType.conditionalProperties.push(whatever);
+  // }
+
+  AddCondition(type: string, index: number) {
+    console.log(". Add conditional from drop down: " + type)
     this.controlType.conditionalProperties ? null : this.controlType.conditionalProperties = [];
-    let cond = new ConditionValues();
+    let values = new ConditionValues();
     switch (type) {
-      case "visible":
-        // do this
-        let visible: any = { "visible": [cond] }
-        this.controlType.conditionalProperties.push(visible);
+      case "label":
+        this.hasLabel != this.hasLabel;
+        console.log(this.hasLabel)
+        if (this.hasLabel == true) {
+          let label: any = { "label": [values] }
+          this.controlType.conditionalProperties.push(label);
+        }
+        else {
+          this.controlType.conditionalProperties.splice(index, 1);
+        }
         break;
       case "required":
-        // do this
-        let required: any = { "required": [cond] }
-        this.controlType.conditionalProperties.push(required);
+        this.hasRequired != this.hasRequired;
+        if (this.hasRequired == true) {
+          let label: any = { "required": [values] }
+          this.controlType.conditionalProperties.push(label);
+        }
+        else {
+          this.controlType.conditionalProperties.splice(index, 1);
+        }
+        break;
+      case "visible":
+        this.hasVisible != this.hasVisible;
+        if (this.hasVisible == true) {
+          let label: any = { "visible": [values] }
+          this.controlType.conditionalProperties.push(label);
+        }
+        else {
+          this.controlType.conditionalProperties.splice(index, 1);
+        }
         break;
       default:
         //do this         
-        this.controlType.conditionalProperties.push(cond);
+        console.log("No propeties")
     }
   }
 
-  AddInput(event): void {
-    console.log("dropdown: "+event)
-    this.myService.updateQuestionType(this.controlType, event).then(x => this.controlType = x);
+  CheckKeys(): void {
+    this.objectKeys = Object.keys(this.controlType.conditionalProperties);
+    console.log("Keys: " + this.objectKeys);
   }
 
   toggleVisible() {
-    if (this.isVisible) {
+    if (this.hasVisible) {
       console.log("add visible")
       this.controlType.conditionalProperties ? null : this.controlType.conditionalProperties = [];
-      let cond = new ConditionValues();
-      let visible: any = { "visible": [cond] }
-      this.controlType.conditionalProperties.push(visible);
+      let values = new ConditionValues();
+      let whatever: any = { "visible": [values] }
+      this.controlType.conditionalProperties.push(whatever);
     }
     else {
       console.log("remove visible")
-      const i = this.controlType.conditionalProperties.map(question => question.key).indexOf("visible");
-      this.controlType.conditionalProperties.splice(i, 1);
+      // const i = this.controlType.conditionalProperties.map(question => question).indexOf("visible");
+      // this.controlType.conditionalProperties.splice(i, 1);
     }
 
   }
 
   toggleRequired() {
-    if (this.isRequired) {
+    if (this.hasRequired) {
       console.log("add required")
       this.controlType.conditionalProperties ? null : this.controlType.conditionalProperties = [];
-      let cond = new ConditionValues();
-      let required: any = { "required": [cond] }
-      this.controlType.conditionalProperties.push(required);
+      let values = new ConditionValues();
+      let whatever: any = { "required": [values] }
+      this.controlType.conditionalProperties.push(whatever);
     }
     else {
       console.log("remove required")
-      const i = this.controlType.conditionalProperties.map(question => question.key).indexOf("required");
-      this.controlType.conditionalProperties.splice(i, 1);
+      // const i = this.controlType.conditionalProperties.map(question => question.key).indexOf("required");
+      // this.controlType.conditionalProperties.splice(i, 1);
     }
+  }
+
+  addToQuestionBase() {
+    let toAdd: Question = new Question();
+    this.controlType.questionBase.questions.push(toAdd);
+  }
+
+  onDeleteFromQuestionBase(id: string) {
+    console.log("deleteFromQuestionBase " + id);
+    const questionIndex = this.controlType.questionBase.questions.map(question => question.key).indexOf(id);
+    console.log(questionIndex);
+    this.controlType.questionBase.questions.splice(questionIndex, 1);
+  }
+
+  addDescriptor() {
+    let toAdd: Descriptor = new Descriptor();
+    this.controlType.descriptors.push(toAdd);
+  }
+
+  onItemDeleted(id: string) {
+    const questionIndex = this.controlType.questionBase.questions.map(question => question.key).indexOf(id);
+    const descriptorIndex = this.controlType.descriptors.map(question => question.key).indexOf(id);
+    if (questionIndex != -1) {
+      console.log("deleteFromQuestionBase " + id);
+      this.controlType.questionBase.questions.splice(questionIndex, 1);
+    }
+    if (descriptorIndex != -1) {
+      console.log("deleteFromDescriptors " + id);
+      this.controlType.descriptors.splice(questionIndex, 1);
+    }
+
+
+
   }
 
 }

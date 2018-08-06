@@ -1,0 +1,13 @@
+.control > mat-form-field mat-radio-group div{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: baseline;
+    align-content: stretch;
+
+}
+
+.example-form-field > * {
+    width: 100%;
+  }

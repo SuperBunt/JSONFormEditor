@@ -5,6 +5,7 @@ import { Guid } from '../../node_modules/guid-typescript';
 import { Step } from './step';
 import { Option } from './option';
 import { ConditionValues } from './conditionValues';
+import { QuestionBase } from './questionBase';
 
 @Injectable()
 export class SubmissionService {
@@ -44,45 +45,48 @@ export class SubmissionService {
         this.myForm.steps.splice(questionIndex, 1);
     }
 
-    updateQuestionType(control: Question, type: string): any {
-        let updated = new Question();
-        updated.label = control.label;
-        updated.key = control.key;
-        updated.visible = control.visible;
-        updated.required = control.required;
-        updated.placeholder = control.placeholder;
-        updated.controlType = type;
+    createQuestionType(type: string): any {
+        console.log("Sevice: creating " + type)
+        let newControl = new Question();        
+        newControl.controlType = type;
+        newControl.placeholder = "";
         switch (type) {
             case "radio":
             case "dropdown":
-                updated.orientation = "horizontal";
+                newControl.orientation = "horizontal";
                 let option1 = new Option();
                 option1.key = 1;
                 option1.value = "Option 1";
                 let option2 = new Option();
                 option2.key = 2;
                 option2.value = "Option 2";
-                updated.options = [
+                newControl.options = [
                     option1, option2
                 ]
-                return Promise.resolve(updated);
+                return Promise.resolve(newControl);
             case "file-upload":
-                updated.subAttachTypeId = 9999
-                updated.conditionalProperties = [];
+                newControl.subAttachTypeId = 9999
+                newControl.conditionalProperties = [];
                 let cond = new ConditionValues();
                 let visible: any = { "visible": [cond] }
-                updated.conditionalProperties.push(visible);
+                newControl.conditionalProperties.push(visible);
                 let required: any = { "required": [cond] }
-                updated.conditionalProperties.push(required);
-                return Promise.resolve(updated);
+                newControl.conditionalProperties.push(required);
+                let qb: Question = new Question();
+                qb.regSysKey = Guid.create().toString() + ".addRegEditList[0]";
+                qb.questions = [];
+                newControl.questionBase = new QuestionBase;
+                let desc1 = {"order": 1,"label": "Descriptor 1", keys: [{"key": "add related key"},{"order": 1}]}
+                let desc2 = {"order": 2,"label": "Descriptor 2", keys: [{"key": "add related key"},{"order": 1}]}
+                newControl.descriptors = [];
+                newControl.descriptors.push(desc1);
+                return Promise.resolve(newControl);
             case "list":
-                let questionBase: any;
-                updated.buttonText = "Add";
-                updated.defaultOpen = true;
-                updated.itemName = "List of ?"
-                questionBase.regSysKey = Guid.create().toString() + ".addRegEdit[0]";
-                questionBase.questions = [];
-                updated.descriptors = [
+                newControl.buttonText = "Add";
+                newControl.defaultOpen = true;
+                newControl.itemName = "List of ?"
+                newControl.questionBase = new QuestionBase();
+                newControl.descriptors = [
                     {
                         "order": 1,
                         "label": "Description label",
@@ -95,10 +99,10 @@ export class SubmissionService {
                         ]
                     }
                 ]
-                return Promise.resolve(updated);
+                return Promise.resolve(newControl);
             default:
                 console.log("Default")
-                return Promise.resolve(updated);
+                return Promise.resolve(newControl);
         }
 
     }

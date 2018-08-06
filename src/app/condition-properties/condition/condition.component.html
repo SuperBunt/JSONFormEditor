@@ -1,4 +1,7 @@
-<div *ngFor="let item of condition.visible">
+<div *ngIf="condition">
+  {{condition | json}}
+</div>
+<!-- <div *ngFor="let item of condition">
   <h4>Visible</h4>
    <form>
       <mat-radio-group [(ngModel)]="item.propertyValue" [ngModelOptions]="{standalone: true}">      
@@ -20,8 +23,8 @@
     </div>
   </form>
 
-</div>
-<div *ngFor="let item of condition.required">
+</div> -->
+<!-- <div *ngFor="let item of condition.required">
   <h4>Required</h4>
   <form>
     <div class="radio">
@@ -46,4 +49,4 @@
       <input type="textbox" [(ngModel)]="item.right" name="right" checked>
     </div>
   </form>
-</div>
+</div> -->

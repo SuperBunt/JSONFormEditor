@@ -30,6 +30,8 @@ import { SubmissionService } from './submissionService.service';
 import { ConditionPropertiesComponent } from './condition-properties/condition-properties.component';
 import { ConditionComponent } from './condition-properties/condition/condition.component';
 import { QuestionDialogComponent } from './question-dialog/question-dialog.component';
+import { FileUploadComponent } from './file-upload/file-upload.component';
+import { DescriptorComponent } from './descriptor/descriptor.component'
 
 @NgModule({
   declarations: [
@@ -41,7 +43,9 @@ import { QuestionDialogComponent } from './question-dialog/question-dialog.compo
     SectionComponent,
     ConditionPropertiesComponent,
     ConditionComponent,
-    QuestionDialogComponent
+    QuestionDialogComponent,
+    FileUploadComponent,
+    DescriptorComponent
   ],
   imports: [
     NgxJsonViewerModule,
