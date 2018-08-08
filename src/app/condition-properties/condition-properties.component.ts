@@ -19,7 +19,7 @@ export class ConditionPropertiesComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {    
-    console.log(Object.keys(this.prop))
+    console.log(JSON.stringify(this.prop))
     this.objectKey = Object.keys(this.prop)[0];
   }
 

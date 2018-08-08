@@ -38,83 +38,60 @@
           View/Edit values
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <!-- <button (click)="addCondition()">Add Condition</button> -->
-      <!-- <mat-form-field>
-        <mat-select placeholder="Property" [(ngModel)]='optionSelected' multiple>
-          <mat-option *ngFor="let option of options index as index" [value]="option" (click)="AddCondition(option, index)" (toggle)="isSelected[index] != isSelected[index]">{{option}}</mat-option>
-        </mat-select>
-      </mat-form-field> -->
-      <mat-form-field>
-        <label>Add a condition</label>
-        <mat-select [(ngModel)]='optionSelected'>
-          <!-- <div class="checkbox">
-            <label>Visible
-              <input type="checkbox" [(ngModel)]="isVisible" (change)="toggleVisible()">Visible</label>
-          </div> -->
-          <mat-option *ngFor='let option of options' [value]="option" (click)="AddCondition(option, index)">
-            {{option}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <!-- <div *ngFor="let item of controlType.conditionalProperties index as index">
+      
+      <mat-checkbox [(ngModel)]="hasVisible" (change)="toggleVisible()"> Visible </mat-checkbox>
+
+      <mat-checkbox [(ngModel)]="hasRequired" (change)="toggleRequired()"> Required </mat-checkbox>
+
+      <div *ngFor="let item of controlType.conditionalProperties index as index">
         <app-condition-properties [prop]="item" [index]="index"></app-condition-properties>
-      </div> -->
-      <div class="checkbox">
-          <label>
-            <input type="checkbox" [(ngModel)]="hasVisible" (change)="toggleVisible()">Visible</label>
-        </div>
-        <div *ngIf="isVisible">
-            <app-condition-properties [prop]="controlType.conditionalProperties[(index)]" [index]="index"></app-condition-properties>
-        </div>
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" [(ngModel)]="hasRequired" (change)="toggleRequired()">Required</label>
-        </div>
-        <div *ngIf="isRequired">
-            <app-condition-properties [prop]="controlType.conditionalProperties['required']" [index]="index"></app-condition-properties>
-        </div>
-        <div *ngFor="let item of controlType.conditionalProperties index as index">
-            <app-condition-properties [prop]="item" [index]="index"></app-condition-properties>
-          </div> 
+      </div>
     </mat-expansion-panel>
   </mat-accordion>
   <hr>
   <mat-accordion *ngIf="(controlType.questionBase)">
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-              QuestionBase
-          </mat-panel-title>
-          <mat-panel-description>
-            View/Edit properties
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-          <label>regSysKey</label>
-          <input class="full-width" [(ngModel)]="controlType.questionBase.regSysKey" placeholder="Is regEdit correct?" />
-          <div *ngFor="let question of controlType.questionBase.questions">
-              <app-question [controlType]="question" (itemDeleted)="onItemDeleted($event)"></app-question>
-          </div>
-          <button class="mat-raised-button mat-primary" (click)="addToQuestionBase()">Add a question</button>
-      </mat-expansion-panel>
-    </mat-accordion>
-    <hr>
-    <mat-accordion *ngIf="(controlType.questionBase)">
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-                Descriptors
-            </mat-panel-title>
-            <mat-panel-description>
-              View/Edit properties
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-            <div *ngFor="let desc of controlType.descriptors; i as index">
-                <app-descriptor [description]="desc" (itemDeleted)="onItemDeleted($event)"></app-descriptor>  
-            </div>
-            <button class="mat-raised-button mat-primary" (click)="addDescriptor()">Add a descriptor</button>
-        </mat-expansion-panel>
-      </mat-accordion>
-      <hr> 
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          QuestionBase
+        </mat-panel-title>
+        <mat-panel-description>
+          View/Edit properties
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <label>regSysKey</label>
+      <input class="full-width" [(ngModel)]="controlType.questionBase.regSysKey" placeholder="Is regEdit correct?" />
+      <div *ngFor="let question of controlType.questionBase.questions">
+        <app-question [controlType]="question" (itemDeleted)="onItemDeleted($event)"></app-question>
+      </div>      
+      <mat-form-field>
+          <mat-select [(ngModel)]='optionSelected' placeholder="Add a question">
+            <mat-option *ngFor='let option of options' [value]="option" (click)='addDescriptor(option)'>
+              {{option}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      <button class="mat-raised-button mat-primary" (click)="addToQuestionBase()">Add a question</button>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <hr>
+  <mat-accordion *ngIf="(controlType.questionBase)">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Descriptors
+        </mat-panel-title>
+        <mat-panel-description>
+          View/Edit properties
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div *ngFor="let desc of controlType.descriptors; index as index" >
+        <app-descriptor (itemDeleted)="onDescriptorDeleted($event)" [description]="desc" (itemDeleted)="onItemDeleted($event)" [index]="index"></app-descriptor>
+      </div>
+      <button class="mat-raised-button mat-primary" (click)="addDescriptor()">Add a descriptor</button>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <hr>
 
 </mat-dialog-content>
 <mat-dialog-actions>

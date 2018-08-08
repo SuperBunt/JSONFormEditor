@@ -7,13 +7,14 @@ import { QuestionDialogComponent } from '../question-dialog/question-dialog.comp
 import { ConditionValues } from '../conditionValues';
 import { SubmissionService } from '../submissionService.service';
 import { fadeInAnimation } from '../_animations/fade-in';
+import { SlideInOutAnimation } from '../_animations/slide-in-out';
 
 @Component({
   selector: 'app-section',
   templateUrl: './section.component.html',
   styleUrls: ['./section.component.css'], 
   // make fade in animation available to this component
-  animations: [fadeInAnimation], 
+  animations: [fadeInAnimation, SlideInOutAnimation],
   // attach the fade in animation to the host (root) element of this component
   host: { '[@fadeInAnimation]': '' }
 })
@@ -25,6 +26,7 @@ export class SectionComponent implements OnInit {
   optionSelected: any;
   numberOfTicks = 1;
   show: boolean = true;
+  animationState = 'in';
   @Output() sectionDeleted: EventEmitter<string> = new EventEmitter();
 
   constructor(

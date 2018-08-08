@@ -1,17 +1,14 @@
 .section {
-    background-color: #CFD8DC;
-    position: relative;  
-    width: 90%;
-    border: 2px solid rgba(0,150,255);
-    border-radius: 15px;
+    background-color: #f2f4f7;
+    
+    border: 2px solid#d6d8db;
+    border-radius: 4px;
     padding: 15px;
-    margin: auto;
 }
 
 .emphaise{
     width: 50%;
-    margin: auto;
-    background-color: rgb(182, 175, 176, 0.5);
+    background-color: rgba(250, 251, 253, 0.911);
     padding-left: 15px;
     padding-right: 15px;
     border-radius: 15px;

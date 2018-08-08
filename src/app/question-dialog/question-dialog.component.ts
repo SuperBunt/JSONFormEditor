@@ -19,14 +19,11 @@ export class QuestionDialogComponent implements OnInit {
   form: FormGroup;
   controlType: Question;
   numOptions = 2;
-  hasLabel: boolean = true;
-  hasVisible: boolean;
-  hasRequired: boolean;
-  options: string[] = ["label", "required", "visible"]
-  isSelected: boolean[] = [false, true, false];
+  hasLabel: boolean = false;
+  hasVisible: boolean = false;
+  hasRequired: boolean = false;
+  options = ["textbox", "textarea", "radio", "dropdown", ,"file-upload", "list","multi-select", "free-note", "date", "checkbox", "quick-autocomplete"];
   optionSelected: any;
-  toppings = new FormControl();
-
   numberOfTicks = 1;
   objectKeys: string[];
 
@@ -39,6 +36,7 @@ export class QuestionDialogComponent implements OnInit {
   }
 
   ngOnInit() {
+    
   }
 
   delete() {
@@ -118,6 +116,7 @@ export class QuestionDialogComponent implements OnInit {
   }
 
   toggleVisible() {
+    console.log("toggleVisible")
     if (this.hasVisible) {
       console.log("add visible")
       this.controlType.conditionalProperties ? null : this.controlType.conditionalProperties = [];
@@ -127,8 +126,8 @@ export class QuestionDialogComponent implements OnInit {
     }
     else {
       console.log("remove visible")
-      // const i = this.controlType.conditionalProperties.map(question => question).indexOf("visible");
-      // this.controlType.conditionalProperties.splice(i, 1);
+      const i = this.controlType.conditionalProperties.map(question => question).indexOf("visible");
+      this.controlType.conditionalProperties.splice(i, 1);
     }
 
   }
@@ -143,8 +142,8 @@ export class QuestionDialogComponent implements OnInit {
     }
     else {
       console.log("remove required")
-      // const i = this.controlType.conditionalProperties.map(question => question.key).indexOf("required");
-      // this.controlType.conditionalProperties.splice(i, 1);
+      const i = this.controlType.conditionalProperties.map(question => question.key).indexOf("required");
+      this.controlType.conditionalProperties.splice(i, 1);
     }
   }
 
@@ -160,9 +159,14 @@ export class QuestionDialogComponent implements OnInit {
     this.controlType.questionBase.questions.splice(questionIndex, 1);
   }
 
-  addDescriptor() {
-    let toAdd: Descriptor = new Descriptor();
-    this.controlType.descriptors.push(toAdd);
+  // addDescriptor() {
+  //   let toAdd: Descriptor = new Descriptor();
+  //   this.controlType.descriptors.push(toAdd);
+  // }
+
+  addDescriptor(type: string) {
+    //let toAdd: Descriptor = new Descriptor();
+    this.myService.createQuestionType(type).then(x => this.controlType.questionBase.questions.push(x));
   }
 
   onItemDeleted(id: string) {
@@ -172,13 +176,10 @@ export class QuestionDialogComponent implements OnInit {
       console.log("deleteFromQuestionBase " + id);
       this.controlType.questionBase.questions.splice(questionIndex, 1);
     }
-    if (descriptorIndex != -1) {
-      console.log("deleteFromDescriptors " + id);
-      this.controlType.descriptors.splice(questionIndex, 1);
-    }
+  }
 
-
-
+  onDescriptorDeleted(index: number){
+    this.controlType.descriptors.splice(index, 1);
   }
 
 }

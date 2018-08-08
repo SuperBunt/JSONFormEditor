@@ -1,13 +1,6 @@
-.control > mat-form-field mat-radio-group div{
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    align-items: baseline;
-    align-content: stretch;
-
+.description {
+    background-color: rgb(242, 244, 247, 0.681);
+    padding: 15px;
+    margin: 5px;
 }
 
-.example-form-field > * {
-    width: 100%;
-  }

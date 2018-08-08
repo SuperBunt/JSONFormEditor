@@ -9,7 +9,7 @@ import { Guid } from "guid-typescript";
 
 import { AppComponent } from './app.component';
 import {Component} from "@angular/core";
-import { MatButtonModule, MatCheckboxModule, MatIconModule, MatRadioModule, MatTooltipModule } from '@angular/material';
+import { MatButtonModule, MatCheckboxModule, MatIconModule, MatRadioModule, MatTooltipModule, MatSlideToggleModule } from '@angular/material';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatCardModule} from '@angular/material/card';
 import {MatSelectModule} from '@angular/material/select';
@@ -64,7 +64,8 @@ import { DescriptorComponent } from './descriptor/descriptor.component'
     MatDialogModule,
     MatFormFieldModule,
     MatRadioModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatSlideToggleModule
   ],
   providers: [
     SubmissionService
