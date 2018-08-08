@@ -1,12 +1,16 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, Inject, EventEmitter } from '@angular/core';
 import { Question } from '../question'
-import { Condition } from '../conditionalProperty'
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig} from '@angular/material';
 import { ConditionValues } from '../conditionValues';
+import { QuestionDialogComponent } from '../question-dialog/question-dialog.component';
+import { fadeInAnimation } from '../_animations/fade-in';
 
 @Component({
   selector: 'app-question',
   templateUrl: './question.component.html',
-  styleUrls: ['./question.component.css']
+  styleUrls: ['./question.component.css'], 
+  // make fade in animation available to this component
+  animations: [fadeInAnimation]
 })
 export class QuestionComponent implements OnInit {
 
@@ -20,10 +24,24 @@ export class QuestionComponent implements OnInit {
   numOptions = 2;
   conditions = ["visible", "required"]
 
-  constructor() { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
-    //this.controlType.questions = [];
+  }
+
+  openDialog(): void {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = this.controlType;
+    dialogConfig.minWidth = 600;
+
+    const dialogRef = this.dialog.open(QuestionDialogComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      //this.controlType = result;
+    });
   }
 
   toggle() {
@@ -32,7 +50,7 @@ export class QuestionComponent implements OnInit {
   }
 
   deleteItem(key) {
-    console.log("deleteing " + key);
+    console.log("question emit: deleteing " + key);
     this.itemDeleted.emit(key);
   }
 
@@ -74,8 +92,8 @@ export class QuestionComponent implements OnInit {
     }
     else {
       console.log("remove visible")
-      const i = this.controlType.conditionalProperties.map(question => question.key).indexOf("visible");
-      this.controlType.conditionalProperties.splice(i, 1);
+      // const i = this.controlType.conditionalProperties.map(question => question.key).indexOf("visible");
+      // this.controlType.conditionalProperties.splice(i, 1);
     }
     
   }
@@ -90,10 +108,12 @@ export class QuestionComponent implements OnInit {
     }
     else {
       console.log("remove required")
-      const i = this.controlType.conditionalProperties.map(question => question.key).indexOf("required");
-      this.controlType.conditionalProperties.splice(i, 1);
+      // const i = this.controlType.conditionalProperties.map(question => question.key).indexOf("required");
+      // this.controlType.conditionalProperties.splice(i, 1);
     }
     
   }
 
 }
+
+

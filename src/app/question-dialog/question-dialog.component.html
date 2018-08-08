@@ -1,0 +1,101 @@
+<h1 mat-dialog-title>Edit Question</h1>
+<mat-dialog-content *ngIf="controlType" class="control">
+  <div>
+    <label>Label:
+      <input [(ngModel)]="controlType.label" placeholder="Edit me" />
+    </label>
+  </div>
+  <div>
+    <b>Controltype: </b>{{controlType.controlType}} </div>
+  <div>
+    <b>Key: </b>{{controlType.key}}</div>
+
+  <div *ngIf="controlType.options">
+    <p>
+      <b>Options: </b>
+    </p>
+    <div *ngFor="let item of controlType.options; index as i;">
+      <label>
+        Value:
+        <input [(ngModel)]="item.value" placeholder="Edit me" />
+      </label>
+      <button type="button" name="add" class="btn btn-danger align-self-end" (click)="removeOption(i)">
+        <i class="fas fa-trash"></i>
+      </button>
+    </div>
+    <button type="button" name="add" class="btn btn-info align-self-end" (click)="addOption()">
+      <i class="fas fa-plus"></i>
+    </button>
+
+  </div>
+  <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Conditional Properties
+        </mat-panel-title>
+        <mat-panel-description>
+          View/Edit values
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      
+      <mat-checkbox [(ngModel)]="hasVisible" (change)="toggleVisible()"> Visible </mat-checkbox>
+
+      <mat-checkbox [(ngModel)]="hasRequired" (change)="toggleRequired()"> Required </mat-checkbox>
+
+      <div *ngFor="let item of controlType.conditionalProperties index as index">
+        <app-condition-properties [prop]="item" [index]="index"></app-condition-properties>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <hr>
+  <mat-accordion *ngIf="(controlType.questionBase)">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          QuestionBase
+        </mat-panel-title>
+        <mat-panel-description>
+          View/Edit properties
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <label>regSysKey</label>
+      <input class="full-width" [(ngModel)]="controlType.questionBase.regSysKey" placeholder="Is regEdit correct?" />
+      <div *ngFor="let question of controlType.questionBase.questions">
+        <app-question [controlType]="question" (itemDeleted)="onItemDeleted($event)"></app-question>
+      </div>      
+      <mat-form-field>
+          <mat-select [(ngModel)]='optionSelected' placeholder="Add a question">
+            <mat-option *ngFor='let option of options' [value]="option" (click)='addDescriptor(option)'>
+              {{option}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      <button class="mat-raised-button mat-primary" (click)="addToQuestionBase()">Add a question</button>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <hr>
+  <mat-accordion *ngIf="(controlType.questionBase)">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Descriptors
+        </mat-panel-title>
+        <mat-panel-description>
+          View/Edit properties
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div *ngFor="let desc of controlType.descriptors; index as index" >
+        <app-descriptor (itemDeleted)="onDescriptorDeleted($event)" [description]="desc" (itemDeleted)="onItemDeleted($event)" [index]="index"></app-descriptor>
+      </div>
+      <button class="mat-raised-button mat-primary" (click)="addDescriptor()">Add a descriptor</button>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <hr>
+
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button class="mat-raised-button mat-primary" (click)="close()">Close</button>
+  <button class="mat-raised-button mat-warn" (click)="deleteItem(controlType.key)">Delete</button>
+  <!-- <button class="mat-raised-button mat-primary"(click)="save()">Save</button> -->
+</mat-dialog-actions>

@@ -1,0 +1,18 @@
+.control > div{
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-items: baseline;
+        align-content: stretch;
+    
+  }
+
+  .example-container > * {
+    width: 100%;
+  }
+
+  .full-width{
+    width: 80%
+  }
+

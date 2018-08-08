@@ -1,7 +1,10 @@
 import { Option } from 'app/option';
+import { ConditionValues } from './conditionValues';
+import { QuestionBase } from './questionBase';
+import { Guid } from '../../node_modules/guid-typescript';
 
 export class Question {
-    key: string;
+  key: string;
   controlType: string;
   label: string;
   visible: boolean;
@@ -20,13 +23,14 @@ export class Question {
   itemName: string;
   buttonText: string;
   defaultOpen: boolean;
-  //questionBase: QuestionBase;
-  //descriptors: Descriptor[];
+  questionBase: QuestionBase;
+  descriptors: any[];
 
-  constructor(){
-      this.controlType = "textarea";
-      this.label = "Edit me";
-      this.visible = true;
-      this.required = false
+  constructor() {
+    this.controlType = "";
+    this.label = "Edit me";
+    this.key = Guid.create().toString();
+    this.visible = true;
+    this.required = false;
   }
 }

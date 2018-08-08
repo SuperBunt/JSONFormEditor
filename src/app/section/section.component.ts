@@ -2,25 +2,41 @@ import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef, Chan
 import { Question } from '../question'
 import { Option } from '../option'
 import { Guid } from "guid-typescript/dist/guid";
+import { MatDialog, MatDialogConfig } from '../../../node_modules/@angular/material';
+import { QuestionDialogComponent } from '../question-dialog/question-dialog.component';
+import { ConditionValues } from '../conditionValues';
+import { SubmissionService } from '../submissionService.service';
+import { fadeInAnimation } from '../_animations/fade-in';
+import { SlideInOutAnimation } from '../_animations/slide-in-out';
 
 @Component({
   selector: 'app-section',
   templateUrl: './section.component.html',
-  styleUrls: ['./section.component.css']
+  styleUrls: ['./section.component.css'], 
+  // make fade in animation available to this component
+  animations: [fadeInAnimation, SlideInOutAnimation],
+  // attach the fade in animation to the host (root) element of this component
+  host: { '[@fadeInAnimation]': '' }
 })
 export class SectionComponent implements OnInit {
 
   @Input() section: Question;
   numQuestions = 0;
-  options = ["textbox", "radio", "dropdown"];
+  options = ["textbox", "textarea", "radio", "dropdown", ,"file-upload", "list","multi-select", "free-note", "date", "checkbox", "quick-autocomplete"];
   optionSelected: any;
   numberOfTicks = 1;
+  show: boolean = true;
+  animationState = 'in';
   @Output() sectionDeleted: EventEmitter<string> = new EventEmitter();
 
-  constructor(private ref: ChangeDetectorRef) {
+  constructor(
+    public tabService: SubmissionService,
+    private ref: ChangeDetectorRef, 
+    public dialog: MatDialog) {
   }
 
   ngOnInit() {
+    this.options.sort();
     this.section.questions = []
   }
 
@@ -30,45 +46,33 @@ export class SectionComponent implements OnInit {
     newControl.key = Guid.create().toString();
     newControl.controlType = "textbox";
     newControl.label = "Edit this Label";
-    this.numQuestions = this.section.questions.push(newControl);
+    newControl.visible = true;
+    this.openDialog(newControl);
+  }
+
+  openDialog(newControl: Question): void {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = newControl;
+    dialogConfig.minWidth = 600;
+    dialogConfig.direction = "ltr";
+
+    const dialogRef = this.dialog.open(QuestionDialogComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log("closed dialog");
+      this.numQuestions = this.section.questions.push(newControl);
+    });
   }
 
   AddInput(event): void {
     console.log("adding input type:" + event)
-    let newControl: Question = new Question();
-    newControl.key = Guid.create().toString();
-    newControl.controlType = event;
-    newControl.label = "Input " + this.numberOfTicks++;
-    switch (event) {
-      case "radio":
-      case "dropdown": {
-        let option1 = new Option();
-        option1.key = 1;
-        option1.value = "Option A";
-        let option2 = new Option();
-        option2.key = 2;
-        option2.value = "Option b";
-        newControl.options = [
-          option1, option2
-        ]
-        break;
+    this.tabService.createQuestionType(event).then(x => this.openDialog(x));
       }
-      case "other": {
-        //statements; 
-        break;
-      }
-      default: {
-        //statements; 
-        break;
-      }
-    }
-    this.numQuestions = this.section.questions.push(newControl);
-    event = "";
-    console.log(this.section.questions);
-  }
 
   onItemDeleted(id: string) {
-    console.log("delete item " + id);
+    console.log("section delete item " + id);
     const questionIndex = this.section.questions.map(question => question.key).indexOf(id);
     console.log(questionIndex);
     this.section.questions.splice(questionIndex, 1);

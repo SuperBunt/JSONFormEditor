@@ -1,22 +1,21 @@
 <div *ngIf="tab" class="tab">
-  <div class="tabs" (click)="changeTab()">
-    <h1>{{tab.label}}</h1>
-  </div>
+  
+    <h1>{{tab.label}}<span ><button  class="right" matTooltip="Delete this tab" mat-fab (click)="deleteTab(tab.key)" color="warn"><i class="material-icons">delete</i></button></span></h1>
+  
   <div>
-      <label>Edit tab label:
-        <input [(ngModel)]="tab.label" placeholder="label" />
-      </label>
-      <button mat-raised-button (click)="AddSection()">
-        <i class="material-icons">add_box</i>Add a section
-      </button>
-      <button mat-raised-button (click)="deleteTab(tab.key)" color="warn">
-          <i class="material-icons">delete</i>
-      </button>
-      
-      <!-- INSERT QUESTION COMPONENT of type SECTION -->
-      <ul *ngFor="let item of tab.questions">
-        <app-section [section]="item" (tabSelected)="onTabSelected($event)" (sectionDeleted)="onSectionDeleted($event)"></app-section>
-        <!-- <app-tab [tab]="tab"></app-tab> -->
-      </ul>
+    <label>Edit tab label:
+      <input [(ngModel)]="tab.label" placeholder="label" />
+    </label>
+
+
+
+    <!-- INSERT QUESTION COMPONENT of type SECTION -->
+    <ul *ngFor="let item of tab.questions">
+      <app-section [section]="item" (tabSelected)="onTabSelected($event)" (sectionDeleted)="onSectionDeleted($event)"></app-section>
+      <!-- <app-tab [tab]="tab"></app-tab> -->
+    </ul>
+    <button mat-raised-button (click)="AddSection()" color="primary">
+      <i class="material-icons">add_box</i>Add a section
+    </button>
   </div>
 </div>

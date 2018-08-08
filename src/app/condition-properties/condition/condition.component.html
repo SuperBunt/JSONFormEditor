@@ -1,29 +1,27 @@
-<div *ngFor="let item of condition.visible">
-  <h4>Visible</h4>
-  <form>
-    <div class="radio">
-      <label>
-        <input type="radio" [(ngModel)]="item.propertyValue" [value]="true" name="optradio" checked>True</label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" [(ngModel)]="item.propertyValue" [value]="false" name="optradio">False</label>
-    </div>
-    <div>
-      <label>Left</label>
-      <input type="textbox" [(ngModel)]="item.left" name="left" checked>
-      <label>Operator:</label>
-      <select class='select-option' required [(ngModel)]='item.operator' [ngModelOptions]="{standalone: true}">
-        <option class='option' *ngFor='let operator of operators' [value]="operator">{{operator}}</option>
-      </select>
-
-      <label>Right</label>
-      <input type="textbox" [(ngModel)]="item.right" name="right" checked>
-    </div>
-  </form>
-
+<div *ngIf="condition" fxLayout="column" >
+  <div fxLayout="row">
+    <mat-radio-group [(ngModel)]="condition.propertyValue" [ngModelOptions]="{standalone: true}">
+      <mat-radio-button [value]="true" checked>True</mat-radio-button>
+      <mat-radio-button [value]="false">False</mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="space-between start">
+    <label fxFlex="20">Left</label>
+    <input fxFlex="80" type="textbox" [(ngModel)]="condition.left" name="left" checked>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="space-between start">
+    <label fxFlex="20">Operator:</label>
+    <select  class='select-option' required [(ngModel)]='condition.operator' [ngModelOptions]="{standalone: true}">
+      <option  class='option' *ngFor='let operator of operators' [value]="operator">{{operator}}</option>
+    </select>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="space-between start">
+    <label fxFlex="20">Right</label>
+    <input fxFlex="80" type="textbox" [(ngModel)]="condition.right" name="right" checked>
+  </div>
 </div>
-<div *ngFor="let item of condition.required">
+
+<!-- <div *ngFor="let item of condition.required">
   <h4>Required</h4>
   <form>
     <div class="radio">
@@ -48,4 +46,4 @@
       <input type="textbox" [(ngModel)]="item.right" name="right" checked>
     </div>
   </form>
-</div>
+</div> -->

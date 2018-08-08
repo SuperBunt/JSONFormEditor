@@ -1,3 +1,10 @@
-<li *ngIf="prop">
-    <app-condition [condition]="prop"></app-condition>
-</li>
+<h5>{{objectKey}}</h5>
+<div *ngFor="let item of prop.visible ; index as index">
+    <app-condition [condition]="item" ></app-condition>
+</div>
+<div *ngFor="let item of prop.required">
+    <app-condition [condition]="item" ></app-condition>
+</div>
+<div *ngFor="let item of prop.label">
+    <app-condition [condition]="item" ></app-condition>
+</div>

@@ -1,7 +1,4 @@
 <div>
-  <div>
-    <ngx-json-viewer [json]="myForm" [expanded]="true"></ngx-json-viewer>
-  </div>
 
   <button type="button" class="btn-lg btn-primary viewBtn" data-toggle="modal" data-target=".bd-example-modal-lg" (click)="ViewPrettyJSON()">ViewJSON</button>
 
@@ -21,35 +18,26 @@
     </div>
   </div>
 
-  <h1>
-    {{myForm.displayName}}
-  </h1>
-  <h2>
-    Version: {{myForm.version}}
-  </h2>
-  <p>Tabs: {{numTabs}}</p>
+  
 
 </div>
 
-  <mat-card>
-    <mat-card-content>
-      <button mat-raised-button color="primary" (click)="AddTab()" matTooltip="Add a tab">
-        Add a tab
-        <i class="fas fa-plus fa-2x"></i>
-      </button>
-      <div>
-        <label>Edit submission display name:
-          <input [(ngModel)]="myForm.displayName" placeholder="name">
-        </label>
+<mat-card>
+  <mat-card-content>
+    <button mat-raised-button color="primary" (click)="AddTab()" matTooltip="Add a tab">
+      Add a tab
+      <i class="fas fa-plus fa-2x"></i>
+    </button>
+    <div>
+      <label>Edit submission display name:
+        <input [(ngModel)]="myForm.displayName" placeholder="name">
+      </label>
 
-      </div>
-      <mat-tab-group class="demo-tab-group" [(selectedIndex)]="selectedTab">
-        <mat-tab [label]="tab.label" *ngFor="let tab of myForm.steps; index as i; let last = last;">
-            <ng-template md-tab-label>
-                {{tab.label}}
-              </ng-template>
-          <app-tab [tab]="tab"></app-tab>          
-        </mat-tab>
-      </mat-tab-group>
-    </mat-card-content>
-  </mat-card>
+    </div>
+    <mat-tab-group class="demo-tab-group" [(selectedIndex)]="selectedTab">
+      <mat-tab [label]="tab.label" *ngFor="let tab of myForm.steps; index as i; last as isLast;">
+        <app-tab [tab]="tab"></app-tab>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card-content>
+</mat-card>

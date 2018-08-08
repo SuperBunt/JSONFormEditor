@@ -1,0 +1,41 @@
+<div *ngIf="description" fxLayout="column" class="description">
+  <h5>
+    <mat-slide-toggle matTooltip="Show/hide descriptor" (click)="this.animationState = this.animationState === 'out' ? 'in' : 'out'"></mat-slide-toggle>
+    {{description.label}}
+    <span class="right">
+      <button matTooltip="Delete descriptor" mat-mini-fab (click)="delete()" color="warn">
+        <i class="material-icons">delete</i>
+      </button>
+    </span>
+  </h5>
+  <div [@slideInOut]="animationState">
+    <div fxLayout="row">
+      <mat-form-field fxFlex="20" class="example-form-field" fxLayout="column">
+        <input matInput type="number" placeholder="Order" [(ngModel)]="description.order">
+      </mat-form-field> &nbsp;
+      <mat-form-field fxFlex="80" class="example-form-field" fxLayout="column">
+        <input matInput type="text" placeholder="Edit description label" [(ngModel)]="description.label">
+      </mat-form-field>
+    </div>
+    <div fxLayout="row">
+      <label fxFlex="20">
+        <b>Visible</b>
+      </label>
+      <mat-radio-group fxFlex="80" class="example-radio-group" [(ngModel)]="description.visible">
+        <mat-radio-button value=true>True</mat-radio-button> &nbsp; &nbsp;
+        <mat-radio-button value=false>False</mat-radio-button>
+      </mat-radio-group>
+    </div>
+    <label>
+      <b>Keys</b>
+    </label>
+    <div *ngFor="let item of description.keys">
+      <mat-form-field class="example-form-field">
+        <input fxFlex="50" matInput type="text" placeholder="key" [(ngModel)]="item.key">
+      </mat-form-field>
+      <mat-form-field class="example-form-field">
+        <input fxFlex="50" matInput type="text" placeholder="value" [(ngModel)]="item.value">
+      </mat-form-field>
+    </div>
+  </div>
+</div>

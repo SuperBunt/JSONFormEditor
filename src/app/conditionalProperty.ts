@@ -1,11 +1,9 @@
 import { ConditionValues } from "./conditionValues";
 
 export class Condition {
-    condition : ConditionValues[]
+    condition : any[]
 
-    constructor(){
-        let values = new ConditionValues();
-        this.condition = [values]
+    constructor(){  
     }
 }
 

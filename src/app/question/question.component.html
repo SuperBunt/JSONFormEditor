@@ -1,20 +1,25 @@
 <div *ngIf="controlType" class="control">
 	<div>
+		<h5>{{controlType.label}}</h5>
 		<label>Label:
 			<input [(ngModel)]="controlType.label" placeholder="Edit me" />
-			<button type="button" name="delete" class="btn btn-info align-self-end" (click)="toggle()">
-				<i class="far fa-edit"></i>
-			</button>
-			<button type="button" name="delete" class="btn btn-danger align-self-end" (click)="deleteItem(controlType.key)">
-				<i class="fas fa-trash-alt"></i>
-			</button>
+
 		</label>
+		
 		<p>
 			<b>controlType: </b>{{controlType.controlType}}</p>
 		<p>
 			<b>key: </b>{{controlType.key}}</p>
 	</div>
-	<div [hidden]="edit">
+	<div class="button-row">
+			<button mat-raised-button (click)="openDialog()">
+				<i class="material-icons">edit</i>
+			</button>
+			<button mat-raised-button color="warn" (click)="deleteItem(controlType.key)">
+				<i class="fas fa-trash-alt"></i>
+			</button>
+		</div>
+	<!-- <div [hidden]="edit">
 		<div *ngIf="controlType.options">
 			<p>
 				<b>Options: </b>
@@ -40,15 +45,15 @@
 			<label>
 				<input type="checkbox" [(ngModel)]="isRequired" (change)="toggleRequired()">Required</label>
 		</div>
-		<!-- <div class='btn btn-secondary btn-sm btn-block'>
+		 <div class='btn btn-secondary btn-sm btn-block'>
 					<label>Add Conditional property:
 						<select  class='select-option' required [(ngModel)]='optionSelected' (ngModelChange)='AddCondition($event)'>
 							<option class='option' *ngFor='let option of conditions' [value]="option">{{option}}</option>
 						</select>
 					</label>
-				</div> -->
+				</div> 
 		<div *ngFor="let item of controlType.conditionalProperties">
 			<app-condition-properties [prop]="item"></app-condition-properties>
 		</div>
-	</div>
+	</div> -->
 </div>
