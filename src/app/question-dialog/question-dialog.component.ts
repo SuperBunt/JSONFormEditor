@@ -36,11 +36,10 @@ export class QuestionDialogComponent implements OnInit {
   }
 
   ngOnInit() {
-    
-  }
-
-  delete() {
-    //emit deleteQuestion
+    this.hasVisible = this.controlType.conditionalProperties.hasOwnProperty("visible")
+    this.hasLabel = this.controlType.conditionalProperties.hasOwnProperty("label")
+    this.hasRequired = this.controlType.conditionalProperties.hasOwnProperty("required")
+    this.options.sort();
   }
 
   close() {
@@ -69,8 +68,8 @@ export class QuestionDialogComponent implements OnInit {
   // }
 
   AddCondition(type: string, index: number) {
-    console.log(". Add conditional from drop down: " + type)
-    this.controlType.conditionalProperties ? null : this.controlType.conditionalProperties = [];
+    console.log(". Add conditional from drop down: " + type);
+    //this.controlType.conditionalProperties ? null : this.controlType.conditionalProperties = [];
     let values = new ConditionValues();
     switch (type) {
       case "label":
@@ -78,30 +77,33 @@ export class QuestionDialogComponent implements OnInit {
         console.log(this.hasLabel)
         if (this.hasLabel == true) {
           let label: any = { "label": [values] }
-          this.controlType.conditionalProperties.push(label);
+          this.controlType.conditionalProperties.label = label;
+          //this.controlType.conditionalProperties.push(label);
         }
         else {
-          this.controlType.conditionalProperties.splice(index, 1);
+          //this.controlType.conditionalProperties.splice(index, 1);
         }
         break;
       case "required":
         this.hasRequired != this.hasRequired;
         if (this.hasRequired == true) {
-          let label: any = { "required": [values] }
-          this.controlType.conditionalProperties.push(label);
+          let required: any = { "required": [values] }
+          this.controlType.conditionalProperties.required = required;
+          //this.controlType.conditionalProperties.push(label);
         }
         else {
-          this.controlType.conditionalProperties.splice(index, 1);
+          //this.controlType.conditionalProperties.splice(index, 1);
         }
         break;
       case "visible":
         this.hasVisible != this.hasVisible;
         if (this.hasVisible == true) {
-          let label: any = { "visible": [values] }
-          this.controlType.conditionalProperties.push(label);
+          let visible: any = { "visible": [values] }
+          this.controlType.conditionalProperties.visible = visible;
+          //this.controlType.conditionalProperties.push(visible);
         }
         else {
-          this.controlType.conditionalProperties.splice(index, 1);
+          //this.controlType.conditionalProperties.splice(index, 1);
         }
         break;
       default:
@@ -115,35 +117,43 @@ export class QuestionDialogComponent implements OnInit {
     console.log("Keys: " + this.objectKeys);
   }
 
+  toggleLabel() {
+    console.log("toggleLabel")
+    if (this.hasLabel) {
+      console.log("add visible");
+      let values = new ConditionValues();
+      this.controlType.conditionalProperties.label = [values]
+    }
+    else {
+      console.log("remove label")
+      delete this.controlType.conditionalProperties.label
+    }
+
+  }
+
   toggleVisible() {
     console.log("toggleVisible")
     if (this.hasVisible) {
-      console.log("add visible")
-      this.controlType.conditionalProperties ? null : this.controlType.conditionalProperties = [];
+      console.log("add visible");
       let values = new ConditionValues();
-      let whatever: any = { "visible": [values] }
-      this.controlType.conditionalProperties.push(whatever);
+      this.controlType.conditionalProperties.visible = [values]
     }
     else {
       console.log("remove visible")
-      const i = this.controlType.conditionalProperties.map(question => question).indexOf("visible");
-      this.controlType.conditionalProperties.splice(i, 1);
+      delete this.controlType.conditionalProperties.visible
     }
 
   }
 
   toggleRequired() {
     if (this.hasRequired) {
-      console.log("add required")
-      this.controlType.conditionalProperties ? null : this.controlType.conditionalProperties = [];
+      console.log("add required");
       let values = new ConditionValues();
-      let whatever: any = { "required": [values] }
-      this.controlType.conditionalProperties.push(whatever);
+      this.controlType.conditionalProperties.required = [values]
     }
     else {
       console.log("remove required")
-      const i = this.controlType.conditionalProperties.map(question => question.key).indexOf("required");
-      this.controlType.conditionalProperties.splice(i, 1);
+      delete this.controlType.conditionalProperties.required
     }
   }
 

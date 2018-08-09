@@ -4,12 +4,14 @@ import { Step } from "app/step";
 import { Guid } from "guid-typescript/dist/guid";
 import { SubmissionService } from '../submissionService.service';
 import { fadeInAnimation } from '../_animations/fade-in';
+import { MatDialogConfig, MatDialog } from '../../../node_modules/@angular/material';
+import { SubmissionDialogComponent } from '../submission-dialog/submission-dialog.component';
 
 @Component({
   selector: 'app-submission',
   templateUrl: './submission.component.html',
   styleUrls: ['./submission.component.css'],
- 
+
   // make fade in animation available to this component
   animations: [fadeInAnimation],
 
@@ -23,7 +25,10 @@ export class SubmissionComponent implements OnInit {
   prettyJSON: string;
   state: string = 'show';
 
-  constructor(public myService: SubmissionService) { }
+  constructor(
+    public myService: SubmissionService,
+    public dialog: MatDialog
+  ) { }
 
   ngOnInit() {
     this.expanded = false;
@@ -32,6 +37,21 @@ export class SubmissionComponent implements OnInit {
 
   get myForm() {
     return this.myService.myForm;
+  }
+
+  openDialog(): void {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = this.myForm;
+    dialogConfig.minWidth = 600;
+    dialogConfig.direction = "ltr";
+
+    const dialogRef = this.dialog.open(SubmissionDialogComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log("closed submission details dialog");
+    });
   }
 
   AddTab() {
@@ -46,7 +66,7 @@ export class SubmissionComponent implements OnInit {
     toAdd.questions = [];
     this.myService.addTab(toAdd);
     this.selectedTab = this.myForm.steps.length;
-    console.log("tab index: "+ this.selectedTab);
+    console.log("tab index: " + this.selectedTab);
     //this.numTabs = this.myForm.steps.push(toAdd);
   }
 

@@ -5,4 +5,11 @@ export class SubmissionDetails {
   submissionTypeId: string;
   submissionTypeDesc: string;
   relatedRegisterId: string;
+
+  constructor(){
+    this.submissionTypeId = null;
+    this.submissionTypeDesc = "Add a description";
+    this.relatedRegisterId = null;
+    this.submissionRegisterEdits = [];
+  }
 }

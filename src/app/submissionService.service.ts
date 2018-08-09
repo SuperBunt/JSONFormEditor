@@ -50,6 +50,7 @@ export class SubmissionService {
         let newControl = new Question();        
         newControl.controlType = type;
         newControl.placeholder = "";
+        newControl.conditionalProperties ={};
         switch (type) {
             case "radio":
             case "dropdown":

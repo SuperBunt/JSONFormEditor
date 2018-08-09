@@ -17,27 +17,27 @@
       </div>
     </div>
   </div>
-
-  
-
 </div>
 
-<mat-card>
-  <mat-card-content>
-    <button mat-raised-button color="primary" (click)="AddTab()" matTooltip="Add a tab">
+<div>
+  
+    <div fxLayout="row" fxLayoutAlign="space-evenly center" >
+        
+    <button fxFlex="20" mat-raised-button color="primary" (click)="AddTab()" matTooltip="Add a tab to the current form">
       Add a tab
-      <i class="fas fa-plus fa-2x"></i>
+      <i class="material-icons">
+        add_circle_outline
+      </i>
     </button>
-    <div>
-      <label>Edit submission display name:
-        <input [(ngModel)]="myForm.displayName" placeholder="name">
-      </label>
+    <h1>{{myForm.displayName}}</h1>
+    <button fxFlex="20" mat-raised-button color="primary" (click)="openDialog()" matTooltip="Edit Submission Details and add regEdits">
+      Submission Details
+    </button>
+  </div>
 
-    </div>
-    <mat-tab-group class="demo-tab-group" [(selectedIndex)]="selectedTab">
-      <mat-tab [label]="tab.label" *ngFor="let tab of myForm.steps; index as i; last as isLast;">
-        <app-tab [tab]="tab"></app-tab>
-      </mat-tab>
-    </mat-tab-group>
-  </mat-card-content>
-</mat-card>
+  <mat-tab-group class="demo-tab-group" [(selectedIndex)]="selectedTab">
+    <mat-tab [label]="tab.label" *ngFor="let tab of myForm.steps; index as i; last as isLast;">
+      <app-tab [tab]="tab"></app-tab>
+    </mat-tab>
+  </mat-tab-group>
+</div>

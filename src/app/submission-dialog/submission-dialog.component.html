@@ -1,0 +1,59 @@
+<h1 mat-dialog-title>Submission Details/ RegEdits</h1>
+<mat-dialog-content *ngIf="submission" >
+  
+  <div fxLayout="column">
+      <label fxFlex="50">Version:</label>
+      <input fxFlex="50" type="text" [(ngModel)]="submission.version" placeholder="Edit me" />
+  </div>
+  <div fxLayout="column">
+      <label fxFlex="50">Display Name:</label>
+      <input fxFlex="50" type="text" [(ngModel)]="submission.displayName" placeholder="Edit me" />
+  </div>
+
+  <h4>Submission Details</h4>
+  <div fxLayout="column">
+    <mat-form-field>
+      <input matInput fxFlex="50" type="number" [(ngModel)]="submission.submissionTypeId" placeholder="Submission Type Id" />
+    </mat-form-field>
+  </div>
+  <div fxLayout="column">
+    <mat-form-field>
+      <!-- <label fxFlex="50">Description:</label> -->
+      <input matInput  fxFlex="50" type="text" [(ngModel)]="submission.submissionTypeDesc" placeholder="Description" />
+    </mat-form-field>
+  </div>
+  <div fxLayout="column">
+    <mat-form-field>
+      <input matInput  fxFlex="50" type="number" [(ngModel)]="submission.relatedRegisterId" placeholder="Register Id" />
+    </mat-form-field>
+  </div>
+
+  <div>
+    <h5>RegEdits</h5>
+
+    <div fxLayout="column" class="example-form-field" *ngFor="let item of submission.submissionDetails.submissionRegisterEdits index as i">
+      <div fxFlex="80" class="example-form-field" fxLayout="row">
+        <label fxFlex="20">Key:</label>
+        <input fxFlex="80" [(ngModel)]="item.key" placeholder="Edit me" disabled/>
+      </div>
+      <div fxFlex="80" class="example-form-field" fxLayout="row">
+        <label fxFlex="20">Name: </label>
+        <input fxFlex="80" [(ngModel)]="item.name" placeholder="Edit me" />
+      </div>
+      <div fxFlex="80" class="example-form-field" fxLayout="row">
+        <label fxFlex="20">
+          RegEdit Id:
+        </label>
+        <input fxFlex="80" type="number" [(ngModel)]="item.registerEditId" placeholder="Edit me" />
+      </div>
+      <button type="button" name="add" class="btn btn-danger align-self-end" (click)="removeRegEdit(i)">
+        <i class="fas fa-trash"></i>
+      </button>
+    </div>
+    <button type="button" mat-raised-button color="primary" (click)="addRegEdit()">
+      <i class="material-icons">
+        add_circle_outline
+      </i>
+    </button>
+  </div>
+</mat-dialog-content>

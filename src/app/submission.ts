@@ -9,6 +9,7 @@ export class Submission {
 
     constructor(name: string) {
         this.displayName = name;
+        this.submissionDetails = new SubmissionDetails();
         let toAdd: Step = new Step();
         toAdd.controlType = "step";
         toAdd.label = "Tab 1"

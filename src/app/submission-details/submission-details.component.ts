@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Submission } from '../submission';
+import { MatDialogConfig } from '../../../node_modules/@angular/material';
 
 @Component({
   selector: 'app-submission-details',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SubmissionDetailsComponent implements OnInit {
 
+  @Input() submission: Submission;
+
   constructor() { }
 
   ngOnInit() {
   }
+
+  
 
 }

@@ -8,8 +8,15 @@
   <div>
     <b>Controltype: </b>{{controlType.controlType}} </div>
   <div>
-    <b>Key: </b>{{controlType.key}}</div>
-
+    <b>Key: </b>{{controlType.key}}
+  </div>
+  <hr>
+  <div fxLayout="row" fxLayoutAlign="start center" >
+    <label><b>Default properties:&nbsp;&nbsp;</b> </label>
+      <mat-checkbox [align]="end" [(ngModel)]="controlType.visible">Visible</mat-checkbox> &nbsp;&nbsp;&nbsp;&nbsp;
+      <mat-checkbox [align]="end" [(ngModel)]="controlType.required">Required</mat-checkbox>
+  </div>
+  <hr>
   <div *ngIf="controlType.options">
     <p>
       <b>Options: </b>
@@ -38,14 +45,22 @@
           View/Edit values
         </mat-panel-description>
       </mat-expansion-panel-header>
-      
+      <div fxLayout="column" fxLayoutAlign="space-around start" >
       <mat-checkbox [(ngModel)]="hasVisible" (change)="toggleVisible()"> Visible </mat-checkbox>
+      <div *ngIf="controlType.conditionalProperties.visible">
+          <app-condition [condition]="controlType.conditionalProperties.visible" ></app-condition>
+      </div>
 
       <mat-checkbox [(ngModel)]="hasRequired" (change)="toggleRequired()"> Required </mat-checkbox>
-
-      <div *ngFor="let item of controlType.conditionalProperties index as index">
-        <app-condition-properties [prop]="item" [index]="index"></app-condition-properties>
+      <div *ngIf="controlType.conditionalProperties.required">
+          <app-condition [condition]="controlType.conditionalProperties.required" ></app-condition>
       </div>
+
+      <mat-checkbox [(ngModel)]="hasLabel" (change)="toggleLabel()"> Label </mat-checkbox>
+      <div *ngIf="controlType.conditionalProperties.label">
+          <app-condition [condition]="controlType.conditionalProperties.label" ></app-condition>
+      </div>
+    </div>
     </mat-expansion-panel>
   </mat-accordion>
   <hr>
@@ -71,7 +86,6 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-      <button class="mat-raised-button mat-primary" (click)="addToQuestionBase()">Add a question</button>
     </mat-expansion-panel>
   </mat-accordion>
   <hr>
