@@ -22,11 +22,14 @@ export class QuestionDialogComponent implements OnInit {
   hasLabel: boolean = false;
   hasVisible: boolean = false;
   hasRequired: boolean = false;
-  options = ["textbox", "textarea", "radio", "dropdown", ,"file-upload", "list","multi-select", "free-note", "date", "checkbox", "quick-autocomplete"];
+  validators = ["email", "phone", "password", "none"]
+  options = ["textbox", "textarea", "radio", "dropdown", "password", "file-upload", "list", "multi-select", "free-note", "date", "checkbox", "quick-autocomplete"];
   optionSelected: any;
   numberOfTicks = 1;
   objectKeys: string[];
-
+  passwordValidaton: boolean;
+  emailValidation: boolean;
+  phoneValidation: boolean;
 
   constructor(
     public myService: SubmissionService,
@@ -58,58 +61,6 @@ export class QuestionDialogComponent implements OnInit {
 
   removeOption(i: number) {
     this.controlType.options.splice(i, 1);
-  }
-
-  // addCondition(){
-  //   this.controlType.conditionalProperties ? null : this.controlType.conditionalProperties = [];
-  //   let values = new ConditionValues();
-  //     let whatever: any = { "condition": [values] }
-  //     this.controlType.conditionalProperties.push(whatever);
-  // }
-
-  AddCondition(type: string, index: number) {
-    console.log(". Add conditional from drop down: " + type);
-    //this.controlType.conditionalProperties ? null : this.controlType.conditionalProperties = [];
-    let values = new ConditionValues();
-    switch (type) {
-      case "label":
-        this.hasLabel != this.hasLabel;
-        console.log(this.hasLabel)
-        if (this.hasLabel == true) {
-          let label: any = { "label": [values] }
-          this.controlType.conditionalProperties.label = label;
-          //this.controlType.conditionalProperties.push(label);
-        }
-        else {
-          //this.controlType.conditionalProperties.splice(index, 1);
-        }
-        break;
-      case "required":
-        this.hasRequired != this.hasRequired;
-        if (this.hasRequired == true) {
-          let required: any = { "required": [values] }
-          this.controlType.conditionalProperties.required = required;
-          //this.controlType.conditionalProperties.push(label);
-        }
-        else {
-          //this.controlType.conditionalProperties.splice(index, 1);
-        }
-        break;
-      case "visible":
-        this.hasVisible != this.hasVisible;
-        if (this.hasVisible == true) {
-          let visible: any = { "visible": [values] }
-          this.controlType.conditionalProperties.visible = visible;
-          //this.controlType.conditionalProperties.push(visible);
-        }
-        else {
-          //this.controlType.conditionalProperties.splice(index, 1);
-        }
-        break;
-      default:
-        //do this         
-        console.log("No propeties")
-    }
   }
 
   CheckKeys(): void {
@@ -169,14 +120,31 @@ export class QuestionDialogComponent implements OnInit {
     this.controlType.questionBase.questions.splice(questionIndex, 1);
   }
 
-  // addDescriptor() {
-  //   let toAdd: Descriptor = new Descriptor();
-  //   this.controlType.descriptors.push(toAdd);
-  // }
+  setValidator(val) {
+    console.log("setValidator: " + val.value);
+    this.controlType.validators = {}
+    switch (val.value) {
+      case "email":
+        this.controlType.validators.email = {}
+        break;
+      case "password":
+        this.controlType.validators.password = {}
+        break;
+      case "phone":
+        this.controlType.validators.phone = {}
+        break;
+      case "none":
+        break;
+
+    }
+  }
 
   addDescriptor(type: string) {
     //let toAdd: Descriptor = new Descriptor();
-    this.myService.createQuestionType(type).then(x => this.controlType.questionBase.questions.push(x));
+    this.myService.createQuestionType(type).then(x => this.controlType.descriptors.push(x));
+  }
+  onDescriptorDeleted(index: number) {
+    this.controlType.descriptors.splice(index, 1);
   }
 
   onItemDeleted(id: string) {
@@ -188,8 +156,6 @@ export class QuestionDialogComponent implements OnInit {
     }
   }
 
-  onDescriptorDeleted(index: number){
-    this.controlType.descriptors.splice(index, 1);
-  }
+
 
 }

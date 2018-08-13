@@ -11,11 +11,24 @@
     <b>Key: </b>{{controlType.key}}
   </div>
   <hr>
-  <div fxLayout="row" fxLayoutAlign="start center" >
-    <label><b>Default properties:&nbsp;&nbsp;</b> </label>
-      <mat-checkbox [align]="end" [(ngModel)]="controlType.visible">Visible</mat-checkbox> &nbsp;&nbsp;&nbsp;&nbsp;
-      <mat-checkbox [align]="end" [(ngModel)]="controlType.required">Required</mat-checkbox>
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <label>
+      <b>Default properties:&nbsp;&nbsp;</b>
+    </label>
+    <mat-checkbox [align]="end" [(ngModel)]="controlType.visible">Visible</mat-checkbox> &nbsp;&nbsp;&nbsp;&nbsp;
+    <mat-checkbox [align]="end" [(ngModel)]="controlType.required">Required</mat-checkbox>
   </div>
+  <hr>
+  <ng-container *ngIf="(controlType.controlType == 'textbox')">
+    <label>
+      <b>Add a validation:&nbsp;&nbsp;</b>
+    </label>
+    <mat-radio-group fxLayout="row" fxLayoutAlign="space-around start" (change)="setValidator($event)">
+      <mat-radio-button class="example-radio-button" *ngFor="let valid of validators" [value]="valid">
+        {{valid}}
+      </mat-radio-button>
+    </mat-radio-group>
+  </ng-container>
   <hr>
   <div *ngIf="controlType.options">
     <p>
@@ -45,25 +58,25 @@
           View/Edit values
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <div fxLayout="column" fxLayoutAlign="space-around start" >
-      <mat-checkbox [(ngModel)]="hasVisible" (change)="toggleVisible()"> Visible </mat-checkbox>
-      <div *ngIf="controlType.conditionalProperties.visible">
-          <app-condition [condition]="controlType.conditionalProperties.visible" ></app-condition>
-      </div>
+      <div fxLayout="column" fxLayoutAlign="space-around start">
+        <mat-checkbox [(ngModel)]="hasVisible" (change)="toggleVisible()"> Visible </mat-checkbox>
+        <div *ngIf="controlType.conditionalProperties.visible">
+          <app-condition [condition]="controlType.conditionalProperties.visible"></app-condition>
+        </div>
 
-      <mat-checkbox [(ngModel)]="hasRequired" (change)="toggleRequired()"> Required </mat-checkbox>
-      <div *ngIf="controlType.conditionalProperties.required">
-          <app-condition [condition]="controlType.conditionalProperties.required" ></app-condition>
-      </div>
+        <mat-checkbox [(ngModel)]="hasRequired" (change)="toggleRequired()"> Required </mat-checkbox>
+        <div *ngIf="controlType.conditionalProperties.required">
+          <app-condition [condition]="controlType.conditionalProperties.required"></app-condition>
+        </div>
 
-      <mat-checkbox [(ngModel)]="hasLabel" (change)="toggleLabel()"> Label </mat-checkbox>
-      <div *ngIf="controlType.conditionalProperties.label">
-          <app-condition [condition]="controlType.conditionalProperties.label" ></app-condition>
+        <mat-checkbox [(ngModel)]="hasLabel" (change)="toggleLabel()"> Label </mat-checkbox>
+        <div *ngIf="controlType.conditionalProperties.label">
+          <app-condition [condition]="controlType.conditionalProperties.label"></app-condition>
+        </div>
       </div>
-    </div>
     </mat-expansion-panel>
   </mat-accordion>
-  <hr>
+
   <mat-accordion *ngIf="(controlType.questionBase)">
     <mat-expansion-panel>
       <mat-expansion-panel-header>
@@ -78,18 +91,18 @@
       <input class="full-width" [(ngModel)]="controlType.questionBase.regSysKey" placeholder="Is regEdit correct?" />
       <div *ngFor="let question of controlType.questionBase.questions">
         <app-question [controlType]="question" (itemDeleted)="onItemDeleted($event)"></app-question>
-      </div>      
+      </div>
       <mat-form-field>
-          <mat-select [(ngModel)]='optionSelected' placeholder="Add a question">
-            <mat-option *ngFor='let option of options' [value]="option" (click)='addDescriptor(option)'>
-              {{option}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+        <mat-select [(ngModel)]='optionSelected' placeholder="Add a question">
+          <mat-option *ngFor='let option of options' [value]="option" (click)='addDescriptor(option)'>
+            {{option}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </mat-expansion-panel>
   </mat-accordion>
-  <hr>
-  <mat-accordion *ngIf="(controlType.questionBase)">
+
+  <mat-accordion *ngIf="(controlType.descriptors)">
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title>
@@ -99,14 +112,41 @@
           View/Edit properties
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <div *ngFor="let desc of controlType.descriptors; index as index" >
+      <div *ngFor="let desc of controlType.descriptors; index as index">
         <app-descriptor (itemDeleted)="onDescriptorDeleted($event)" [description]="desc" (itemDeleted)="onItemDeleted($event)" [index]="index"></app-descriptor>
       </div>
       <button class="mat-raised-button mat-primary" (click)="addDescriptor()">Add a descriptor</button>
     </mat-expansion-panel>
   </mat-accordion>
-  <hr>
 
+  <!-- <mat-accordion *ngIf="(controlType.validators)">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Validators
+        </mat-panel-title>
+        <mat-panel-description>
+          Add/Remove validation
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <div fxLayout="column" fxLayoutAlign="space-around start">
+         <mat-checkbox [(ngModel)]="passwordValidaton" (change)="togglePassword()" [disabled]="passwordValidaton"> Add password validation </mat-checkbox>
+        <div *ngIf="controlType.validators.password">
+          <p>password</p>
+        </div>
+        <mat-checkbox [(ngModel)]="phoneValidation" (change)="togglePhone()"> Add phone validation </mat-checkbox>
+        <div *ngIf="controlType.validators.phone">
+          <p>phone</p>
+        </div>
+        <mat-checkbox [(ngModel)]="emailValidation" (change)="toggleEmail()"> Add email validation </mat-checkbox>
+        <div *ngIf="controlType.validators.email">
+          <p>email</p>
+        </div> 
+      </div>
+    </mat-expansion-panel> 
+  </mat-accordion> -->
+  <hr>
 </mat-dialog-content>
 <mat-dialog-actions>
   <button class="mat-raised-button mat-primary" (click)="close()">Close</button>

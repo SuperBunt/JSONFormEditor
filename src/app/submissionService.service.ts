@@ -40,18 +40,22 @@ export class SubmissionService {
     }
 
     deleteQuestion(id) {
-        const questionIndex = this.myForm.steps.map(question => {question.key}).indexOf(id);
+        const questionIndex = this.myForm.steps.map(question => { question.key }).indexOf(id);
         console.log(questionIndex);
         this.myForm.steps.splice(questionIndex, 1);
     }
 
     createQuestionType(type: string): any {
         console.log("Sevice: creating " + type)
-        let newControl = new Question();        
+        let newControl = new Question();
         newControl.controlType = type;
         newControl.placeholder = "";
-        newControl.conditionalProperties ={};
+        newControl.conditionalProperties = {};
         switch (type) {
+            case "textbox":
+                newControl.validators = {};
+                console.log(newControl)
+                return Promise.resolve(newControl);
             case "radio":
             case "dropdown":
                 newControl.orientation = "horizontal";
@@ -77,8 +81,8 @@ export class SubmissionService {
                 qb.regSysKey = Guid.create().toString() + ".addRegEditList[0]";
                 qb.questions = [];
                 newControl.questionBase = new QuestionBase;
-                let desc1 = {"order": 1,"label": "Descriptor 1", keys: [{"key": "add related key"},{"order": 1}]}
-                let desc2 = {"order": 2,"label": "Descriptor 2", keys: [{"key": "add related key"},{"order": 1}]}
+                let desc1 = { "order": 1, "label": "Descriptor 1", keys: [{ "key": "add related key" }, { "order": 1 }] }
+                let desc2 = { "order": 2, "label": "Descriptor 2", keys: [{ "key": "add related key" }, { "order": 1 }] }
                 newControl.descriptors = [];
                 newControl.descriptors.push(desc1);
                 return Promise.resolve(newControl);
@@ -100,6 +104,13 @@ export class SubmissionService {
                         ]
                     }
                 ]
+                return Promise.resolve(newControl);
+            case "password":
+                newControl.label = "Password";
+                newControl.regSysType = "string";
+                newControl.required = true;
+                newControl.validators = { "password": {} };
+                console.log(newControl)
                 return Promise.resolve(newControl);
             default:
                 console.log("Default")

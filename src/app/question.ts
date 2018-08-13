@@ -25,6 +25,7 @@ export class Question {
   defaultOpen: boolean;
   questionBase: QuestionBase;
   descriptors: any[];
+  validators: any;
 
   constructor() {
     this.controlType = "";
