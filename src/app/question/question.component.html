@@ -1,59 +1,26 @@
 <div *ngIf="controlType" class="control">
 	<div>
 		<h5>{{controlType.label}}</h5>
-		<label>Label:
-			<input [(ngModel)]="controlType.label" placeholder="Edit me" />
-
-		</label>
-		
-		<p>
-			<b>controlType: </b>{{controlType.controlType}}</p>
-		<p>
-			<b>key: </b>{{controlType.key}}</p>
+		<div *ngIf="controlType.label">
+			<label>Label:
+				<input [(ngModel)]="controlType.label" placeholder="Edit me" />
+			</label>
+		</div>
+		<div *ngIf="controlType.value">
+			<label>Value:
+				<input [(ngModel)]="controlType.value" placeholder="Edit me" />
+			</label>
+		</div>
+		<p><b>controlType: </b>{{controlType.controlType}}</p>
+		<p><b>key: </b>{{controlType.key}}</p>
 	</div>
 	<div class="button-row">
-			<button mat-raised-button (click)="openDialog()">
-				<i class="material-icons">edit</i>
-			</button>
-			<button mat-raised-button color="warn" (click)="deleteItem(controlType.key)">
-				<i class="fas fa-trash-alt"></i>
-			</button>
-		</div>
-	<!-- <div [hidden]="edit">
-		<div *ngIf="controlType.options">
-			<p>
-				<b>Options: </b>
-			</p>
-			<li *ngFor="let item of controlType.options index as i">
-				<label>
-					Value:
-					<input [(ngModel)]="item.value" placeholder="Edit me" />
-				</label>
-				<button type="button" name="add" class="btn btn-danger align-self-end" (click)="removeOption(i)">
-					<i class="fas fa-trash"></i>
-				</button>
-			</li>
-			<button type="button" name="add" class="btn btn-info align-self-end" (click)="addOption()">
-				<i class="fas fa-plus"></i>
-			</button>
-		</div>
-		<div class="checkbox">
-			<label>
-				<input type="checkbox" [(ngModel)]="isVisible" (change)="toggleVisible()">Visible</label>
-		</div>
-		<div class="checkbox">
-			<label>
-				<input type="checkbox" [(ngModel)]="isRequired" (change)="toggleRequired()">Required</label>
-		</div>
-		 <div class='btn btn-secondary btn-sm btn-block'>
-					<label>Add Conditional property:
-						<select  class='select-option' required [(ngModel)]='optionSelected' (ngModelChange)='AddCondition($event)'>
-							<option class='option' *ngFor='let option of conditions' [value]="option">{{option}}</option>
-						</select>
-					</label>
-				</div> 
-		<div *ngFor="let item of controlType.conditionalProperties">
-			<app-condition-properties [prop]="item"></app-condition-properties>
-		</div>
-	</div> -->
+		<button mat-raised-button (click)="openDialog()">
+			<i class="material-icons">edit</i>
+		</button>
+		<button mat-raised-button color="warn" (click)="deleteItem(controlType.key)">
+			<i class="fas fa-trash-alt"></i>
+		</button>
+	</div>
+
 </div>

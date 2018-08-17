@@ -1,8 +1,13 @@
 <h1 mat-dialog-title>Edit Question</h1>
 <mat-dialog-content *ngIf="controlType" class="control">
-  <div>
+  <div *ngIf="controlType.label">
     <label>Label:
       <input [(ngModel)]="controlType.label" placeholder="Edit me" />
+    </label>
+  </div>
+  <div *ngIf="controlType.value">
+    <label>Value:
+      <input [(ngModel)]="controlType.value" placeholder="Edit me" />
     </label>
   </div>
   <div>

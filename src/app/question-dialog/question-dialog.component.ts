@@ -23,7 +23,7 @@ export class QuestionDialogComponent implements OnInit {
   hasVisible: boolean = false;
   hasRequired: boolean = false;
   validators = ["email", "phone", "password", "none"]
-  options = ["textbox", "textarea", "radio", "dropdown", "password", "file-upload", "list", "multi-select", "free-note", "date", "checkbox", "quick-autocomplete"];
+  options = ["textbox", "textarea", "radio", "dropdown", "display", "password", "file-upload", "list", "multi-select", "free-note", "date", "checkbox", "quick-autocomplete"];
   optionSelected: any;
   numberOfTicks = 1;
   objectKeys: string[];
@@ -56,7 +56,8 @@ export class QuestionDialogComponent implements OnInit {
   }
 
   addOption() {
-    this.controlType.options.push({ key: this.numOptions++, value: "Option " + this.numOptions })
+    this.numOptions = this.numOptions + 1
+    this.controlType.options.push({ key: this.numOptions.toString(), value: "Option " + this.numOptions })
   }
 
   removeOption(i: number) {

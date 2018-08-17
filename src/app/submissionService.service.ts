@@ -15,8 +15,6 @@ export class SubmissionService {
 
     addTab(tab: Step) {
         this.myForm.steps ? this.myForm.steps.push(tab) : this.myForm.steps = [tab];
-        // const i = this.myForm.steps.length - 1;
-        // this.myForm.steps.splice(i, 0, tab);
     }
 
     deleteTab(id) {
@@ -41,7 +39,7 @@ export class SubmissionService {
 
     deleteQuestion(id) {
         const questionIndex = this.myForm.steps.map(question => { question.key }).indexOf(id);
-        console.log(questionIndex);
+        console.log("deleteQuestion:" + questionIndex);
         this.myForm.steps.splice(questionIndex, 1);
     }
 
@@ -56,14 +54,18 @@ export class SubmissionService {
                 newControl.validators = {};
                 console.log(newControl)
                 return Promise.resolve(newControl);
+            case "display":
+                delete newControl.label;
+                newControl.value = "Edit display value";
+                return Promise.resolve(newControl);
             case "radio":
             case "dropdown":
                 newControl.orientation = "horizontal";
                 let option1 = new Option();
-                option1.key = 1;
+                option1.key = "1";
                 option1.value = "Option 1";
                 let option2 = new Option();
-                option2.key = 2;
+                option2.key = "2";
                 option2.value = "Option 2";
                 newControl.options = [
                     option1, option2

@@ -42,6 +42,7 @@ export class TabComponent implements OnInit {
     newSection.controlType = "section";
     newSection.label = "SECTION " + (this.numSections + 1) +" Label"; 
     newSection.visible = true;
+    newSection.conditionalProperties = {};
     this. numSections = this.tab.questions.push(newSection);
   }
 

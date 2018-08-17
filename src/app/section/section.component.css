@@ -6,12 +6,50 @@
     padding: 15px;
 }
 
-.emphaise{
+.input_selector{
     width: 50%;
-    background-color: rgba(250, 251, 253, 0.911);
+    /* IE10+ */ 
+background-image: -ms-radial-gradient(center, ellipse farthest-corner, #FFFFFF 0%, #C5CBE6 100%);
+
+/* Mozilla Firefox */ 
+background-image: -moz-radial-gradient(center, ellipse farthest-corner, #FFFFFF 0%, #C5CBE6 100%);
+
+/* Opera */ 
+background-image: -o-radial-gradient(center, ellipse farthest-corner, #FFFFFF 0%, #C5CBE6 100%);
+
+/* Webkit (Safari/Chrome 10) */ 
+background-image: -webkit-gradient(radial, center center, 0, center center, 286, color-stop(0, #FFFFFF), color-stop(100, #C5CBE6));
+
+/* Webkit (Chrome 11+) */ 
+background-image: -webkit-radial-gradient(center, ellipse farthest-corner, #FFFFFF 0%, #C5CBE6 100%);
+
+/* W3C Markup */ 
+background-image: radial-gradient(ellipse farthest-corner at center, #FFFFFF 0%, #C5CBE6 100%);
     padding-left: 15px;
     padding-right: 15px;
+    border: 1px solid rgb(128, 125, 125);
     border-radius: 15px;
+    margin: auto;
+}
+
+.input_selector:hover{   
+/* IE10+ */ 
+background-image: -ms-radial-gradient(center, ellipse farthest-corner, #a7cfdf 0%, #C5CBE6 100%);
+
+/* Mozilla Firefox */ 
+background-image: -moz-radial-gradient(center, ellipse farthest-corner, #a7cfdf 0%, #C5CBE6 100%);
+
+/* Opera */ 
+background-image: -o-radial-gradient(center, ellipse farthest-corner, #a7cfdf 0%, #C5CBE6 100%);
+
+/* Webkit (Safari/Chrome 10) */ 
+background-image: -webkit-gradient(radial, center center, 0, center center, 286, color-stop(0, #a7cfdf), color-stop(100, #C5CBE6));
+
+/* Webkit (Chrome 11+) */ 
+background-image: -webkit-radial-gradient(center, ellipse farthest-corner, #a7cfdf 0%, #C5CBE6 100%);
+
+/* W3C Markup */ 
+background-image: radial-gradient(ellipse farthest-corner at center, #a7cfdf 0%, #C5CBE6 100%);
 }
 
 
