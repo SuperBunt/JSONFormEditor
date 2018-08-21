@@ -4,15 +4,11 @@
   
   <div>
     <label>Edit tab label:
-      <input [(ngModel)]="tab.label" placeholder="label" />
+      <input #box [(ngModel)]="tab.label" placeholder="label" (keyup.enter)="onEnter(box.value)"/>
     </label>
 
-
-
-    <!-- INSERT QUESTION COMPONENT of type SECTION -->
     <ul *ngFor="let item of tab.questions">
       <app-section [section]="item" (tabSelected)="onTabSelected($event)" (sectionDeleted)="onSectionDeleted($event)"></app-section>
-      <!-- <app-tab [tab]="tab"></app-tab> -->
     </ul>
     <button mat-raised-button (click)="AddSection()" color="primary">
       <i class="material-icons">add_box</i>Add a section

@@ -29,7 +29,7 @@
           </mat-panel-description>
         </mat-expansion-panel-header>
         <div fxLayout="column" fxLayoutAlign="space-around center">
-          <mat-checkbox fxFlex="50" fx [align]="end" [(ngModel)]="section.visible"> Default visible property = true: </mat-checkbox>
+          <mat-checkbox [(ngModel)]="section.visible"> Default visible property = true: </mat-checkbox>
           <div *ngFor="let item of section.conditionalProperties.visible">
             <hr>
             <app-condition [condition]="item"></app-condition>

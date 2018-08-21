@@ -109,16 +109,15 @@ export class QuestionDialogComponent implements OnInit {
     }
   }
 
-  addToQuestionBase() {
-    let toAdd: Question = new Question();
-    this.controlType.questionBase.questions.push(toAdd);
+  addControlToQuestionBase(type: string) {
+    this.myService.createQuestionType(type).then(x => this.controlType.questionBase.questions[0].questions.push(x));
   }
 
   onDeleteFromQuestionBase(id: string) {
     console.log("deleteFromQuestionBase " + id);
-    const questionIndex = this.controlType.questionBase.questions.map(question => question.key).indexOf(id);
+    const questionIndex = this.controlType.questionBase.questions[0].questions.map(question => question.key).indexOf(id);
     console.log(questionIndex);
-    this.controlType.questionBase.questions.splice(questionIndex, 1);
+    this.controlType.questionBase.questions[0].questions.splice(questionIndex, 1);
   }
 
   setValidator(val) {
@@ -141,7 +140,6 @@ export class QuestionDialogComponent implements OnInit {
   }
 
   addDescriptor(type: string) {
-    //let toAdd: Descriptor = new Descriptor();
     this.myService.createQuestionType(type).then(x => this.controlType.descriptors.push(x));
   }
   onDescriptorDeleted(index: number) {

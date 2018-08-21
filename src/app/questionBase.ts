@@ -7,7 +7,6 @@ export class QuestionBase {
 
     constructor() {
         this.regSysKey = Guid.create().toString() + ".addRegEdit[0]";
-        let question = new Question();
-        this.questions = [];
+        this.questions = [];        
     }
 }

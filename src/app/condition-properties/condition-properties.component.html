@@ -1,10 +1,10 @@
 
-<div *ngIf="prop.visible">
-    <app-condition [condition]="prop.visible" ></app-condition>
+<div *ngFor="let item of prop.visible">
+    <app-condition [condition]="item" ></app-condition>
 </div>
-<div *ngIf="prop.required">
-    <app-condition [condition]="prop.required" ></app-condition>
+<div *ngFor="let item of prop.required">
+    <app-condition [condition]="item" ></app-condition>
 </div>
-<div *ngIf="prop.label">
-    <app-condition [condition]="prop.label" ></app-condition>
+<div *ngFor="let item of prop.label">
+    <app-condition [condition]="item" ></app-condition>
 </div> 

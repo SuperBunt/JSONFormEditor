@@ -65,18 +65,18 @@
       </mat-expansion-panel-header>
       <div fxLayout="column" fxLayoutAlign="space-around start">
         <mat-checkbox [(ngModel)]="hasVisible" (change)="toggleVisible()"> Visible </mat-checkbox>
-        <div *ngIf="controlType.conditionalProperties.visible">
-          <app-condition [condition]="controlType.conditionalProperties.visible"></app-condition>
+        <div *ngFor="let item of controlType.conditionalProperties.visible">
+            <app-condition [condition]="item" ></app-condition>
         </div>
 
         <mat-checkbox [(ngModel)]="hasRequired" (change)="toggleRequired()"> Required </mat-checkbox>
-        <div *ngIf="controlType.conditionalProperties.required">
-          <app-condition [condition]="controlType.conditionalProperties.required"></app-condition>
+        <div *ngFor="let item of controlType.conditionalProperties.required">
+            <app-condition [condition]="item" ></app-condition>
         </div>
 
         <mat-checkbox [(ngModel)]="hasLabel" (change)="toggleLabel()"> Label </mat-checkbox>
-        <div *ngIf="controlType.conditionalProperties.label">
-          <app-condition [condition]="controlType.conditionalProperties.label"></app-condition>
+        <div *ngFor="let item of controlType.conditionalProperties.label">
+            <app-condition [condition]="item" ></app-condition>
         </div>
       </div>
     </mat-expansion-panel>
@@ -94,12 +94,12 @@
       </mat-expansion-panel-header>
       <label>regSysKey</label>
       <input class="full-width" [(ngModel)]="controlType.questionBase.regSysKey" placeholder="Is regEdit correct?" />
-      <div *ngFor="let question of controlType.questionBase.questions">
-        <app-question [controlType]="question" (itemDeleted)="onItemDeleted($event)"></app-question>
+      <div *ngFor="let question of controlType.questionBase.questions[0].questions">
+        <app-question [controlType]="question" (itemDeleted)="onDeleteFromQuestionBase($event)"></app-question>
       </div>
       <mat-form-field>
         <mat-select [(ngModel)]='optionSelected' placeholder="Add a question">
-          <mat-option *ngFor='let option of options' [value]="option" (click)='addDescriptor(option)'>
+          <mat-option *ngFor='let option of options' [value]="option" (click)='addControlToQuestionBase(option)'>
             {{option}}
           </mat-option>
         </mat-select>
@@ -123,38 +123,9 @@
       <button class="mat-raised-button mat-primary" (click)="addDescriptor()">Add a descriptor</button>
     </mat-expansion-panel>
   </mat-accordion>
-
-  <!-- <mat-accordion *ngIf="(controlType.validators)">
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Validators
-        </mat-panel-title>
-        <mat-panel-description>
-          Add/Remove validation
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-
-      <div fxLayout="column" fxLayoutAlign="space-around start">
-         <mat-checkbox [(ngModel)]="passwordValidaton" (change)="togglePassword()" [disabled]="passwordValidaton"> Add password validation </mat-checkbox>
-        <div *ngIf="controlType.validators.password">
-          <p>password</p>
-        </div>
-        <mat-checkbox [(ngModel)]="phoneValidation" (change)="togglePhone()"> Add phone validation </mat-checkbox>
-        <div *ngIf="controlType.validators.phone">
-          <p>phone</p>
-        </div>
-        <mat-checkbox [(ngModel)]="emailValidation" (change)="toggleEmail()"> Add email validation </mat-checkbox>
-        <div *ngIf="controlType.validators.email">
-          <p>email</p>
-        </div> 
-      </div>
-    </mat-expansion-panel> 
-  </mat-accordion> -->
   <hr>
 </mat-dialog-content>
 <mat-dialog-actions>
   <button class="mat-raised-button mat-primary" (click)="close()">Close</button>
   <button class="mat-raised-button mat-warn" (click)="deleteItem(controlType.key)">Delete</button>
-  <!-- <button class="mat-raised-button mat-primary"(click)="save()">Save</button> -->
 </mat-dialog-actions>

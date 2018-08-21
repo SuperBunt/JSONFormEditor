@@ -79,33 +79,25 @@ export class SubmissionService {
                 newControl.conditionalProperties.push(visible);
                 let required: any = { "required": [cond] }
                 newControl.conditionalProperties.push(required);
-                let qb: Question = new Question();
-                qb.regSysKey = Guid.create().toString() + ".addRegEditList[0]";
-                qb.questions = [];
-                newControl.questionBase = new QuestionBase;
-                let desc1 = { "order": 1, "label": "Descriptor 1", keys: [{ "key": "add related key" }, { "order": 1 }] }
-                let desc2 = { "order": 2, "label": "Descriptor 2", keys: [{ "key": "add related key" }, { "order": 1 }] }
-                newControl.descriptors = [];
-                newControl.descriptors.push(desc1);
+                //newControl.descriptors.push(desc2);
                 return Promise.resolve(newControl);
             case "list":
                 newControl.buttonText = "Add";
                 newControl.defaultOpen = true;
                 newControl.itemName = "List of ?"
-                newControl.questionBase = new QuestionBase();
-                newControl.descriptors = [
-                    {
-                        "order": 1,
-                        "label": "Description label",
-                        "visible": true,
-                        "keys": [
-                            {
-                                "key": "@",
-                                "order": 1
-                            }
-                        ]
-                    }
-                ]
+                newControl.questionBase = new QuestionBase;
+                newControl.questionBase.regSysKey = Guid.create().toString() + ".addRegEditList[0]";
+                newControl.questionBase.questions = [];
+                let section = new Question();
+                delete section.label;
+                delete section.required;
+                section.controlType = "section";
+                section.questions = [];
+                newControl.questionBase.questions.push(section);
+                let desc1 = { "order": 1, "label": "Descriptor 1", keys: [{ "key": "add related key" }, { "order": 1 }] }
+                let desc2 = { "order": 2, "label": "Descriptor 2", keys: [{ "key": "add related key" }, { "order": 1 }] }
+                newControl.descriptors = [];
+                newControl.descriptors.push(desc1);
                 return Promise.resolve(newControl);
             case "password":
                 newControl.label = "Password";

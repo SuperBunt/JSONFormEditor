@@ -34,4 +34,5 @@ export class Question {
     this.visible = true;
     this.required = false;
   }
+
 }
