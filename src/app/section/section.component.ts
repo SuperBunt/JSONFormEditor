@@ -22,7 +22,7 @@ export class SectionComponent implements OnInit {
 
   @Input() section: Question;
   numQuestions = 0;
-  options = ["textbox", "textarea", "radio", "display", "dropdown", "password", "file-upload", "list", "multi-select", "free-note", "date", "checkbox", "quick-autocomplete"];
+  options = ["textbox", "textarea", "radio", "display", "section", "dropdown", "password", "file-upload", "list", "multi-select", "free-note", "date", "checkbox", "quick-autocomplete"];
   optionSelected: any;
   numberOfTicks = 1;
   show: boolean = true;
@@ -39,19 +39,9 @@ export class SectionComponent implements OnInit {
 
   ngOnInit() {
     this.options.sort();
-    this.section.questions = [];
+    this.section.conditionalProperties = {}
     this.hasVisible = this.section.conditionalProperties.visible;
     this.buttonValue = this.section.conditionalProperties.visible ? "Remove conditions" : "Add conditions";
-  }
-
-  AddControlType(): void {
-    console.log("adding control type")
-    let newControl: Question = new Question();
-    newControl.key = Guid.create().toString();
-    newControl.controlType = "textbox";
-    newControl.label = "Edit this Label";
-    newControl.visible = true;
-    this.openDialog(newControl);
   }
 
   openDialog(newControl: Question): void {

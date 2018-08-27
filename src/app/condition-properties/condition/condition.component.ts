@@ -8,7 +8,7 @@ import { ConditionValues } from '../../conditionValues';
 })
 export class ConditionComponent implements OnInit {
   
-  @Input() condition: ConditionValues;
+  @Input() condition: any;
   operators = ["CONTAINS","EQUAL_TO","NOT_EQUAL_TO","LESS_THAN","GREATER_THAN","LESS_THAN_OR_EQUAL_TO","GREATER_THAN_OR_EQUAL_TO"]
   operatorSelected: any;
   constructor() { }

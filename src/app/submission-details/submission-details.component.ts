@@ -9,7 +9,7 @@ import { MatDialogConfig } from '../../../node_modules/@angular/material';
 })
 export class SubmissionDetailsComponent implements OnInit {
 
-  @Input() submission: Submission;
+  @Input() submission: any;
 
   constructor() { }
 

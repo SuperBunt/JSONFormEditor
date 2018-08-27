@@ -1,5 +1,5 @@
 import { SubmissionDetails } from "app/submissionDetails";
-import { Step } from "app/step";
+import { Step, IStep } from "app/step";
 
 export class Submission {
     version: string;
@@ -10,12 +10,13 @@ export class Submission {
     constructor(name: string) {
         this.displayName = name;
         this.submissionDetails = new SubmissionDetails();
-        let toAdd: Step = new Step();
-        toAdd.controlType = "step";
-        toAdd.label = "Tab 1"
-        toAdd.order = 1;
-        toAdd.questions = [];
+        // let toAdd = new Step();
+        // toAdd.controlType = "step";
+        // toAdd.label = "Tab 1"
+        // toAdd.order = 1;
+        // toAdd.visible = true;
+        // toAdd.questions = [];
         this.steps = [];
-        this.steps.push(toAdd)
+        //this.steps.push(toAdd)
     }
 }

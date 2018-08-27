@@ -14,7 +14,7 @@ import { fadeInAnimation } from '../_animations/fade-in';
 })
 export class QuestionComponent implements OnInit {
 
-  @Input() controlType: Question;
+  @Input() controlType: any;
   @Output() itemDeleted: EventEmitter<string> = new EventEmitter();
   isVisible: boolean;
   isRequired: boolean = false;

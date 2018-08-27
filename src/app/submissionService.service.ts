@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Submission } from './submission';
-import { Question } from './question';
+import { Question, IQuestion } from './question';
 import { Guid } from '../../node_modules/guid-typescript';
 import { Step } from './step';
 import { Option } from './option';
@@ -13,11 +13,20 @@ export class SubmissionService {
     numTabs = 0
     numSections = 0
 
-    addTab(tab: Step) {
-        this.myForm.steps ? this.myForm.steps.push(tab) : this.myForm.steps = [tab];
+    addTab():void {
+        console.log(this.numTabs);
+        let toAdd = new Step();
+        this.numTabs++
+        toAdd.label = "TAB " + (this.numTabs);
+        toAdd.controlType = "step";
+        toAdd.order = this.myForm.steps ? this.myForm.steps.length + 1 : 1;
+        toAdd.key = Guid.create().toString();
+        toAdd.visible = true;
+        toAdd.questions = [];
+        this.myForm.steps ? this.myForm.steps.push(toAdd) : this.myForm.steps = [toAdd];
     }
 
-    deleteTab(id) {
+    deleteTab(id):void {
         const questionIndex = this.myForm.steps.map(question => question.key).indexOf(id);
         console.log(questionIndex);
         this.myForm.steps.splice(questionIndex, 1);
@@ -43,18 +52,31 @@ export class SubmissionService {
         this.myForm.steps.splice(questionIndex, 1);
     }
 
-    createQuestionType(type: string): any {
+    defaultControlType(type: string): Question {
+        let control = new Question();
+        control.controlType = type;
+        control.key = Guid.create().toString();
+        control.label = "";
+        control.visible = true;
+        control.required = false;
+        control.conditionalProperties = {};
+
+        return control
+    }
+
+    createQuestionType(type: string): Promise<Question> {
         console.log("Sevice: creating " + type)
-        let newControl = new Question();
-        newControl.controlType = type;
-        newControl.placeholder = "";
-        newControl.conditionalProperties = {};
+        let newControl = this.defaultControlType(type);
         switch (type) {
+            case "section":
+                newControl.questions = [];
+                delete newControl.placeholder;
+                return Promise.resolve(newControl);
             case "textbox":
                 newControl.validators = {};
                 console.log(newControl)
                 return Promise.resolve(newControl);
-            case "display":
+            case "free-note":
                 delete newControl.label;
                 newControl.value = "Edit display value";
                 return Promise.resolve(newControl);
@@ -89,9 +111,9 @@ export class SubmissionService {
                 newControl.questionBase.regSysKey = Guid.create().toString() + ".addRegEditList[0]";
                 newControl.questionBase.questions = [];
                 let section = new Question();
+                section.controlType = "section";
                 delete section.label;
                 delete section.required;
-                section.controlType = "section";
                 section.questions = [];
                 newControl.questionBase.questions.push(section);
                 let desc1 = { "order": 1, "label": "Descriptor 1", keys: [{ "key": "add related key" }, { "order": 1 }] }
@@ -110,7 +132,16 @@ export class SubmissionService {
                 console.log("Default")
                 return Promise.resolve(newControl);
         }
+    }
 
+    standardVerificationTab(): Promise<Question> {
+        // console.log("standardVerificationTab" + key)
+        // const index = this.myForm.steps.map(question => question.key).indexOf(key);
+        let personDetails: IQuestion;
+        personDetails.controlType = "section";
+        personDetails.label = "Details of the Person(s) who are certifying that the information provided is correct";
+        personDetails.questions = [];
+        return Promise.resolve(personDetails)
     }
 
 }

@@ -1,4 +1,4 @@
-<div *ngIf="controlType" class="control">
+<div fxFlexOffset="10" fxFlex="80%" *ngIf="controlType" class="control">
 	<div>
 		<h5>{{controlType.label}}</h5>
 		<div *ngIf="controlType.label">
@@ -11,8 +11,10 @@
 				<input [(ngModel)]="controlType.value" placeholder="Edit me" />
 			</label>
 		</div>
-		<p><b>controlType: </b>{{controlType.controlType}}</p>
-		<p><b>key: </b>{{controlType.key}}</p>
+		<p>
+			<b>controlType: </b>{{controlType.controlType}}</p>
+		<p>
+			<b>key: </b>{{controlType.key}}</p>
 	</div>
 	<div class="button-row">
 		<button mat-raised-button (click)="openDialog()">
@@ -21,6 +23,12 @@
 		<button mat-raised-button color="warn" (click)="deleteItem(controlType.key)">
 			<i class="fas fa-trash-alt"></i>
 		</button>
+		<i *ngIf="controlType.visible" class="material-icons">
+				visibility
+			</i>
+			<i *ngIf="controlType.required" class="material-icons">
+				check_box
+			</i>
 	</div>
 
 </div>

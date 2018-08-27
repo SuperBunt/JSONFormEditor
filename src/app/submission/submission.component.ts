@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Submission } from '../submission'
-import { Step } from "app/step";
+import { Step, IStep } from "app/step";
 import { Guid } from "guid-typescript/dist/guid";
 import { SubmissionService } from '../submissionService.service';
 import { fadeInAnimation } from '../_animations/fade-in';
@@ -20,7 +20,7 @@ import { SubmissionDialogComponent } from '../submission-dialog/submission-dialo
 })
 export class SubmissionComponent implements OnInit {
   selectedTab: number;
-  numTabs = 1;
+  numTabs = 0;
   expanded: boolean;
   prettyJSON: string;
   state: string = 'show';
@@ -55,16 +55,7 @@ export class SubmissionComponent implements OnInit {
   }
 
   AddTab() {
-    console.log(this.numTabs);
-    let toAdd: Step = new Step();
-    this.numTabs++
-    toAdd.label = "TAB " + (this.numTabs);
-    toAdd.controlType = "step";
-    toAdd.order = this.myForm.steps ? this.myForm.steps.length + 1 : 1;
-    toAdd.key = Guid.create().toString();
-    toAdd.visible = true;
-    toAdd.questions = [];
-    this.myService.addTab(toAdd);
+    this.myService.addTab();
     this.selectedTab = this.myForm.steps.length;
     console.log("tab index: " + this.selectedTab);
     //this.numTabs = this.myForm.steps.push(toAdd);

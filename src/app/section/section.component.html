@@ -1,4 +1,4 @@
-<mat-card fxFlex="80%" class="section" *ngIf="section">
+<mat-card fxFlexOffset="5" fxFlex="90%" class="section" *ngIf="section">
 
   <h3>
     <mat-slide-toggle matTooltip="Show/hide section" (click)="this.animationState = this.animationState === 'out' ? 'in' : 'out'"></mat-slide-toggle>
@@ -46,8 +46,18 @@
     </mat-accordion>
 
     <div *ngFor="let item of section.questions; index as i">
-      <app-question [controlType]="item" (itemDeleted)="onItemDeleted($event)"></app-question>
+      <ng-container *ngIf='item.controlType !== "section"; else section'>
+        <app-question [controlType]="item" (itemDeleted)="onItemDeleted($event)"></app-question>
+      </ng-container>
+      <ng-template #section>
+          <app-section [section]="item" (tabSelected)="onTabSelected($event)" (sectionDeleted)="onSectionDeleted($event)"></app-section>
+        </ng-template>
     </div>
+
+
+   
+
+
 
     <mat-form-field class="input_selector">
       <mat-select [(ngModel)]='optionSelected' placeholder="Add a question">

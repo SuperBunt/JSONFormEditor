@@ -1,15 +1,17 @@
 <h1 mat-dialog-title>Edit Question</h1>
 <mat-dialog-content *ngIf="controlType" class="control">
-  <div *ngIf="controlType.label">
+  <div *ngIf="controlType.controlType !='free-note'; else value">
     <label>Label:
       <input [(ngModel)]="controlType.label" placeholder="Edit me" />
     </label>
   </div>
-  <div *ngIf="controlType.value">
+  <ng-template #value>
+  <div *ngIf="controlType.controlType =='free-note'">
     <label>Value:
       <input [(ngModel)]="controlType.value" placeholder="Edit me" />
     </label>
   </div>
+</ng-template>
   <div>
     <b>Controltype: </b>{{controlType.controlType}} </div>
   <div>

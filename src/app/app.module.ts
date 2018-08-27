@@ -73,10 +73,7 @@ import { SubmissionDialogComponent } from './submission-dialog/submission-dialog
     SubmissionService
   ],
   bootstrap: [
-    AppComponent,
-    SubmissionComponent,
-    QuestionComponent,
-    TabComponent
+    AppComponent
   ],
   entryComponents: [QuestionDialogComponent, SubmissionDialogComponent]
 })

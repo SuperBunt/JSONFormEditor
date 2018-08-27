@@ -23,7 +23,7 @@ export class QuestionDialogComponent implements OnInit {
   hasVisible: boolean = false;
   hasRequired: boolean = false;
   validators = ["email", "phone", "password", "none"]
-  options = ["textbox", "textarea", "radio", "dropdown", "display", "password", "file-upload", "list", "multi-select", "free-note", "date", "checkbox", "quick-autocomplete"];
+  options = ["textbox", "textarea", "radio", "dropdown", "display", "password", "file-upload", "section","list", "multi-select", "free-note", "date", "checkbox", "quick-autocomplete"];
   optionSelected: any;
   numberOfTicks = 1;
   objectKeys: string[];
