@@ -74,7 +74,6 @@ export class SubmissionService {
                 return Promise.resolve(newControl);
             case "textbox":
                 newControl.validators = {};
-                console.log(newControl)
                 return Promise.resolve(newControl);
             case "free-note":
                 delete newControl.label;

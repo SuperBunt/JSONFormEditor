@@ -22,14 +22,18 @@ export class QuestionDialogComponent implements OnInit {
   hasLabel: boolean = false;
   hasVisible: boolean = false;
   hasRequired: boolean = false;
-  validators = ["email", "phone", "password", "none"]
-  options = ["textbox", "textarea", "radio", "dropdown", "display", "password", "file-upload", "section","list", "multi-select", "free-note", "date", "checkbox", "quick-autocomplete"];
+  validators = ["email", "phone", "password", "number", "none"];
+  regTypes = ["string", "number", "boolean"]
+  options = ["textbox", "textarea", "radio", "dropdown", "display", "password", "file-upload", "section", "list", "multi-select", "free-note", "date", "checkbox", "quick-autocomplete"];
   optionSelected: any;
   numberOfTicks = 1;
   objectKeys: string[];
+  regEdit = false;
   passwordValidaton: boolean;
   emailValidation: boolean;
   phoneValidation: boolean;
+  numberValidation: boolean;
+  chosenValidator: string;
 
   constructor(
     public myService: SubmissionService,
@@ -39,10 +43,9 @@ export class QuestionDialogComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.hasVisible = this.controlType.conditionalProperties.hasOwnProperty("visible")
-    this.hasLabel = this.controlType.conditionalProperties.hasOwnProperty("label")
-    this.hasRequired = this.controlType.conditionalProperties.hasOwnProperty("required")
     this.options.sort();
+    this.regTypes.sort();
+    this.chosenValidator = this.controlType.validators ? Object.keys(this.controlType.validators)[0] : ""
   }
 
   close() {
@@ -120,10 +123,11 @@ export class QuestionDialogComponent implements OnInit {
     this.controlType.questionBase.questions[0].questions.splice(questionIndex, 1);
   }
 
-  setValidator(val) {
-    console.log("setValidator: " + val.value);
+  setValidator(val: string) {
+    console.log("setValidator: " + val);
     this.controlType.validators = {}
-    switch (val.value) {
+    this.chosenValidator = val;
+    switch (val) {
       case "email":
         this.controlType.validators.email = {}
         break;
@@ -133,10 +137,19 @@ export class QuestionDialogComponent implements OnInit {
       case "phone":
         this.controlType.validators.phone = {}
         break;
+      case "number":
+        this.controlType.validators.regex = {
+          "regExp": "^[\\d]",
+          "message": "Only numeric values are allowed"
+        }
+        break;
       case "none":
         break;
-
     }
+  }
+
+  setRegsysType(type: string) {
+    this.controlType.regSysType = type
   }
 
   addDescriptor(type: string) {

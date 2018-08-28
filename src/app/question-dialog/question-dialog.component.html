@@ -6,12 +6,12 @@
     </label>
   </div>
   <ng-template #value>
-  <div *ngIf="controlType.controlType =='free-note'">
-    <label>Value:
-      <input [(ngModel)]="controlType.value" placeholder="Edit me" />
-    </label>
-  </div>
-</ng-template>
+    <div *ngIf="controlType.controlType =='free-note'">
+      <label>Value:
+        <input [(ngModel)]="controlType.value" placeholder="Edit me" />
+      </label>
+    </div>
+  </ng-template>
   <div>
     <b>Controltype: </b>{{controlType.controlType}} </div>
   <div>
@@ -25,12 +25,23 @@
     <mat-checkbox [align]="end" [(ngModel)]="controlType.visible">Visible</mat-checkbox> &nbsp;&nbsp;&nbsp;&nbsp;
     <mat-checkbox [align]="end" [(ngModel)]="controlType.required">Required</mat-checkbox>
   </div>
+  <div >
+    <label>
+      regSysKey:
+      <input [(ngModel)]="controlType.regSysKey" placeholder="Edit me" />
+    </label>
+    <mat-radio-group fxLayout="row" fxLayoutAlign="space-around center" (change)="setRegsysType($event.value)" [(ngModel)]="controlType.regSystype">
+      <mat-radio-button class="example-radio-button" *ngFor="let reg of regTypes" [value]="reg">
+        {{reg}}
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
   <hr>
   <ng-container *ngIf="(controlType.controlType == 'textbox')">
     <label>
       <b>Add a validation:&nbsp;&nbsp;</b>
     </label>
-    <mat-radio-group fxLayout="row" fxLayoutAlign="space-around start" (change)="setValidator($event)">
+    <mat-radio-group fxLayout="row" fxLayoutAlign="space-around start" (change)="setValidator($event.value)" [(ngModel)]="chosenValidator">
       <mat-radio-button class="example-radio-button" *ngFor="let valid of validators" [value]="valid">
         {{valid}}
       </mat-radio-button>
@@ -67,18 +78,24 @@
       </mat-expansion-panel-header>
       <div fxLayout="column" fxLayoutAlign="space-around start">
         <mat-checkbox [(ngModel)]="hasVisible" (change)="toggleVisible()"> Visible </mat-checkbox>
-        <div *ngFor="let item of controlType.conditionalProperties.visible">
-            <app-condition [condition]="item" ></app-condition>
+        <div *ngIf="hasVisible">
+          <ng-container *ngFor="let item of controlType.conditionalProperties.visible">
+            <app-condition [condition]="item"></app-condition>
+          </ng-container>
         </div>
 
         <mat-checkbox [(ngModel)]="hasRequired" (change)="toggleRequired()"> Required </mat-checkbox>
-        <div *ngFor="let item of controlType.conditionalProperties.required">
-            <app-condition [condition]="item" ></app-condition>
+        <div *ngIf="hasRequired">
+          <ng-container *ngFor="let item of controlType.conditionalProperties.required">
+            <app-condition [condition]="item"></app-condition>
+          </ng-container>
         </div>
 
         <mat-checkbox [(ngModel)]="hasLabel" (change)="toggleLabel()"> Label </mat-checkbox>
-        <div *ngFor="let item of controlType.conditionalProperties.label">
-            <app-condition [condition]="item" ></app-condition>
+        <div *ngIf="hasLabel">
+          <ng-container *ngFor="let item of controlType.conditionalProperties.label">
+            <app-condition [condition]="item"></app-condition>
+          </ng-container>
         </div>
       </div>
     </mat-expansion-panel>
