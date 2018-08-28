@@ -1,10 +1,16 @@
-<div *ngIf="tab" class="tab" >
-  
-    <h1>{{tab.label}}<span ><button  class="right" matTooltip="Delete this tab" mat-fab (click)="deleteTab(tab.key)" color="warn"><i class="material-icons">delete</i></button></span></h1>
- 
+<div *ngIf="tab" class="tab">
+
+  <h1>{{tab.label}}
+    <span>
+      <button class="right" matTooltip="Delete this tab" mat-fab (click)="deleteTab(tab.key)" color="warn">
+        <i class="material-icons">delete</i>
+      </button>
+    </span>
+  </h1>
+
   <div>
     <label>Edit tab label:
-      <input #box [(ngModel)]="tab.label" placeholder="label" (keyup.enter)="onEnter(box.value)"/>
+      <input #box [(ngModel)]="tab.label" placeholder="label" (keyup.enter)="onEnter(box.value)" />
     </label>
 
     <ng-container *ngFor="let item of tab.questions">

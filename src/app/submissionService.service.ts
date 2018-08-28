@@ -9,7 +9,7 @@ import { QuestionBase } from './questionBase';
 
 @Injectable()
 export class SubmissionService {
-    myForm: Submission = new Submission("Submission Form");
+    myForm: Submission = Submission.create();
     numTabs = 0
     numSections = 0
 

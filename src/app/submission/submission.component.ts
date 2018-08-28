@@ -24,6 +24,7 @@ export class SubmissionComponent implements OnInit {
   expanded: boolean;
   prettyJSON: string;
   state: string = 'show';
+  paste = false;
 
   constructor(
     public myService: SubmissionService,
@@ -37,6 +38,11 @@ export class SubmissionComponent implements OnInit {
 
   get myForm() {
     return this.myService.myForm;
+  }
+
+  set myForm(_form){
+    this.myService.myForm = _form;
+    console.log(typeof(this.myForm));
   }
 
   openDialog(): void {
@@ -68,6 +74,10 @@ export class SubmissionComponent implements OnInit {
 
   changeTab() {
     this.state = (this.state === 'small' ? 'large' : 'small');
+  }
+
+  pasteJSON(value: string){
+    this.myForm = JSON.parse(value);
   }
 
 }

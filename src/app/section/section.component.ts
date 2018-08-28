@@ -20,7 +20,7 @@ import { SlideInOutAnimation } from '../_animations/slide-in-out';
 })
 export class SectionComponent implements OnInit {
 
-  @Input() section: Question;
+  @Input() section: any;
   numQuestions = 0;
   options = ["textbox", "textarea", "radio", "display", "section", "dropdown", "password", "file-upload", "list", "multi-select", "free-note", "date", "checkbox", "quick-autocomplete"];
   optionSelected: any;
