@@ -68,8 +68,22 @@ export class SubmissionComponent implements OnInit {
   }
 
   ViewPrettyJSON(): void {
-    this.prettyJSON = JSON.stringify(this.myForm, undefined, 2);
-    console.log("View json")
+    this.prettyJSON = JSON.stringify(this.myForm, undefined, 2); 
+  }
+
+  copyToClipboard(){
+    console.log("copy");
+    let selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = this.prettyJSON;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
   }
 
   changeTab() {

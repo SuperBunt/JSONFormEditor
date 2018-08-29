@@ -13,7 +13,7 @@ export class SubmissionService {
     numTabs = 0
     numSections = 0
 
-    addTab():void {
+    addTab(): void {
         console.log(this.numTabs);
         let toAdd = new Step();
         this.numTabs++
@@ -26,7 +26,7 @@ export class SubmissionService {
         this.myForm.steps ? this.myForm.steps.push(toAdd) : this.myForm.steps = [toAdd];
     }
 
-    deleteTab(id):void {
+    deleteTab(id): void {
         const questionIndex = this.myForm.steps.map(question => question.key).indexOf(id);
         console.log(questionIndex);
         this.myForm.steps.splice(questionIndex, 1);
@@ -37,6 +37,7 @@ export class SubmissionService {
     }
 
     deleteSection(id) {
+        console.log("deleteSection in service")
         const questionIndex = this.myForm.steps.map(question => question.key).indexOf(id);
         console.log(questionIndex);
         this.myForm.steps.splice(questionIndex, 1);
@@ -47,6 +48,7 @@ export class SubmissionService {
     }
 
     deleteQuestion(id) {
+        console.log("deleteQuestion in service")
         const questionIndex = this.myForm.steps.map(question => { question.key }).indexOf(id);
         console.log("deleteQuestion:" + questionIndex);
         this.myForm.steps.splice(questionIndex, 1);
@@ -62,6 +64,40 @@ export class SubmissionService {
         control.conditionalProperties = {};
 
         return control
+    }
+
+    getKeys(index: number): Promise<any> {
+        let filtered = [];
+        console.log("getKeys");
+
+        this.myForm.steps[index].questions
+            .forEach(x => {
+                if (x.label !== "") {
+                    let obj = {};
+                    obj["label"] = x.label
+                    obj["key"] = x.key
+                    filtered.push(obj)
+                }
+                x.questions.forEach(y => {
+                    let obj = {};
+                    obj["label"] = x.label
+                    obj["key"] = x.key
+                    if (y.label !== "") {
+                        let obj = {};
+                        obj["label"] = y.label
+                        obj["key"] = y.key
+                        filtered.push(obj)
+                    }
+                    //filtered.push(Object.entries(y).filter((item) =>  item.map))
+                })
+            })
+        return Promise.resolve(filtered)
+    }
+
+    getEntries() {
+        this.myForm.steps[0].questions.forEach(q => {
+
+        })
     }
 
     createQuestionType(type: string): Promise<Question> {
@@ -125,7 +161,6 @@ export class SubmissionService {
                 newControl.regSysType = "string";
                 newControl.required = true;
                 newControl.validators = { "password": {} };
-                console.log(newControl)
                 return Promise.resolve(newControl);
             default:
                 console.log("Default")

@@ -1,50 +1,53 @@
-<div *ngIf="condition" fxLayout="column" >
-  <div fxLayout="row">
+<div *ngIf="condition" fxLayout="column">
+
+  <div fxLayoutAlign="space-between start">
     <label>propertyValue&nbsp;&nbsp;&nbsp;&nbsp;</label>
     <mat-radio-group [(ngModel)]="condition.propertyValue" [ngModelOptions]="{standalone: true}">
       <mat-radio-button [value]="true" checked>True</mat-radio-button>
       <mat-radio-button [value]="false">False</mat-radio-button>
     </mat-radio-group>
   </div>
-  <div fxLayout="row" fxLayoutAlign="space-between start">
-    <label fxFlex="20">Left</label>
-    <input fxFlex="80" type="textbox" [(ngModel)]="condition.left" name="left">
-  </div>
-  <div fxLayout="row" fxLayoutAlign="space-between start">
-    <label fxFlex="20">Operator</label>
-    <select  class='select-option' required [(ngModel)]='condition.operator' [ngModelOptions]="{standalone: true}">
-      <option  class='option' *ngFor='let operator of operators' [value]="operator">{{operator}}</option>
-    </select>
-  </div>
-  <div fxLayout="row" fxLayoutAlign="space-between start">
-    <label fxFlex="20">Right</label>
-    <input fxFlex="80" type="textbox" [(ngModel)]="condition.right" name="right">
-  </div>
-</div>
 
-<!-- <div *ngFor="let item of condition.required">
-  <h4>Required</h4>
-  <form>
-    <div class="radio">
-      <label>
-        <input type="radio" [(ngModel)]="item.propertyValue" [value]="true" name="optradio" checked>True</label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" [(ngModel)]="item.propertyValue" [value]="false" name="optradio">False</label>
-    </div>
-    <div>
-      <label>Left</label>
-      <input type="textbox" [(ngModel)]="item.left" name="left" checked>
-      <div >
-          <label>Operator:
-              <select class='select-option' required [(ngModel)]='item.operator' [ngModelOptions]="{standalone: true}">
-                  <option class='option' *ngFor='let operator of operators' [value]="operator">{{operator}}</option>
-                </select>
-          </label>
-        </div>      
-      <label>Right</label>
-      <input type="textbox" [(ngModel)]="item.right" name="right" checked>
-    </div>
-  </form>
-</div> -->
+  <div  fxLayoutAlign="space-between center">
+    <label>Left</label>
+    <mat-form-field class="input_selector" *ngIf="condition.operator != 'CONTAINS'; else leftInput">
+      <mat-select placeholder="Select the related control">
+        <mat-option *ngFor='let key of keys' [value]="key.key" (click)='selectLeft(key.key)'>
+          {{key.label}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <ng-template #leftInput>
+      <mat-form-field>
+        <input #box matInput placeholder="Use comma separated values" value=""/>
+        <button mat-button matSuffix mat-icon-button type="text" (click)="addValue(box.value)" matTooltip="Press button to store values">
+           <i class="material-icons">add_circle</i>
+        </button>
+        <!-- <button (click)="addValue(box.value)"><mat-icon>add_circle</mat-icon></button> -->
+      </mat-form-field>
+
+    </ng-template>
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <label>Operator</label>
+    <mat-form-field class="input_selector">
+      <mat-select >
+        <mat-option *ngFor='let operator of operators' [value]="operator" (click)='selectOperator(operator)'>{{operator}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <label>Right</label>
+    <mat-form-field class="input_selector">
+      <mat-select >
+        <mat-option *ngFor='let key of keys' [value]="key.key" (click)='selectRight(key.key)'>
+          {{key.label}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+</div>

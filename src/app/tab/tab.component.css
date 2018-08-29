@@ -2,8 +2,6 @@ ul {
   list-style-type: none;
 }
 
-
-
 .myButton {
 	background-color:#0d6d08;
 	-moz-border-radius:28px;
@@ -24,13 +22,14 @@ ul {
 }
 
 .tab{
-	padding: 20px;
+	padding: 60px;
 	display: flex;
 	flex-direction: column;
 	flex-wrap: nowrap;
-	justify-content: flex-start;
+	justify-content: center;
 	align-items: stretch;
 	align-content: stretch;
-	width: 80%;
-	margin:auto;
+	width: 60%;
+	margin: auto;
+	border: 1px solid grey;
 }

@@ -39,7 +39,6 @@ export class SectionComponent implements OnInit {
 
   ngOnInit() {
     this.options.sort();
-    this.section.conditionalProperties = {}
     this.hasVisible = this.section.conditionalProperties.visible;
     this.buttonValue = this.section.conditionalProperties.visible ? "Remove conditions" : "Add conditions";
   }

@@ -54,11 +54,6 @@
         </ng-template>
     </div>
 
-
-   
-
-
-
     <mat-form-field class="input_selector">
       <mat-select [(ngModel)]='optionSelected' placeholder="Add a question">
         <mat-option *ngFor='let option of options' [value]="option" (click)='AddInput(option)'>

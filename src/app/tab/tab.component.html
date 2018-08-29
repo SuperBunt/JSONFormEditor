@@ -16,8 +16,10 @@
     <ng-container *ngFor="let item of tab.questions">
       <app-section [section]="item" (tabSelected)="onTabSelected($event)" (sectionDeleted)="onSectionDeleted($event)"></app-section>
     </ng-container>
-    <button mat-raised-button (click)="AddSection()" color="primary">
-      <i class="material-icons">add_box</i>Add a section
-    </button>
+    <div fxLayoutAlign="end">
+      <button mat-raised-button (click)="AddSection()" color="primary">
+          Add a section&nbsp;<i class="material-icons">add_circle</i>
+      </button>
+    </div>
   </div>
 </div>
