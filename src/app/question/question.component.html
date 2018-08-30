@@ -1,34 +1,36 @@
 <div fxFlexOffset="10" fxFlex="80%" *ngIf="controlType" class="control">
 	<div>
-		<h5>{{controlType.label}}</h5>
 		<div *ngIf="controlType.label">
-			<label>Label:
+			<h5>{{controlType.label}}</h5>
+			<!-- <label>Label:
 				<input [(ngModel)]="controlType.label" placeholder="Edit me" />
-			</label>
+			</label> -->
 		</div>
 		<div *ngIf="controlType.value">
-			<label>Value:
+			<h5>{{controlType.value}}</h5>
+			<!-- <label>Value:
 				<input [(ngModel)]="controlType.value" placeholder="Edit me" />
-			</label>
+			</label> -->
 		</div>
-		<p>
-			<b>controlType: </b>{{controlType.controlType}}</p>
-		<p>
-			<b>key: </b>{{controlType.key}}</p>
+		<div class="warning" *ngIf="!controlType.value && !controlType.label">This control has no label</div>
 	</div>
-	<div class="button-row">
+
+	<div fxLayoutAlign="start center" class="question_group">
+
+		<b fxFlex="15%">{{controlType.controlType}}</b>
+
 		<button mat-raised-button (click)="openDialog()">
 			<i class="material-icons">edit</i>
 		</button>
 		<button mat-raised-button color="warn" (click)="deleteItem(controlType.key)">
 			<i class="fas fa-trash-alt"></i>
 		</button>
-		<i *ngIf="controlType.visible" class="material-icons">
-				visibility
-			</i>
-			<i *ngIf="controlType.required" class="material-icons">
-				check_box
-			</i>
+		<i *ngIf="controlType.visible" class="material-icons" matTooltip="Control is visible by default">
+			visibility
+		</i>
+		<i *ngIf="controlType.required" class="material-icons" matTooltip="Control is required by default">
+			check_box
+		</i>
 	</div>
 
 </div>

@@ -1,16 +1,16 @@
-<div *ngIf="condition" fxLayout="column">
+<div class="condition" *ngIf="condition" fxLayout="column">
 
-  <div fxLayoutAlign="space-between start">
-    <label>propertyValue&nbsp;&nbsp;&nbsp;&nbsp;</label>
-    <mat-radio-group [(ngModel)]="condition.propertyValue" [ngModelOptions]="{standalone: true}">
-      <mat-radio-button [value]="true" checked>True</mat-radio-button>
-      <mat-radio-button [value]="false">False</mat-radio-button>
+  <div fxLayout="row" fxLayoutAlign="space-between start">
+    <label fxFlex="20"><b>Property</b>&nbsp;&nbsp;</label>
+    <mat-radio-group fxFlex="80" [(ngModel)]="condition.propertyValue" [ngModelOptions]="{standalone: true}">
+      <mat-radio-button [value]="true" [align]='start' checked>True</mat-radio-button>
+      <mat-radio-button [value]="false" [align]='start'>False</mat-radio-button>
     </mat-radio-group>
   </div>
 
-  <div  fxLayoutAlign="space-between center">
-    <label>Left</label>
-    <mat-form-field class="input_selector" *ngIf="condition.operator != 'CONTAINS'; else leftInput">
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <label fxFlex="20">Left</label>
+    <mat-form-field fxFlex="80" class="input_selector" *ngIf="condition.operator != 'CONTAINS'; else leftInput">
       <mat-select placeholder="Select the related control">
         <mat-option *ngFor='let key of keys' [value]="key.key" (click)='selectLeft(key.key)'>
           {{key.label}}
@@ -18,20 +18,18 @@
       </mat-select>
     </mat-form-field>
     <ng-template #leftInput>
-      <mat-form-field>
-        <input #box matInput placeholder="Use comma separated values" value=""/>
-        <button mat-button matSuffix mat-icon-button type="text" (click)="addValue(box.value)" matTooltip="Press button to store values">
+      <mat-form-field fxFlex="80">
+        <input [(ngModel)]="condition.left" #left matInput placeholder="use comma for multiple values" value=""/>
+        <button mat-button matSuffix mat-icon-button type="text" (click)="addValue(left.value)" matTooltip="click store values">
            <i class="material-icons">add_circle</i>
         </button>
-        <!-- <button (click)="addValue(box.value)"><mat-icon>add_circle</mat-icon></button> -->
       </mat-form-field>
-
     </ng-template>
   </div>
 
   <div fxLayout="row" fxLayoutAlign="space-between center">
-    <label>Operator</label>
-    <mat-form-field class="input_selector">
+    <label fxFlex="20">Operator</label>
+    <mat-form-field fxFlex="80" class="input_selector">
       <mat-select >
         <mat-option *ngFor='let operator of operators' [value]="operator" (click)='selectOperator(operator)'>{{operator}}
         </mat-option>
@@ -40,14 +38,22 @@
   </div>
 
   <div fxLayout="row" fxLayoutAlign="space-between center">
-    <label>Right</label>
-    <mat-form-field class="input_selector">
+    <label fxFlex="20">Right</label>
+    <mat-form-field fxFlex="80" class="input_selector" *ngIf="condition.operator == 'CONTAINS'; else rightInput">
       <mat-select >
         <mat-option *ngFor='let key of keys' [value]="key.key" (click)='selectRight(key.key)'>
           {{key.label}}
         </mat-option>
       </mat-select>
     </mat-form-field>
+    <ng-template #rightInput>
+        <mat-form-field fxFlex="80">
+          <input [(ngModel)]="condition.right" #right matInput placeholder="use comma for multiple values" value=""/>
+          <button mat-button matSuffix mat-icon-button type="text" (click)="addValue(right.value)" matTooltip="click to store values">
+             <i class="material-icons">add_circle</i>
+          </button>
+        </mat-form-field>
+      </ng-template>
   </div>
 
 </div>

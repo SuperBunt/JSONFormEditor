@@ -10,3 +10,12 @@
 ul {
   list-style-type: none;
 }
+
+.question_group  *{
+  margin-right: 10px;
+}
+
+.warning{
+  color: red;
+  font-style: italic;
+}

@@ -1,4 +1,4 @@
-.control > div{
+/* .control > div{
         display: flex;
         flex-direction: column;
         flex-wrap: nowrap;
@@ -6,6 +6,9 @@
         align-items: baseline;
         align-content: stretch;
     
+  } */
+  .boxed{
+    border: 1px solid rgba(179, 170, 170, 0.435)
   }
 
   .example-container > * {

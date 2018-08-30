@@ -25,7 +25,7 @@
     <mat-checkbox [align]="end" [(ngModel)]="controlType.visible">Visible</mat-checkbox> &nbsp;&nbsp;&nbsp;&nbsp;
     <mat-checkbox [align]="end" [(ngModel)]="controlType.required">Required</mat-checkbox>
   </div>
-  <div >
+  <div>
     <label>
       regSysKey:
       <input [(ngModel)]="controlType.regSysKey" placeholder="Edit me" />
@@ -76,26 +76,30 @@
           View/Edit values
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <div fxLayout="column" fxLayoutAlign="space-around start">
-        <mat-checkbox [(ngModel)]="hasVisible" (change)="toggleVisible()"> Visible </mat-checkbox>
-        <div *ngIf="hasVisible">
-          <ng-container *ngFor="let item of controlType.conditionalProperties.visible">
-            <app-condition [condition]="item"></app-condition>
-          </ng-container>
+      <div fxLayout="column" fxLayoutAlign="start">
+        <div class="boxed">
+          <mat-checkbox [(ngModel)]="hasVisible" (change)="toggleVisible()"> Add visibilty conditions</mat-checkbox>
+          <div *ngIf="hasVisible">
+            <ng-container *ngFor="let item of controlType.conditionalProperties.visible">
+              <app-condition [condition]="item"></app-condition>
+            </ng-container>
+          </div>
         </div>
-
-        <mat-checkbox [(ngModel)]="hasRequired" (change)="toggleRequired()"> Required </mat-checkbox>
-        <div *ngIf="hasRequired">
-          <ng-container *ngFor="let item of controlType.conditionalProperties.required">
-            <app-condition [condition]="item"></app-condition>
-          </ng-container>
+        <div class="boxed">
+          <mat-checkbox [(ngModel)]="hasRequired" (change)="toggleRequired()"> Add required conditions </mat-checkbox>
+          <div *ngIf="hasRequired">
+            <ng-container *ngFor="let item of controlType.conditionalProperties.required">
+              <app-condition [condition]="item"></app-condition>
+            </ng-container>
+          </div>
         </div>
-
-        <mat-checkbox [(ngModel)]="hasLabel" (change)="toggleLabel()"> Label </mat-checkbox>
-        <div *ngIf="hasLabel">
-          <ng-container *ngFor="let item of controlType.conditionalProperties.label">
-            <app-condition [condition]="item"></app-condition>
-          </ng-container>
+        <div class="boxed">
+          <mat-checkbox [(ngModel)]="hasLabel" (change)="toggleLabel()"> Add label conditions </mat-checkbox>
+          <div *ngIf="hasLabel">
+            <ng-container *ngFor="let item of controlType.conditionalProperties.label">
+              <app-condition [condition]="item"></app-condition>
+            </ng-container>
+          </div>
         </div>
       </div>
     </mat-expansion-panel>

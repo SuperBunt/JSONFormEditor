@@ -1,7 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Submission } from '../submission'
-import { Step, IStep } from "app/step";
-import { Guid } from "guid-typescript/dist/guid";
+import { Component, OnInit } from '@angular/core';
 import { SubmissionService } from '../submissionService.service';
 import { fadeInAnimation } from '../_animations/fade-in';
 import { MatDialogConfig, MatDialog } from '../../../node_modules/@angular/material';
@@ -19,12 +16,11 @@ import { SubmissionDialogComponent } from '../submission-dialog/submission-dialo
   host: { '[@fadeInAnimation]': '' }
 })
 export class SubmissionComponent implements OnInit {
-  selectedTab: number;
-  numTabs = 0;
+  selectedTab:number;
   expanded: boolean;
   prettyJSON: string;
   state: string = 'show';
-  paste = false;
+  paste: boolean;
 
   constructor(
     public myService: SubmissionService,
@@ -34,15 +30,16 @@ export class SubmissionComponent implements OnInit {
   ngOnInit() {
     this.expanded = false;
     this.prettyJSON = JSON.stringify(this.myForm, undefined, 2);
+    this.selectedTab = this.myForm.steps.length;
   }
 
   get myForm() {
     return this.myService.myForm;
   }
 
-  set myForm(_form){
+  set myForm(_form) {
     this.myService.myForm = _form;
-    console.log(typeof(this.myForm));
+    console.log(typeof (this.myForm));
   }
 
   openDialog(): void {
@@ -55,23 +52,26 @@ export class SubmissionComponent implements OnInit {
 
     const dialogRef = this.dialog.open(SubmissionDialogComponent, dialogConfig);
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(() => {
       console.log("closed submission details dialog");
+      this.AddTab();
     });
   }
 
   AddTab() {
-    this.myService.addTab();
-    this.selectedTab = this.myForm.steps.length;
-    console.log("tab index: " + this.selectedTab);
-    //this.numTabs = this.myForm.steps.push(toAdd);
+    event.stopPropagation();
+    this.myService.addTab().then(x => {
+      this.selectedTab = x
+    })    
   }
 
   ViewPrettyJSON(): void {
-    this.prettyJSON = JSON.stringify(this.myForm, undefined, 2); 
+    this.prettyJSON = JSON.stringify(this.myForm, undefined, 2);
   }
 
-  copyToClipboard(){
+  copyToClipboard() {
+    this.prettyJSON = JSON.stringify(this.myForm, undefined, 2);
+
     console.log("copy");
     let selBox = document.createElement('textarea');
     selBox.style.position = 'fixed';
@@ -84,14 +84,23 @@ export class SubmissionComponent implements OnInit {
     selBox.select();
     document.execCommand('copy');
     document.body.removeChild(selBox);
+
+    let newWindow = window.open(
+      "http://developer.regsys.ie"
+    );
   }
 
   changeTab() {
     this.state = (this.state === 'small' ? 'large' : 'small');
   }
 
-  pasteJSON(value: string){
+  pasteJSON(value: string) {
     this.myForm = JSON.parse(value);
+  }
+
+  openEditor(){
+    this.prettyJSON = JSON.stringify(this.myForm, undefined, 2);
+    this.paste = !this.paste
   }
 
 }

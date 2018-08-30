@@ -2,8 +2,8 @@
 
   <!-- <button type="button" class="btn-lg btn-primary viewBtn" data-toggle="modal" data-target=".bd-example-modal-lg" (click)="ViewPrettyJSON()">View JSON</button> -->
   <button type="button" class="btn-lg btn-primary viewBtn" aria-label="Copy" (click)="copyToClipboard()">
-      Copy to clipboard
-    </button>
+    Copy to clipboard
+  </button>
   <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
@@ -22,42 +22,41 @@
 </div>
 
 <div>
-  <h1>{{myForm.displayName}}</h1>
+
   <div fxLayout="row" fxLayoutAlign="space-evenly center">
-    <button fxFlex="20" mat-raised-button color="primary" (click)="AddTab()" matTooltip="Add a tab to the current form">
-      Add a tab
+    <button fxFlex="20" mat-raised-button color="primary" (click)="openDialog()" >
+      Create a new Form
       <i class="material-icons">
         add_circle_outline
       </i>
     </button>
 
-    <button fxFlex="20" mat-raised-button color="primary" (click)="openDialog()" matTooltip="Edit Submission Details and add regEdits">
+    <!-- <button fxFlex="20" mat-raised-button color="primary" (click)="openDialog()" matTooltip="Edit Submission Details and add regEdits">
       Submission Details
-    </button>
-    <button mat-raised-button color="primary" (click)="paste = !paste" matTooltip="Edit pre-existing code">
+    </button> -->
+    <button mat-raised-button color="primary" (click)="openEditor()" matTooltip="Paste in pre-existing json">
+      Json Editor
       <i class="material-icons">
         code
       </i>
     </button>
-    <ng-container *ngIf="paste">
-      <label>Paste json:
-        <input #box (keyup.enter)="pasteJSON(box.value)" />
-      </label>
+    <ng-container *ngIf="paste">      
+        <textarea class='centered' placeholder="Paste json and press enter" #box (keyup.enter)="pasteJSON(box.value); paste = !paste">{{prettyJSON}}</textarea>      
     </ng-container>
   </div>
-
+  <h1>{{myForm.displayName}}</h1>
   <mat-tab-group class="demo-tab-group" [(selectedIndex)]="selectedTab">
     <mat-tab [label]="tab.label" *ngFor="let tab of myForm.steps; let index = index; let last = last;">
       <ng-template mat-tab-label>
         {{tab.label}}
-        <button *ngIf="last" (click)="AddTab()" mat-icon-button matTooltip="Add a tab">
-          <mat-icon>add_circle</mat-icon>
-        </button>
+          <button *ngIf="last" (click)="AddTab($event)" mat-icon-button matTooltip="Add a tab">
+            <mat-icon>add_circle</mat-icon>
+          </button>
       </ng-template>
       <app-tab [tab]="tab"></app-tab>
     </mat-tab>
   </mat-tab-group>
 
-  
+
 
 </div>

@@ -39,8 +39,12 @@ export class SectionComponent implements OnInit {
 
   ngOnInit() {
     this.options.sort();
-    this.hasVisible = this.section.conditionalProperties.visible;
-    this.buttonValue = this.section.conditionalProperties.visible ? "Remove conditions" : "Add conditions";
+    if (this.section.visible === undefined) {
+      this.section.visible = false
+      this.hasVisible
+    }
+    else
+      this.hasVisible = this.section.visible ? true : false;
   }
 
   openDialog(newControl: Question): void {
@@ -76,6 +80,19 @@ export class SectionComponent implements OnInit {
     this.sectionDeleted.emit(key);
   }
 
+  visibleProperty(_event) {
+    this.section.visible = _event.checked
+    console.log(_event);
+    if (_event.checked == false) {
+      console.log("add visible");
+      let values = new ConditionValues();
+      this.section.conditionalProperties.visible = [values];
+    }
+    else {
+      delete this.section.conditionalProperties.visible
+    }
+  }
+
   editVisibleProperties() {
     console.log("Edit section visible");
     this.buttonValue = "Remove conditions";
@@ -94,7 +111,7 @@ export class SectionComponent implements OnInit {
 
   addCondition() {
     let values = new ConditionValues();
-    this.section.conditionalProperties.visible ? this.section.conditionalProperties.visible.push(values) : this.section.conditionalProperties.visible = [ values ]
+    this.section.conditionalProperties.visible ? this.section.conditionalProperties.visible.push(values) : this.section.conditionalProperties.visible = [values]
   }
 
   removeCondition(i: number) {

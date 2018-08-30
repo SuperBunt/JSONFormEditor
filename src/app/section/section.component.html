@@ -1,6 +1,6 @@
 <mat-card fxFlexOffset="5" fxFlex="90%" class="section" *ngIf="section">
 
-  <h3>
+  <h5>
     <mat-slide-toggle matTooltip="Show/hide section" (click)="this.animationState = this.animationState === 'out' ? 'in' : 'out'"></mat-slide-toggle>
     {{section.label}}
     <span class="right">
@@ -8,7 +8,7 @@
         <i class="material-icons">delete</i>
       </button>
     </span>
-  </h3>
+  </h5>
 
   <mat-card-content fxLayout="column" fxLayoutAlign="center" *ngIf="show; else closed" [@slideInOut]="animationState">
 
@@ -18,7 +18,25 @@
       </mat-form-field>
     </div>
 
-    <mat-accordion>
+    <div>
+      <mat-checkbox [(ngModel)]="hasVisible" [align]="end" (change)="visibleProperty($event)">Section visible by default</mat-checkbox>
+      <ng-container *ngIf="!hasVisible">
+        <div *ngFor="let item of section.conditionalProperties.visible" fxLayout="column" fxLayoutAlign="start">
+          <app-condition [condition]="item"></app-condition>
+          <button type="button" name="add" class="btn btn-danger align-self-end" (click)="removeCondition(i)">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+        <hr>
+        <button type="button" name="add" class="btn btn-info align-self-end" (click)="addCondition()">
+          Add a condition
+          <i class="fas fa-plus"></i>
+        </button>
+      </ng-container>
+    </div>
+    
+
+    <!-- <mat-accordion>
       <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title>
@@ -43,15 +61,15 @@
           </button>
         </div>
       </mat-expansion-panel>
-    </mat-accordion>
+    </mat-accordion> -->
 
     <div *ngFor="let item of section.questions; index as i">
       <ng-container *ngIf='item.controlType !== "section"; else section'>
         <app-question [controlType]="item" (itemDeleted)="onItemDeleted($event)"></app-question>
       </ng-container>
       <ng-template #section>
-          <app-section [section]="item" (tabSelected)="onTabSelected($event)" (sectionDeleted)="onSectionDeleted($event)"></app-section>
-        </ng-template>
+        <app-section [section]="item" (tabSelected)="onTabSelected($event)" (sectionDeleted)="onSectionDeleted($event)"></app-section>
+      </ng-template>
     </div>
 
     <mat-form-field class="input_selector">

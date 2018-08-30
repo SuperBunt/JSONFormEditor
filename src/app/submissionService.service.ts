@@ -10,20 +10,21 @@ import { QuestionBase } from './questionBase';
 @Injectable()
 export class SubmissionService {
     myForm: Submission = Submission.create();
-    numTabs = 0
+    tabsCreated = 0
     numSections = 0
 
-    addTab(): void {
-        console.log(this.numTabs);
+    addTab(): Promise<number> {
+        this.tabsCreated++
         let toAdd = new Step();
-        this.numTabs++
-        toAdd.label = "TAB " + (this.numTabs);
+        toAdd.label = "TAB " + (this.tabsCreated);
         toAdd.controlType = "step";
         toAdd.order = this.myForm.steps ? this.myForm.steps.length + 1 : 1;
         toAdd.key = Guid.create().toString();
         toAdd.visible = true;
         toAdd.questions = [];
-        this.myForm.steps ? this.myForm.steps.push(toAdd) : this.myForm.steps = [toAdd];
+        this.myForm.steps.push(toAdd)
+        
+        return Promise.resolve(this.myForm.steps.length)
     }
 
     deleteTab(id): void {

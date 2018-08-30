@@ -46,11 +46,11 @@
         </label>
         <input fxFlex="80" type="number" [(ngModel)]="item.registerEditId" placeholder="Edit me" />
       </div>
-      <button type="button" name="add" class="btn btn-danger align-self-end" (click)="removeRegEdit(i)">
+      <button type="button" name="add" class="btn btn-danger align-self-end" (click)="removeRegEdit(i)" matTooltip="Delete this regEdit">
         <i class="fas fa-trash"></i>
       </button>
     </div>
-    <button type="button" mat-raised-button color="primary" (click)="addRegEdit()">
+    <button type="button" mat-raised-button color="primary" (click)="addRegEdit()" matTooltip="Add another regEdit">
       <i class="material-icons">
         add_circle_outline
       </i>

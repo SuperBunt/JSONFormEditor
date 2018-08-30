@@ -34,3 +34,15 @@ ul {
 	z-index: 10;
 }
 
+.centered{
+	position: absolute;
+  left: 49%;
+	top: 50%;
+	width: 50%;
+	height: 60%;
+	transform: translate(-50%,-50%);
+	box-shadow: 5px 5px 6px 1px #96828C;
+	background-color: rgb(234, 236, 238);
+	z-index: 10;
+}
+
