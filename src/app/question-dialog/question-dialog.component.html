@@ -12,6 +12,11 @@
       </label>
     </div>
   </ng-template>
+  <div *ngIf="controlType.controlType =='list'">
+      <label>itemName:
+        <input [(ngModel)]="controlType.itemName" placeholder="Edit me" />
+      </label>
+    </div>
   <div>
     <b>Controltype: </b>{{controlType.controlType}} </div>
   <div>

@@ -150,6 +150,7 @@ export class SubmissionService {
                 section.controlType = "section";
                 delete section.label;
                 delete section.required;
+                section.visible = true;
                 section.questions = [];
                 newControl.questionBase.questions.push(section);
                 let desc1 = { "order": 1, "label": "Descriptor 1", keys: [{ "key": "add related key" }, { "order": 1 }] }

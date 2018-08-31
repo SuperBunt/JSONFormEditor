@@ -3,6 +3,7 @@ import { SubmissionService } from '../submissionService.service';
 import { fadeInAnimation } from '../_animations/fade-in';
 import { MatDialogConfig, MatDialog } from '../../../node_modules/@angular/material';
 import { SubmissionDialogComponent } from '../submission-dialog/submission-dialog.component';
+import { Submission } from '../submission';
 
 @Component({
   selector: 'app-submission',
@@ -43,6 +44,7 @@ export class SubmissionComponent implements OnInit {
   }
 
   openDialog(): void {
+    this.myForm = Submission.create();
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = false;
     dialogConfig.autoFocus = true;

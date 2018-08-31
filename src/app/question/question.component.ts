@@ -39,7 +39,9 @@ export class QuestionComponent implements OnInit {
     const dialogRef = this.dialog.open(QuestionDialogComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      console.log('question component: ' + result);
+      if(result == undefined)
+        return;
       if(result !== null)
         this.deleteItem(result)
     });
