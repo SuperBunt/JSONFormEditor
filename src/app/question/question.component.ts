@@ -40,7 +40,8 @@ export class QuestionComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      //this.controlType = result;
+      if(result !== null)
+        this.deleteItem(result)
     });
   }
 

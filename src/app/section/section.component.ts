@@ -58,8 +58,11 @@ export class SectionComponent implements OnInit {
     const dialogRef = this.dialog.open(QuestionDialogComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log("closed dialog");
-      this.numQuestions = this.section.questions.push(newControl);
+      console.log("closed dialog "+ result);
+      if(result == undefined)
+        this.numQuestions = this.section.questions.push(newControl);
+      else
+        console.log("control not saved")
     });
   }
 

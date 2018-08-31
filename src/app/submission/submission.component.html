@@ -23,8 +23,8 @@
 
 <div>
 
-  <div fxLayout="row" fxLayoutAlign="space-evenly center">
-    <button fxFlex="20" mat-raised-button color="primary" (click)="openDialog()" >
+  <div fxLayout="row" fxLayoutAlign="space-evenly">
+    <button *ngIf="!paste" mat-raised-button color="primary" (click)="openDialog()">
       Create a new Form
       <i class="material-icons">
         add_circle_outline
@@ -34,24 +34,30 @@
     <!-- <button fxFlex="20" mat-raised-button color="primary" (click)="openDialog()" matTooltip="Edit Submission Details and add regEdits">
       Submission Details
     </button> -->
-    <button mat-raised-button color="primary" (click)="openEditor()" matTooltip="Paste in pre-existing json">
-      Json Editor
-      <i class="material-icons">
-        code
-      </i>
-    </button>
-    <ng-container *ngIf="paste">      
-        <textarea class='centered' placeholder="Paste json and press enter" #box (keyup.enter)="pasteJSON(box.value); paste = !paste">{{prettyJSON}}</textarea>      
-    </ng-container>
+    <div>
+      <button *ngIf="!paste" mat-raised-button color="primary" (click)="openEditor()" matTooltip="Paste in pre-existing json">
+        Json Editor
+        <i class="material-icons">
+          code
+        </i>
+      </button>
+      <span *ngIf="paste">
+          <button mat-raised-button (click)="pasteJSON(box.value); paste = !paste" color="primary" matTooltip="Confirm changes">Update</button>
+          <button mat-raised-button (click)="paste = !paste" color="warn" matTooltip="Close editor without changes">Close</button>
+          <textarea class='centered' #box>{{prettyJSON}}</textarea>
+      </span>
+    </div>
   </div>
+
   <h1>{{myForm.displayName}}</h1>
+
   <mat-tab-group class="demo-tab-group" [(selectedIndex)]="selectedTab">
     <mat-tab [label]="tab.label" *ngFor="let tab of myForm.steps; let index = index; let last = last;">
       <ng-template mat-tab-label>
         {{tab.label}}
-          <button *ngIf="last" (click)="AddTab($event)" mat-icon-button matTooltip="Add a tab">
-            <mat-icon>add_circle</mat-icon>
-          </button>
+        <button *ngIf="last" (click)="AddTab($event)" mat-icon-button matTooltip="Add a tab">
+          <mat-icon>add_circle</mat-icon>
+        </button>
       </ng-template>
       <app-tab [tab]="tab"></app-tab>
     </mat-tab>

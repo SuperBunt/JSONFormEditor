@@ -16,7 +16,7 @@ import { SubmissionDialogComponent } from '../submission-dialog/submission-dialo
   host: { '[@fadeInAnimation]': '' }
 })
 export class SubmissionComponent implements OnInit {
-  selectedTab:number;
+  selectedTab: number;
   expanded: boolean;
   prettyJSON: string;
   state: string = 'show';
@@ -62,7 +62,7 @@ export class SubmissionComponent implements OnInit {
     event.stopPropagation();
     this.myService.addTab().then(x => {
       this.selectedTab = x
-    })    
+    })
   }
 
   ViewPrettyJSON(): void {
@@ -85,6 +85,8 @@ export class SubmissionComponent implements OnInit {
     document.execCommand('copy');
     document.body.removeChild(selBox);
 
+    alert("Form copied to clipboard")
+
     let newWindow = window.open(
       "http://developer.regsys.ie"
     );
@@ -98,7 +100,7 @@ export class SubmissionComponent implements OnInit {
     this.myForm = JSON.parse(value);
   }
 
-  openEditor(){
+  openEditor() {
     this.prettyJSON = JSON.stringify(this.myForm, undefined, 2);
     this.paste = !this.paste
   }

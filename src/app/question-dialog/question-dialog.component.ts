@@ -53,9 +53,8 @@ export class QuestionDialogComponent implements OnInit {
   }
 
   deleteItem(key) {
-    console.log("dialog emit: deleteing " + key);
-    this.itemDeleted.emit(key);
-    this.dialogRef.close();
+    console.log("dialog deleteing " + key);
+    this.dialogRef.close(key);
   }
 
   addOption() {
