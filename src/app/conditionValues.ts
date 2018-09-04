@@ -7,7 +7,7 @@ export class ConditionValues {
     constructor(){
         this.propertyValue = true
         this.left = null
-        this.operator = "EQUAL_TO"
+        this.operator = ""
         this.right =null
     }
 }

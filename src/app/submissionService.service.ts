@@ -23,7 +23,7 @@ export class SubmissionService {
         toAdd.visible = true;
         toAdd.questions = [];
         this.myForm.steps.push(toAdd)
-        
+
         return Promise.resolve(this.myForm.steps.length)
     }
 
@@ -67,39 +67,58 @@ export class SubmissionService {
         return control
     }
 
-    getKeys(index: number): Promise<any> {
-        let filtered = [];
-        console.log("getKeys");
+    getEntries(): Promise<any> {
+        let filtered = []
 
-        this.myForm.steps[index].questions
-            .forEach(x => {
-                if (x.label !== "") {
+        this.myForm.steps.forEach(q => {
+            if (q.questions.length > 0) {
+                getNestedKeys(q.questions)
+            }
+        })
+
+        function getNestedKeys(_arr) {
+            _arr.forEach(x => {
+                if (x.controlType == "dropdown" || x.controlType == "radio") {
                     let obj = {};
                     obj["label"] = x.label
                     obj["key"] = x.key
+                    console.log(obj)
                     filtered.push(obj)
                 }
-                x.questions.forEach(y => {
-                    let obj = {};
-                    obj["label"] = x.label
-                    obj["key"] = x.key
-                    if (y.label !== "") {
-                        let obj = {};
-                        obj["label"] = y.label
-                        obj["key"] = y.key
-                        filtered.push(obj)
+                else if (x.controlType == 'section') {
+                    if (x.questions.length > 0) {
+                        getNestedKeys(x.questions)
                     }
-                    //filtered.push(Object.entries(y).filter((item) =>  item.map))
-                })
+                }
             })
+        }
         return Promise.resolve(filtered)
     }
 
-    getEntries() {
-        this.myForm.steps[0].questions.forEach(q => {
+    getOptions(val: string): Promise<any> {
 
+        let options = [];
+                
+        this.myForm.steps.forEach(q => {
+            if (q.questions.length > 0) {
+                q.questions.forEach((x, index) => { search(x) })
+            }
         })
+
+        function search(_arr) {
+            console.log("search: val " + val + "key " + _arr.key)
+            if (_arr.key == val) {
+                console.log("found it: " + _arr.options)
+                options = _arr.options
+                return; 
+            }
+            else if (_arr.questions != undefined && _arr.questions.length > 0)
+                _arr.questions.forEach(a => search(a))
+        }
+
+        return Promise.resolve(options)
     }
+
 
     createQuestionType(type: string): Promise<Question> {
         console.log("Sevice: creating " + type)

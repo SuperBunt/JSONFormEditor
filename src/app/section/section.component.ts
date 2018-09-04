@@ -22,7 +22,7 @@ export class SectionComponent implements OnInit {
 
   @Input() section: Question;
   numQuestions = 0;
-  options = ["textbox", "textarea", "radio", "display", "section", "dropdown", "password", "file-upload", "list", "multi-select", "free-note", "date", "checkbox", "quick-autocomplete"];
+  options = ["textbox", "textarea", "radio", "display", "section", "dropdown", "password", "file-upload", "numeric", "list", "multi-select", "free-note", "date", "checkbox", "quick-autocomplete"];
   optionSelected: any;
   numberOfTicks = 1;
   show: boolean = true;

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ConditionValues } from '../../conditionValues';
 import { SubmissionService } from '../../submissionService.service';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-condition',
@@ -10,16 +11,19 @@ import { SubmissionService } from '../../submissionService.service';
 export class ConditionComponent implements OnInit {
 
   @Input() condition: any;
+  operatorControl = new FormControl('', [Validators.required]);
+
   operators = ["CONTAINS", "EQUAL_TO", "NOT_EQUAL_TO", "LESS_THAN", "GREATER_THAN", "LESS_THAN_OR_EQUAL_TO", "GREATER_THAN_OR_EQUAL_TO"]
-  operatorSelected: any;
+  operator: string;
   keys: string[];
+  options: any[];
 
   constructor(
     public myService: SubmissionService
   ) { }
 
   ngOnInit() {
-    this.myService.getKeys(0)
+    this.myService.getEntries()
       .then(x => {
         this.keys = x
         console.log(x)
@@ -28,25 +32,35 @@ export class ConditionComponent implements OnInit {
 
   selectOperator(op: string) {
     console.log("op: " + op)
-    if(op == 'CONTAINS'){
+    if (op == 'CONTAINS') {
       this.condition.left = []
     }
     this.condition.operator = op;
   }
 
-  addValue(value: any){
+  addValue(value: any) {
     this.condition.left = value.split(",");
     console.log(this.condition.left)
   }
 
-  selectLeft(value: string){
+  selectLeft(value: string) {
     console.log("left: " + value)
-    this.condition.left = "@"+value;
+    this.myService.getOptions(value)
+      .then(x => {
+        this.options = x
+        console.log(x)
+      })
+    this.condition.left = "@" + value;
   }
 
-  selectRight(value: string){
+  selectRight(value: string) {
     console.log("left: " + value)
-    this.condition.right = "@"+value;
+    this.myService.getOptions(value)
+      .then(x => {
+        this.options = x
+        console.log(x)
+      })
+    this.condition.right = "@" + value;
   }
 
 }
