@@ -35,34 +35,6 @@
       </ng-container>
     </div>
     
-
-    <!-- <mat-accordion>
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Visible Property for Section
-          </mat-panel-title>
-          <mat-panel-description>
-
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-        <div fxLayout="column" fxLayoutAlign="space-around center">
-          <mat-checkbox [(ngModel)]="section.visible"> Default visible property = true: </mat-checkbox>
-          <div *ngFor="let item of section.conditionalProperties.visible">
-            <hr>
-            <app-condition [condition]="item"></app-condition>
-            <button type="button" name="add" class="btn btn-danger align-self-end" (click)="removeCondition(i)">
-              <i class="fas fa-trash"></i>
-            </button>
-          </div>
-          <button type="button" name="add" class="btn btn-info align-self-end" (click)="addCondition()">
-            Add a condition
-            <i class="fas fa-plus"></i>
-          </button>
-        </div>
-      </mat-expansion-panel>
-    </mat-accordion> -->
-
     <div *ngFor="let item of section.questions; index as i">
       <ng-container *ngIf='item.controlType !== "section"; else section'>
         <app-question [controlType]="item" (itemDeleted)="onItemDeleted($event)"></app-question>

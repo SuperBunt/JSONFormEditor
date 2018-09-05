@@ -13,12 +13,30 @@
     </div>
   </ng-template>
   <div *ngIf="controlType.controlType =='list'">
-      <label>itemName:
-        <input [(ngModel)]="controlType.itemName" placeholder="Edit me" />
-      </label>
-    </div>
+    <label>itemName:
+      <input [(ngModel)]="controlType.itemName" placeholder="Edit me" />
+    </label>
+  </div>
   <div>
-    <b>Controltype: </b>{{controlType.controlType}} </div>
+    <mat-form-field *ngIf="!changeType" class="example-form-field">
+      <input matInput type="text" disabled [(ngModel)]="controlType.controlType" />
+      <button mat-button matSuffix mat-icon-button aria-label="Edit" (click)="changeType = !changeType">
+        <mat-icon>edit</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <!-- <b>Controltype: <span><button mat-mini-fab (click)="changeType = !changeType"></button>
+        <mat-icon (click)="changeType = !changeType" aria-label="change control type button">edit</mat-icon>
+        </button></span></b> {{controlType.controlType}} -->
+
+    <mat-form-field *ngIf="changeType" class="input_selector">
+      <mat-select [(ngModel)]='optionSelected' placeholder="Change control type">
+        <mat-option *ngFor='let option of options' [value]="option" (click)="changeInput(option); changeType = !changeType;">
+          {{option}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
   <div>
     <b>Key: </b>{{controlType.key}}
   </div>
@@ -58,10 +76,12 @@
       <b>Options: </b>
     </p>
     <div *ngFor="let item of controlType.options; index as i;">
-      <label>
-        Value:
-        <input [(ngModel)]="item.value" placeholder="Edit me" />
-      </label>
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Key" #key [(ngModel)]="item.key" (keyup)="onKey(key.value, i)" value="item.key">
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Display" [(ngModel)]="item.value" value="item.value">
+      </mat-form-field>
       <button type="button" name="add" class="btn btn-danger align-self-end" (click)="removeOption(i)">
         <i class="fas fa-trash"></i>
       </button>

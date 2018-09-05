@@ -139,10 +139,10 @@ export class SubmissionService {
             case "dropdown":
                 newControl.orientation = "horizontal";
                 let option1 = new Option();
-                option1.key = "1";
+                option1.key = 1;
                 option1.value = "Option 1";
                 let option2 = new Option();
-                option2.key = "2";
+                option2.key = 2;
                 option2.value = "Option 2";
                 newControl.options = [
                     option1, option2

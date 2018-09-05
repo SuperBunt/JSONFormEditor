@@ -54,7 +54,7 @@ export class ConditionComponent implements OnInit {
   }
 
   selectRight(value: string) {
-    console.log("left: " + value)
+    console.log("right: " + value)
     this.myService.getOptions(value)
       .then(x => {
         this.options = x

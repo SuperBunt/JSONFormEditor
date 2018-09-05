@@ -18,7 +18,7 @@ export class QuestionDialogComponent implements OnInit {
   @Output() itemDeleted: EventEmitter<string> = new EventEmitter();
   form: FormGroup;
   controlType: Question;
-  numOptions = 2;
+  numOptions: number;
   hasLabel: boolean = false;
   hasVisible: boolean = false;
   hasRequired: boolean = false;
@@ -45,6 +45,7 @@ export class QuestionDialogComponent implements OnInit {
   ngOnInit() {
     this.options.sort();
     this.regTypes.sort();
+    this.controlType.options ? this.numOptions = this.controlType.options.length : null;
     this.chosenValidator = this.controlType.validators ? Object.keys(this.controlType.validators)[0] : ""
   }
 
@@ -59,13 +60,19 @@ export class QuestionDialogComponent implements OnInit {
 
   addOption() {
     this.numOptions = this.numOptions + 1
-    this.controlType.options.push({ key: this.numOptions.toString(), value: "Option " + this.numOptions })
+    this.controlType.options.push({ key: this.numOptions, value: "Option " + this.numOptions })
   }
 
   removeOption(i: number) {
     this.controlType.options.splice(i, 1);
   }
 
+  regex=/^[0-9]+$/;
+  onKey(value: any, index: number) {
+    value.match(this.regex) ? this.controlType.options[index].key = parseInt(value) : this.controlType.options[index].key = value;
+  }
+
+ 
   CheckKeys(): void {
     this.objectKeys = Object.keys(this.controlType.conditionalProperties);
     console.log("Keys: " + this.objectKeys);
@@ -167,6 +174,27 @@ export class QuestionDialogComponent implements OnInit {
     }
   }
 
+  changeInput(type: string) {
+    console.log("changeInput: " + type)
+    if (type != this.controlType.controlType) {
+      this.myService.createQuestionType(type)
+        .then(result => {
+          result.key = this.controlType.key.toString();
+          if (type == "free-note")
+            result.value = this.controlType.label.toString();
+          else
+            result.label = this.controlType.label.toString();
 
+          if ((type == "radio" && result.controlType == "dropdown") || (type == "dropdown" && result.controlType == "radio")) {
+            console.log("radio/dropdown")
+            this.controlType.options.forEach(
+              x => result.options.push(x)
+            )
+          }
+
+          return Promise.resolve(result)
+        }).then(control => this.controlType = control)
+    }
+  }
 
 }
