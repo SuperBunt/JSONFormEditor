@@ -22,7 +22,7 @@ export class SectionComponent implements OnInit {
 
   @Input() section: Question;
   numQuestions = 0;
-  options = ["textbox", "textarea", "radio", "display", "section", "dropdown", "password", "file-upload", "numeric", "list", "multi-select", "free-note", "date", "checkbox", "quick-autocomplete"];
+  options: string[]
   optionSelected: any;
   numberOfTicks = 1;
   show: boolean = true;
@@ -38,7 +38,7 @@ export class SectionComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.options.sort();
+    this.options = this.tabService.controls.sort();
     if (this.section.visible === undefined) {
       this.section.visible = false
       this.hasVisible

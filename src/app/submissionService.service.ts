@@ -12,6 +12,7 @@ export class SubmissionService {
     myForm: Submission = Submission.create();
     tabsCreated = 0
     numSections = 0
+    controls = ["textbox", "textarea", "radio", "display", "section", "dropdown", "checkbox-list", "password", "file-upload", "numeric", "list", "multi-select", "free-note", "date", "checkbox", "quick-autocomplete"];
 
     addTab(): Promise<number> {
         this.tabsCreated++
@@ -78,11 +79,11 @@ export class SubmissionService {
 
         function getNestedKeys(_arr) {
             _arr.forEach(x => {
-                if (x.controlType == "dropdown" || x.controlType == "radio") {
+                console.log(x.controlType)
+                if (x.controlType == "dropdown" || x.controlType == "radio" || x.controlType == "checkbox" || x.controlType == "checkbox-list") {
                     let obj = {};
                     obj["label"] = x.label
-                    obj["key"] = x.key
-                    console.log(obj)
+                    obj["key"] = x.key                    
                     filtered.push(obj)
                 }
                 else if (x.controlType == 'section') {
@@ -96,9 +97,8 @@ export class SubmissionService {
     }
 
     getOptions(val: string): Promise<any> {
-
         let options = [];
-                
+
         this.myForm.steps.forEach(q => {
             if (q.questions.length > 0) {
                 q.questions.forEach((x, index) => { search(x) })
@@ -109,8 +109,22 @@ export class SubmissionService {
             console.log("search: val " + val + "key " + _arr.key)
             if (_arr.key == val) {
                 console.log("found it: " + _arr.options)
-                options = _arr.options
-                return; 
+                if (_arr.controlType == "checkbox") {
+                    options = [
+                        {
+                            "key": true,
+                            "value": "True"
+                        },
+                        {
+                            "key": false,
+                            "value": "False"
+                        }
+                    ]
+                    return;
+                }
+                else options = _arr.options;
+
+                return;
             }
             else if (_arr.questions != undefined && _arr.questions.length > 0)
                 _arr.questions.forEach(a => search(a))
@@ -137,7 +151,8 @@ export class SubmissionService {
                 return Promise.resolve(newControl);
             case "radio":
             case "dropdown":
-                newControl.orientation = "horizontal";
+            case "checkbox-list":
+                newControl.orientation = "vertical";
                 let option1 = new Option();
                 option1.key = 1;
                 option1.value = "Option 1";

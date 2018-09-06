@@ -24,7 +24,7 @@ export class QuestionDialogComponent implements OnInit {
   hasRequired: boolean = false;
   validators = ["email", "phone", "password", "none"];
   regTypes = ["string", "number", "boolean"]
-  options = ["textbox", "textarea", "radio", "dropdown", "display", "password", "file-upload", "section", "list", "multi-select", "free-note", "numeric", "date", "checkbox", "quick-autocomplete"];
+  options = ["textbox", "textarea", "radio", "dropdown", "display", "password", "checkbox-list", "file-upload", "section", "list", "multi-select", "free-note", "numeric", "date", "checkbox", "quick-autocomplete"];
   optionSelected: any;
   numberOfTicks = 1;
   objectKeys: string[];
@@ -34,6 +34,7 @@ export class QuestionDialogComponent implements OnInit {
   phoneValidation: boolean;
   numberValidation: boolean;
   chosenValidator: string;
+  updated: boolean;
 
   constructor(
     public myService: SubmissionService,
@@ -47,13 +48,15 @@ export class QuestionDialogComponent implements OnInit {
     this.regTypes.sort();
     this.controlType.options ? this.numOptions = this.controlType.options.length : null;
     this.chosenValidator = this.controlType.validators ? Object.keys(this.controlType.validators)[0] : ""
+    this.updated = false;
   }
 
   close() {
     this.dialogRef.close();
+    //this.updated ? this.dialogRef.close(this.controlType) : this.dialogRef.close();
   }
 
-  deleteItem(key) {
+  deleteItem(key: string) {
     console.log("dialog deleteing " + key);
     this.dialogRef.close(key);
   }
@@ -67,12 +70,12 @@ export class QuestionDialogComponent implements OnInit {
     this.controlType.options.splice(i, 1);
   }
 
-  regex=/^[0-9]+$/;
+  regex = /^[0-9]+$/;
   onKey(value: any, index: number) {
     value.match(this.regex) ? this.controlType.options[index].key = parseInt(value) : this.controlType.options[index].key = value;
   }
 
- 
+
   CheckKeys(): void {
     this.objectKeys = Object.keys(this.controlType.conditionalProperties);
     console.log("Keys: " + this.objectKeys);
@@ -177,6 +180,7 @@ export class QuestionDialogComponent implements OnInit {
   changeInput(type: string) {
     console.log("changeInput: " + type)
     if (type != this.controlType.controlType) {
+      this.updated = true;
       this.myService.createQuestionType(type)
         .then(result => {
           result.key = this.controlType.key.toString();
@@ -193,7 +197,7 @@ export class QuestionDialogComponent implements OnInit {
           }
 
           return Promise.resolve(result)
-        }).then(control => this.controlType = control)
+        }).then(res => Object.assign(this.controlType, res))
     }
   }
 

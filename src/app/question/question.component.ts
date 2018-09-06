@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, Inject, EventEmitter } from '@angular/core';
 import { Question } from '../question'
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig} from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig } from '@angular/material';
 import { ConditionValues } from '../conditionValues';
 import { QuestionDialogComponent } from '../question-dialog/question-dialog.component';
 import { fadeInAnimation } from '../_animations/fade-in';
@@ -8,7 +8,7 @@ import { fadeInAnimation } from '../_animations/fade-in';
 @Component({
   selector: 'app-question',
   templateUrl: './question.component.html',
-  styleUrls: ['./question.component.css'], 
+  styleUrls: ['./question.component.css'],
   // make fade in animation available to this component
   animations: [fadeInAnimation]
 })
@@ -39,11 +39,15 @@ export class QuestionComponent implements OnInit {
     const dialogRef = this.dialog.open(QuestionDialogComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('question component: ' + result);
-      if(result == undefined)
-        return;
-      if(result !== null)
+      console.log('question component: ' + result.controlType);
+      if (typeof result === 'string')
         this.deleteItem(result)
+      else if (result.controlType == undefined)
+        return;
+      // else if (result.controlType != this.controlType.controlType){        
+      //   Object.assign(this.controlType, result);
+      // }
+        
     });
   }
 
@@ -85,7 +89,7 @@ export class QuestionComponent implements OnInit {
     }
   }
 
-  toggleVisible() {    
+  toggleVisible() {
     if (this.isVisible) {
       console.log("add visible")
       this.controlType.conditionalProperties ? null : this.controlType.conditionalProperties = [];
@@ -98,10 +102,10 @@ export class QuestionComponent implements OnInit {
       // const i = this.controlType.conditionalProperties.map(question => question.key).indexOf("visible");
       // this.controlType.conditionalProperties.splice(i, 1);
     }
-    
+
   }
 
-  toggleRequired() {    
+  toggleRequired() {
     if (this.isRequired) {
       console.log("add required")
       this.controlType.conditionalProperties ? null : this.controlType.conditionalProperties = [];
@@ -114,7 +118,7 @@ export class QuestionComponent implements OnInit {
       // const i = this.controlType.conditionalProperties.map(question => question.key).indexOf("required");
       // this.controlType.conditionalProperties.splice(i, 1);
     }
-    
+
   }
 
 }
