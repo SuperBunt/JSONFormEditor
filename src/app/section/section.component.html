@@ -19,7 +19,8 @@
     </div>
 
     <div>
-      <mat-checkbox [(ngModel)]="hasVisible" [align]="end" (change)="visibleProperty($event)">Section visible by default</mat-checkbox>
+      <mat-checkbox [(ngModel)]="hasVisible" [align]="end" (change)="visibleProperty($event)">Section visible by
+        default</mat-checkbox>
       <ng-container *ngIf="!hasVisible">
         <div *ngFor="let item of section.conditionalProperties.visible" fxLayout="column" fxLayoutAlign="start">
           <app-condition [condition]="item"></app-condition>
@@ -34,15 +35,18 @@
         </button>
       </ng-container>
     </div>
-    
-    <div *ngFor="let item of section.questions; index as i">
-      <ng-container *ngIf='item.controlType !== "section"; else section'>
-        <app-question [controlType]="item" (itemDeleted)="onItemDeleted($event)"></app-question>
-      </ng-container>
-      <ng-template #section>
-        <app-section [section]="item" (tabSelected)="onTabSelected($event)" (sectionDeleted)="onSectionDeleted($event)"></app-section>
-      </ng-template>
+
+    <div dragula="QUESTIONS" [(dragulaModel)]="section.questions">
+      <div *ngFor="let item of section.questions; index as i" >
+        <ng-container *ngIf='item.controlType !== "section"; else section'>
+          <app-question [controlType]="item" (itemDeleted)="onItemDeleted($event)"></app-question>
+        </ng-container>
+        <ng-template #section>
+          <app-section [section]="item" (tabSelected)="onTabSelected($event)" (sectionDeleted)="onSectionDeleted($event)"></app-section>
+        </ng-template>
+      </div>
     </div>
+
 
     <mat-form-field class="input_selector">
       <mat-select [(ngModel)]='optionSelected' placeholder="Add a question">

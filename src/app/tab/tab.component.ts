@@ -8,25 +8,12 @@ import { trigger, state, style, transition, animate, keyframes } from '@angular/
 @Component({
   selector: 'app-tab',
   templateUrl: './tab.component.html',
-  styleUrls: ['./tab.component.css'],
-  animations: [
-    // the fade-in/fade-out animation.
-    trigger('tabStyling', [
-      state('active', style({
-        transform: 'scale(0.8)',
-      })),
-      state('inactive', style({
-        transform: 'scale(1)',
-      })),
-      transition('active => inactive', animate('800ms ease-in')),
-    ])
-  ]
+  styleUrls: ['./tab.component.css']
 })
 export class TabComponent implements OnInit {
 
   @Input() tab: Step;
   numSections = 0;
-  state = "active";
   @Output() tabSelected: EventEmitter<string> = new EventEmitter();
   index: number;
 
@@ -44,7 +31,6 @@ export class TabComponent implements OnInit {
     newSection.visible = true;
     newSection.label = "SECTION " + (this.numSections + 1) + " Label";
     newSection.questions = []
-    //newSection.visible = true;
     newSection.conditionalProperties = {};
     this.numSections = this.tab.questions.push(newSection);
   }
@@ -59,11 +45,6 @@ export class TabComponent implements OnInit {
     const questionIndex = this.tab.questions.map(question => question.key).indexOf(id);
     console.log(questionIndex);
     this.tab.questions.splice(questionIndex, 1);
-  }
-
-  onTabSelected() {
-    this.state = (this.state === 'active' ? 'inactive' : 'active');
-    this.tabSelected.emit();
   }
 
   onEnter(value: string) {

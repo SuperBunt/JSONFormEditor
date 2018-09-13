@@ -71,3 +71,9 @@ import 'zone.js/dist/zone';  // Included with Angular CLI.
  * Need to import at least one locale-data with intl.
  */
 // import 'intl/locale-data/jsonp/en';
+
+
+/********************************************************
+ * This is a temporary workaround for #849, while upstream dragula still relies on global.
+ *********************************************************/
+(window as any).global = window;

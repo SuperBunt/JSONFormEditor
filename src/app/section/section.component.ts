@@ -1,13 +1,12 @@
-import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { Question } from '../question'
-import { Option } from '../option'
-import { Guid } from "guid-typescript/dist/guid";
 import { MatDialog, MatDialogConfig } from '../../../node_modules/@angular/material';
 import { QuestionDialogComponent } from '../question-dialog/question-dialog.component';
 import { ConditionValues } from '../conditionValues';
 import { SubmissionService } from '../submissionService.service';
 import { fadeInAnimation } from '../_animations/fade-in';
 import { SlideInOutAnimation } from '../_animations/slide-in-out';
+import { DragulaService } from 'ng2-dragula';
 
 @Component({
   selector: 'app-section',
@@ -22,7 +21,7 @@ export class SectionComponent implements OnInit {
 
   @Input() section: Question;
   numQuestions = 0;
-  options: string[]
+  options: string[];
   optionSelected: any;
   numberOfTicks = 1;
   show: boolean = true;
@@ -31,11 +30,14 @@ export class SectionComponent implements OnInit {
   buttonValue: string;
   @Output() sectionDeleted: EventEmitter<string> = new EventEmitter();
 
+  
+
   constructor(
     public tabService: SubmissionService,
-    private ref: ChangeDetectorRef,
-    public dialog: MatDialog) {
-  }
+    public dialog: MatDialog,
+    private dragulaService: DragulaService) {
+      
+     }
 
   ngOnInit() {
     this.options = this.tabService.controls.sort();
@@ -58,8 +60,8 @@ export class SectionComponent implements OnInit {
     const dialogRef = this.dialog.open(QuestionDialogComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log("closed dialog "+ result);
-      if(result == undefined)
+      console.log("closed dialog " + result);
+      if (result == undefined)
         this.numQuestions = this.section.questions.push(newControl);
       else
         console.log("control not saved")
@@ -120,5 +122,6 @@ export class SectionComponent implements OnInit {
   removeCondition(i: number) {
     this.section.conditionalProperties.visible.splice(i, 1);
   }
+
 
 }

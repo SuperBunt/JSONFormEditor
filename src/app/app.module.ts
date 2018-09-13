@@ -34,6 +34,8 @@ import { FileUploadComponent } from './file-upload/file-upload.component';
 import { DescriptorComponent } from './descriptor/descriptor.component';
 import { SubmissionDialogComponent } from './submission-dialog/submission-dialog.component'
 
+import { DragulaModule } from 'ng2-dragula';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -67,7 +69,8 @@ import { SubmissionDialogComponent } from './submission-dialog/submission-dialog
     MatFormFieldModule,
     MatRadioModule,
     MatTooltipModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    DragulaModule.forRoot()
   ],
   providers: [
     SubmissionService
