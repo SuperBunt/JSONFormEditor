@@ -8,7 +8,9 @@
     
   } */
   .boxed{
-    border: 1px solid rgba(179, 170, 170, 0.435)
+    border: 1px solid rgba(179, 170, 170, 0.789);
+    margin-bottom: 5px;
+    padding: 15px;
   }
 
   .example-container > * {

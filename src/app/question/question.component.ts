@@ -39,15 +39,9 @@ export class QuestionComponent implements OnInit {
     const dialogRef = this.dialog.open(QuestionDialogComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('question component: ' + result.controlType);
+      //console.log('question component: ' + result.controlType);
       if (typeof result === 'string')
-        this.deleteItem(result)
-      else if (result.controlType == undefined)
-        return;
-      // else if (result.controlType != this.controlType.controlType){        
-      //   Object.assign(this.controlType, result);
-      // }
-        
+        this.deleteItem(result)        
     });
   }
 
@@ -69,25 +63,6 @@ export class QuestionComponent implements OnInit {
     this.controlType.options.splice(i, 1);
   }
 
-  AddCondition(type: string) {
-    this.controlType.conditionalProperties ? null : this.controlType.conditionalProperties = [];
-    let cond = new ConditionValues();
-    switch (type) {
-      case "visible":
-        // do this
-        let visible: any = { "visible": [cond] }
-        this.controlType.conditionalProperties.push(visible);
-        break;
-      case "required":
-        // do this
-        let required: any = { "required": [cond] }
-        this.controlType.conditionalProperties.push(required);
-        break;
-      default:
-        //do this         
-        this.controlType.conditionalProperties.push(cond);
-    }
-  }
 
   toggleVisible() {
     if (this.isVisible) {

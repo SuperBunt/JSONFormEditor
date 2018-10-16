@@ -1,5 +1,4 @@
 <div class="condition" *ngIf="condition" fxLayout="column">
-
   <div fxLayout="row" fxLayoutAlign="space-between start">
     <label fxFlex="20"><b>Property</b>&nbsp;&nbsp;</label>
     <mat-radio-group fxFlex="80" [(ngModel)]="condition.propertyValue" [ngModelOptions]="{standalone: true}">
@@ -31,7 +30,7 @@
   <div fxLayout="row" fxLayoutAlign="space-between center">
     <label fxFlex="20">Operator</label>
     <mat-form-field fxFlex="80" class="input_selector">
-      <mat-select >
+      <mat-select>
         <mat-option *ngFor='let operator of operators' [value]="operator" (click)='selectOperator(operator)'>{{operator}}
         </mat-option>
       </mat-select>
@@ -58,21 +57,6 @@
         </mat-select>
       </mat-form-field>
     </ng-template>
-    <!-- <ng-template #rightInput>
-        <mat-form-field>
-            <mat-select placeholder="Choose option" [(ngModel)]="condition.right" name="right">
-              <mat-option *ngFor="let option of options" [value]="option">
-                {{option}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        <mat-form-field fxFlex="80">
-          <input [(ngModel)]="condition.right" #right matInput placeholder="use comma for multiple values" value=""/>
-          <button mat-button matSuffix mat-icon-button type="text" (click)="addValue(right.value)" matTooltip="click to store values">
-             <i class="material-icons">add_circle</i>
-          </button>
-        </mat-form-field> 
-      </ng-template> -->
   </div>
 
 </div>

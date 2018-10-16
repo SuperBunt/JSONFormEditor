@@ -26,7 +26,6 @@ export class ConditionComponent implements OnInit {
     this.myService.getEntries()
       .then(x => {
         this.keys = x
-        console.log(x)
       });
   }
 

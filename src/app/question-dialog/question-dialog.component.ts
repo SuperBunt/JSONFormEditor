@@ -1,5 +1,5 @@
 import { MAT_DIALOG_DATA, MatDialogRef, MatFormFieldBase } from "@angular/material";
-import { Component, OnInit, Inject, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Inject, Output, EventEmitter, AfterViewInit, ViewChildren, QueryList } from '@angular/core';
 import { Question } from "../question";
 import { FormBuilder, FormGroup, FormControl } from "../../../node_modules/@angular/forms";
 import { ConditionValues } from "../conditionValues";
@@ -7,6 +7,7 @@ import { SubmissionService } from '../submissionService.service';
 import { Condition } from "../conditionalProperty";
 import { checkAndUpdateBinding } from "../../../node_modules/@angular/core/src/view/util";
 import { Descriptor } from "./descriptor";
+import { ConditionComponent } from "../condition-properties/condition/condition.component";
 
 @Component({
   selector: 'app-question-dialog',
@@ -16,7 +17,6 @@ import { Descriptor } from "./descriptor";
 export class QuestionDialogComponent implements OnInit {
 
   @Output() itemDeleted: EventEmitter<string> = new EventEmitter();
-  form: FormGroup;
   controlType: Question;
   numOptions: number;
   hasLabel: boolean = false;
@@ -27,7 +27,7 @@ export class QuestionDialogComponent implements OnInit {
   options = ["textbox", "textarea", "radio", "dropdown", "display", "password", "checkbox-list", "file-upload", "section", "list", "multi-select", "free-note", "numeric", "date", "checkbox", "quick-autocomplete"];
   optionSelected: any;
   numberOfTicks = 1;
-  objectKeys: string[];
+  conditionKeys: string[];
   regEdit = false;
   passwordValidaton: boolean;
   emailValidation: boolean;
@@ -35,6 +35,7 @@ export class QuestionDialogComponent implements OnInit {
   numberValidation: boolean;
   chosenValidator: string;
   updated: boolean;
+  properties = this.myService.properties;
 
   constructor(
     public myService: SubmissionService,
@@ -48,12 +49,12 @@ export class QuestionDialogComponent implements OnInit {
     this.regTypes.sort();
     this.controlType.options ? this.numOptions = this.controlType.options.length : null;
     this.chosenValidator = this.controlType.validators ? Object.keys(this.controlType.validators)[0] : ""
-    this.updated = false;
+    this.conditionKeys = this.controlType.conditionalProperties ? Object.keys(this.controlType.conditionalProperties) : [];
+    console.log(this.controlType);
   }
 
   close() {
     this.dialogRef.close();
-    //this.updated ? this.dialogRef.close(this.controlType) : this.dialogRef.close();
   }
 
   deleteItem(key: string) {
@@ -75,52 +76,6 @@ export class QuestionDialogComponent implements OnInit {
     value.match(this.regex) ? this.controlType.options[index].key = parseInt(value) : this.controlType.options[index].key = value;
   }
 
-
-  CheckKeys(): void {
-    this.objectKeys = Object.keys(this.controlType.conditionalProperties);
-    console.log("Keys: " + this.objectKeys);
-  }
-
-  toggleLabel() {
-    console.log("toggleLabel")
-    if (this.hasLabel) {
-      console.log("add visible");
-      let values = new ConditionValues();
-      this.controlType.conditionalProperties.label = [values]
-    }
-    else {
-      console.log("remove label")
-      delete this.controlType.conditionalProperties.label
-    }
-
-  }
-
-  toggleVisible() {
-    console.log("toggleVisible")
-    if (this.hasVisible) {
-      console.log("add visible");
-      let values = new ConditionValues();
-      this.controlType.conditionalProperties.visible = [values]
-    }
-    else {
-      console.log("remove visible")
-      delete this.controlType.conditionalProperties.visible
-    }
-
-  }
-
-  toggleRequired() {
-    if (this.hasRequired) {
-      console.log("add required");
-      let values = new ConditionValues();
-      this.controlType.conditionalProperties.required = [values]
-    }
-    else {
-      console.log("remove required")
-      delete this.controlType.conditionalProperties.required
-    }
-  }
-
   addControlToQuestionBase(type: string) {
     this.myService.createQuestionType(type).then(x => this.controlType.questionBase.questions[0].questions.push(x));
   }
@@ -130,6 +85,31 @@ export class QuestionDialogComponent implements OnInit {
     const questionIndex = this.controlType.questionBase.questions[0].questions.map(question => question.key).indexOf(id);
     console.log(questionIndex);
     this.controlType.questionBase.questions[0].questions.splice(questionIndex, 1);
+  }
+
+  addConditionalProperty(val: string) {
+    if (this.conditionKeys.indexOf(val) == -1) {
+      let values = new ConditionValues();
+      if (this.controlType.conditionalProperties == undefined) {
+        this.controlType.conditionalProperties = {}
+      }
+      this.controlType.conditionalProperties[val] = [values]
+      this.conditionKeys = Object.keys(this.controlType.conditionalProperties);
+    }
+
+  }
+
+  addCondition(key: string) {
+    let values = new ConditionValues();
+    this.controlType.conditionalProperties[key].push(values)
+  }
+
+  deleteCondition(index: number, key: string) {
+    this.controlType.conditionalProperties[key].splice(index, 1);
+    if (this.controlType.conditionalProperties[key].length == 0) {
+      delete this.controlType.conditionalProperties[key];
+      this.conditionKeys = Object.keys(this.controlType.conditionalProperties);
+    }
   }
 
   setValidator(val: string) {
@@ -145,12 +125,6 @@ export class QuestionDialogComponent implements OnInit {
         break;
       case "phone":
         this.controlType.validators.phone = {}
-        break;
-      case "number":
-        this.controlType.validators.regex = {
-          "regExp": "^[\\d]",
-          "message": "Only numeric values are allowed"
-        }
         break;
       case "none":
         break;
@@ -190,7 +164,6 @@ export class QuestionDialogComponent implements OnInit {
             result.label = this.controlType.label.toString();
 
           if ((type == "radio" && result.controlType == "dropdown") || (type == "dropdown" && result.controlType == "radio")) {
-            console.log("radio/dropdown")
             this.controlType.options.forEach(
               x => result.options.push(x)
             )

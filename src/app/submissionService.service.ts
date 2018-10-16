@@ -12,7 +12,8 @@ export class SubmissionService {
     myForm: Submission = Submission.create();
     tabsCreated = 0
     numSections = 0
-    controls = ["textbox", "textarea", "radio", "display", "section", "dropdown", "checkbox-list", "password", "file-upload", "numeric", "list", "multi-select", "free-note", "date", "checkbox", "quick-autocomplete"];
+    controls = ["textbox", "textarea", "hidden", "radio", "display", "section", "dropdown", "checkbox-list", "password", "file-upload", "numeric", "list", "multi-select", "free-note", "date", "checkbox", "quick-autocomplete"];
+    properties = ["visible","required","label"];
 
     addTab(): Promise<number> {
         this.tabsCreated++
@@ -63,12 +64,13 @@ export class SubmissionService {
         control.label = "";
         control.visible = true;
         control.required = false;
-        control.conditionalProperties = {};
+        //control.conditionalProperties = {};
 
         return control
     }
 
     getEntries(): Promise<any> {
+        console.log("get entries")
         let filtered = []
 
         this.myForm.steps.forEach(q => {
@@ -95,6 +97,39 @@ export class SubmissionService {
         }
         return Promise.resolve(filtered)
     }
+
+    // getEntries(): Promise<any> {
+    //     console.log("get entries")
+    //     let filtered = []
+
+    //     this.myForm.steps.forEach((q, index) => {
+    //         if (q.questions.length > 0) {
+    //             filtered.push({
+    //                 name: "Tab " + index,
+    //                 options: []
+    //             })
+    //             getNestedKeys(q.questions, index)
+    //         }
+    //     })
+
+    //     function getNestedKeys(_arr, i) {
+    //         _arr.forEach(x => {
+    //             console.log(x.controlType)
+    //             if (x.controlType == "dropdown" || x.controlType == "radio" || x.controlType == "checkbox" || x.controlType == "checkbox-list") {
+    //                 let obj = {};
+    //                 obj["label"] = x.label
+    //                 obj["key"] = x.key                    
+    //                 filtered[i].options.push(obj)
+    //             }
+    //             else if (x.controlType == 'section') {
+    //                 if (x.questions.length > 0) {
+    //                     getNestedKeys(x.questions, i)
+    //                 }
+    //             }
+    //         })
+    //     }
+    //     return Promise.resolve(filtered)
+    // }
 
     getOptions(val: string): Promise<any> {
         let options = [];
@@ -197,6 +232,10 @@ export class SubmissionService {
                 newControl.regSysType = "string";
                 newControl.required = true;
                 newControl.validators = { "password": {} };
+                return Promise.resolve(newControl);
+            case "hidden":
+                delete newControl.label;
+                delete newControl.visible;
                 return Promise.resolve(newControl);
             default:
                 console.log("Default")

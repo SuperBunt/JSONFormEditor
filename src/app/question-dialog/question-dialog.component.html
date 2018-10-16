@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>Edit Question</h1>
+<h1 mat-dialog-title>Edit Question </h1>
 <mat-dialog-content *ngIf="controlType" class="control">
   <div *ngIf="controlType.controlType !='free-note'; else value">
     <label>Label:
@@ -37,9 +37,9 @@
       </mat-select>
     </mat-form-field>
   </div>
-  <div>
+  <!-- <div>
     <b>Key: </b>{{controlType.key}}
-  </div>
+  </div> -->
   <hr>
   <div fxLayout="row" fxLayoutAlign="start center">
     <label>
@@ -53,7 +53,8 @@
       regSysKey:
       <input [(ngModel)]="controlType.regSysKey" placeholder="Edit me" />
     </label>
-    <mat-radio-group fxLayout="row" fxLayoutAlign="space-around center" (change)="setRegsysType($event.value)" [(ngModel)]="controlType.regSystype">
+    <mat-radio-group fxLayout="row" fxLayoutAlign="space-around center" (change)="setRegsysType($event.value)"
+      [(ngModel)]="controlType.regSystype">
       <mat-radio-button class="example-radio-button" *ngFor="let reg of regTypes" [value]="reg">
         {{reg}}
       </mat-radio-button>
@@ -64,7 +65,8 @@
     <label>
       <b>Add a validation:&nbsp;&nbsp;</b>
     </label>
-    <mat-radio-group fxLayout="row" fxLayoutAlign="space-around start" (change)="setValidator($event.value)" [(ngModel)]="chosenValidator">
+    <mat-radio-group fxLayout="row" fxLayoutAlign="space-around start" (change)="setValidator($event.value)"
+      [(ngModel)]="chosenValidator">
       <mat-radio-button class="example-radio-button" *ngFor="let valid of validators" [value]="valid">
         {{valid}}
       </mat-radio-button>
@@ -102,27 +104,25 @@
         </mat-panel-description>
       </mat-expansion-panel-header>
       <div fxLayout="column" fxLayoutAlign="start">
-        <div class="boxed">
-          <mat-checkbox [(ngModel)]="hasVisible" (change)="toggleVisible()"> Add visibilty conditions</mat-checkbox>
-          <div *ngIf="hasVisible">
-            <ng-container *ngFor="let item of controlType.conditionalProperties.visible">
-              <app-condition [condition]="item"></app-condition>
-            </ng-container>
-          </div>
-        </div>
-        <div class="boxed">
-          <mat-checkbox [(ngModel)]="hasRequired" (change)="toggleRequired()"> Add required conditions </mat-checkbox>
-          <div *ngIf="hasRequired">
-            <ng-container *ngFor="let item of controlType.conditionalProperties.required">
-              <app-condition [condition]="item"></app-condition>
-            </ng-container>
-          </div>
-        </div>
-        <div class="boxed">
-          <mat-checkbox [(ngModel)]="hasLabel" (change)="toggleLabel()"> Add label conditions </mat-checkbox>
-          <div *ngIf="hasLabel">
-            <ng-container *ngFor="let item of controlType.conditionalProperties.label">
-              <app-condition [condition]="item"></app-condition>
+        <mat-form-field>
+          <mat-select placeholder="Choose Property">
+            <mat-option *ngFor="let prop of properties" [value]="prop" (click)='addConditionalProperty(prop)'>
+              {{ prop }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div *ngIf="controlType.hasOwnProperty('conditionalProperties')">
+          <div class="boxed" *ngFor="let prop of conditionKeys">
+            <h5>{{prop}}
+              <span>
+                <button matTooltip="Add another condition" mat-mini-fab (click)='addCondition(prop)' color="primary">
+                  <i class="material-icons">add</i>
+                </button>
+              </span>
+            </h5>
+            <ng-container *ngFor="let item of controlType.conditionalProperties[prop]; index as i">
+              <app-condition *ngIf="!describe" [condition]="item"></app-condition>
+              <button mat-raised-button color="warn" matTooltip="Delete this condition" (click)='deleteCondition(i, prop)'><i class="material-icons">delete</i></button>
             </ng-container>
           </div>
         </div>
@@ -166,7 +166,8 @@
         </mat-panel-description>
       </mat-expansion-panel-header>
       <div *ngFor="let desc of controlType.descriptors; index as index">
-        <app-descriptor (itemDeleted)="onDescriptorDeleted($event)" [description]="desc" (itemDeleted)="onItemDeleted($event)" [index]="index"></app-descriptor>
+        <app-descriptor (itemDeleted)="onDescriptorDeleted($event)" [description]="desc" (itemDeleted)="onItemDeleted($event)"
+          [index]="index"></app-descriptor>
       </div>
       <button class="mat-raised-button mat-primary" (click)="addDescriptor()">Add a descriptor</button>
     </mat-expansion-panel>
@@ -177,3 +178,5 @@
   <button class="mat-raised-button mat-primary" (click)="close()">Close</button>
   <button class="mat-raised-button mat-warn" (click)="deleteItem(controlType.key)">Delete</button>
 </mat-dialog-actions>
+<hr>
+<small>{{controlType.key}}</small>

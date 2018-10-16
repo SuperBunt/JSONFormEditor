@@ -1,5 +1,5 @@
 export class ConditionValues {
-    propertyValue: boolean;
+    propertyValue: any;
     left?: any;
     operator: string;
     right?: any;
